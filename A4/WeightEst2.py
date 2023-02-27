@@ -17,9 +17,9 @@ wt_crew_baggage = 30 # lbm
 # Weight of baggage for each passenger in lbs
 wt_pass_baggage = 40 # lbm
 # Total payload weight
-w_payload = (passengers * (wt_passengers + wt_pass_baggage)) 
+W_payload = (passengers * (wt_passengers + wt_pass_baggage)) 
 # Total crew weight
-w_crew = crew * (wt_crew + wt_crew_baggage)
+W_crew = crew * (wt_crew + wt_crew_baggage)
 
 # Mission range of 1000 nmi
 R = 1000*6076.11549 # ft
@@ -78,20 +78,22 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
 
     W0_list = []
     W0 = W0_guess
-    A = 0.65462
-    C = -0.0741581
+    A = 1.20212 # from regression model
+    C = -0.100611
     error = 1e-6
     delta  = (2 * error)
 
     while delta > error:
         W0_list.append(W0)
-        We_W0 = A*W0**C
-        W_wing = W0/WS*10 # lbm
-        W_engine = 2*((W0/WP_ICE/2)**0.9306*10**-0.1205 + (W0/WP_EM1/2)/(5.2*0.745699872/2.20462262)) # lbm, 5.2kW/kg electric engine from Martins
-        W_pg = 1.35*(W_engine+0.24*W0*(1/WP_ICE+1/WP_EM1))
-        w0_New = (w_crew + w_payload + W_wing + W_pg) / (1 - We_W0 - Wf_W0 - Wb_W0)
-        delta = abs((w0_New - W0)/w0_New)
-        W0 = w0_New
+        # defined from direct ratios
+        W_wing_W0 = 10/WS # wing loading
+        # iterables
+        We_W0 = A*W0**C # everything else
+        W_engine = 2*((W0/WP_ICE/2)**0.9306*10**-0.1205 + (W0/WP_EM1/2)/(5.22*1.34102209/2.20462262)) # lbm, 5.2kW/kg electric engine from Martins
+        # W_pg = 1.35*(W_engine+0.24*W0*(1/WP_ICE+1/WP_EM1))
+        W0_New = (W_crew + W_payload + W_engine) / (1 - We_W0 - W_wing_W0 - Wf_W0 - Wb_W0 )
+        delta = abs((W0_New - W0)/W0_New)
+        W0 = W0_New
     W_empty_W0 = (1-Wf_W0)
     return W0,W_empty_W0,Wf_W0,Wb_W0
 
@@ -125,7 +127,7 @@ print("Empty Weight: " + str(round(We)) + " lbm")
 print("Empty Weight Fraction: {:.3f}".format(We_W0))
 print("Battery & Motor Weight: {:.3f} lbm".format(W_elec))
 print("Battery & Motor Weight Fraction: {:.3f}".format(W_elec/W0))
-print("Weight of Crew and Payload {:.3f} lbm".format(w_crew+w_payload))
+print("Weight of Crew and Payload {:.3f} lbm".format(W_crew+W_payload))
 
 
 # From 1st estimate: 821.836ft2, 5113.424bhp, 4398.445 ft2 wet
