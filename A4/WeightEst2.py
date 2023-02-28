@@ -57,14 +57,14 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
 
     PSFCvec = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(PHIvec/(1-PHIvec))))
     # PSFCvec_HP = (3600 * 550) * PSFCvec
-    print(PSFCvec)
+    # print(PSFCvec)
     # Mission Weight fractions
     Wi_Wi1 = np.array([1 - 0.0004*PSFCvec[0]*(3600 * 550), # Taxi&Takeoff
         1 - h*PSFCvec[1]*0.15*550/ROC, # Climb
         np.exp((-R*PSFCvec[2] )/ (0.85*L_D)), # Cruise
         1 - h*PSFCvec[3]*0.15*550/ROC, # Descent
         np.exp((-E*V*PSFCvec[4]) / (0.85*L_D))],float) # Loiter
-    
+    print(Wi_Wi1)
     Wi_W0 = np.append(1,Wi_Wi1.copy())
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
@@ -94,13 +94,13 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
         W0_New = (W_crew + W_payload + W_engine) / (1 - We_W0 - W_wing_W0 - Wf_W0 - Wb_W0 )
         delta = abs((W0_New - W0)/W0_New)
         W0 = W0_New
-    W_empty_W0 = (1-Wf_W0)
+    W_empty_W0 = (W_engine+W0*(We_W0 + W_wing_W0 + Wb_W0))/W0
     return W0,W_empty_W0,Wf_W0,Wb_W0
 
 # format for hybrid parameter:
 # PHIvec = [Taxi&Takeoff, Climb, Cruise, Descent, Loiter, Landing]
-PHIvec = np.array([0.285, # Taxi&Takeoff
-          0.1, # Climb
+PHIvec = np.array([0.36, # Taxi&Takeoff
+          0.36, # Climb
           0, # Cruise
           0, # Descent
           0, # Loiter
@@ -109,8 +109,8 @@ PHIvec = np.array([0.285, # Taxi&Takeoff
 # from prelim sizing: Wing Loading: 69.364lbm/ft2, Power Loading: 9.578lbm/bhp
 
 WS = 69.364
-WP_ICE = 12.5
-WP_EM1 = 12.5
+WP_ICE = 25
+WP_EM1 = 11
 # WP_ICE = 9.578*2
 # WP_EM1 = 9.578*2
 
