@@ -2,14 +2,15 @@ import numpy as np
 import math
 
 # Empennage sizing #
-Cvt = 0.09   # Verticle tail volume coefficient from Raymer table 6.4
-Cht = 1      # Horizantle tail volume coefficient from Raymer table 6.4
+Cvt = 0.08/2  - 0.05*0.08/2  # Verticle tail volume coefficient from Raymer table 6.4 + End plate effect
+Cht = 0.9     # Horizantle tail volume coefficient from Raymer table 6.4
 
-Lvt =       # Verticle tail moment arm
-Lht =       # Horizantle tail moment arm
-bw =        # Span of wing
-cw =        # Wing mean chord
+Lvt =  30 + (11.12500/4) - (5.41837/4)      # Verticle tail moment arm (Quarter chord length used to find AC)
+Lht =  43 + (4.50000/4) - (5.41837/4)      # Horizantle tail moment arm (Quarter chord length used to find AC)
+bw =  115.77869      # Projected Span of wing
+cw =  5.41837      # Wing mean chord
 
+S_w = 826.13454    # Surface area of wing in ft^2
 
 AR_w =    # Wing Aspect Ratio
 AR_h =    # Horizantle Stabilizer Aspect Ratio
