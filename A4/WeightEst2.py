@@ -74,7 +74,6 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
     # Calculate Weight
 
 
-    
 
     W0_list = []
     W0 = W0_guess
