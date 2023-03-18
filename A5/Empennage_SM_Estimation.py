@@ -34,9 +34,9 @@ eta_h = 0.9  # tail efficiency (0.9 is typical for low tails, so we probably wan
 Kf = .589     # Empirical factor, 0.589 is the value for a quarter chord position on the body at 0.45 of the body length
 Lf = 79       # Fuselage length
 Wf = 9       # Maximum width of fuselage
-Xcg = 4.4      # Aircraft center of gravity
-Lh =  50 - Xcg     # Distance from CG back to tail
-X25mac = 11.12500   # Not too sure what this term means, maybe something related to aerodynamic center (Quarter chord length)
+Xcg = 2.866      # Aircraft center of gravity from leading edge of wing
+Lh =  40 - Xcg     # Distance from CG back to tail
+
 
 CL_al_w = (2 * np.pi * AR_w) / (2 + np.sqrt(((AR_w / eta)**2) * (1 + (np.tan(gam_w))**2 - M**2)) + 4)   # List curve slope of wing, / radian
 CL_al_h0 = (2 * np.pi * AR_h) / (2 + np.sqrt(((AR_h / eta)**2) * (1 + (np.tan(gam_h))**2 - M**2)) + 4)   # List curve slope of horizantle tail, / radian
@@ -46,8 +46,6 @@ CL_al_h = CL_al_h0 * (1 - de_dal) * eta_h   # Correct tail lift curve slope
 
 dCmf_dCL = (Kf * (Wf ** 2) * Lf) / (S_w * cw * CL_al_w)
 
-# SM = ((Xcg - X25mac) / cw) - ((CL_al_h * S_h * Lh) / (CL_al_w * S_w * cw)) + dCmf_dCL   # Static Margin estimation
-
-NP = Lh*S_h/cw/S_w*(CL_al_h)/CL_al_w - dCmf_dCL
+NP = (((Lh*S_h)/(cw*S_w)) * (CL_al_h/CL_al_w)) - dCmf_dCL
 print("NP = {} ft".format(NP))
 
