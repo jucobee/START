@@ -18,6 +18,7 @@ wt_crew_baggage = 30 # lbm
 wt_pass_baggage = 40 # lbm
 # Total payload weight
 W_payload = (passengers * (wt_passengers + wt_pass_baggage)) 
+
 # Total crew weight
 W_crew = crew * (wt_crew + wt_crew_baggage)
 
@@ -128,7 +129,7 @@ print("Empty Weight Fraction: {:.3f}".format(We_W0))
 print("Battery & Motor Weight: {:.3f} lbm".format(W_elec))
 print("Battery & Motor Weight Fraction: {:.3f}".format(W_elec/W0))
 print("Weight of Crew and Payload {:.3f} lbm".format(W_crew+W_payload))
-
+print(W_payload)
 
 # From 1st estimate: 821.836ft2, 5113.424bhp, 4398.445 ft2 wet
 

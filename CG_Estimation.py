@@ -18,7 +18,7 @@ nose landing gear
 main landing gear
 
 '''
-MTOW = 56990
+MTOW = 57006
 # Number of pilots
 pilots = 2
 # Number of attendants
@@ -54,7 +54,7 @@ Wfw = Wfuel  # Weight of fuel in wing
 ARw = 16.22  # Aspect ratio of wing
 Gammaw = 5 * (np.pi / 180)   # Wing sweep angle
 lambdaw = 0.4 # Wing taper ratio
-tcw = 0.16    # Thickness to chord ratio of wing root
+tcw = 0.16    # Thickness to chord ratio of wing root 
 Nz = 2.458 * 1.5    # Ultimate load factor; 1.5 x limit load factor
 Wdg = MTOW  # Design gross weight
 q = (0.0343 * (590.733 ** 2)) / 2   # Dynamic pressure at cruise
@@ -125,3 +125,29 @@ sum1 = (Wwing * wingXcg) + (Wfuel * fuelXcg) + (Wpass * passengersXcg) + (Wcrew 
 sum2 = Wwing + Wfuel + Wpass + Wcrew + Wbaggage + Wbattery + Wengine + Wht + Wvt + W_noselanding + W_mainlanding + Wfusel
 XCG = sum1 / sum2
 print('Center of gravity from wing LE: {} ft'.format(XCG))
+print(' ')
+print(Wwing)
+print(Wfuel)
+print(Wpass)
+print(Wcrew)
+print(Wbaggage)
+print(Wbattery)
+print(Wengine)
+print(Wht)
+print(Wvt)
+print(W_noselanding)
+print(W_mainlanding)
+print(Wfusel)
+print(' ')
+print(wingXcg)
+print(fuelXcg)
+print(passengersXcg)
+print(crewXcg)
+print(baggageXcg)
+print(batteryXcg)
+print(engineXcg)
+print(horizontalXcg)
+print(verticalXcg)
+print(noselandingXcg)
+print(mainlandingXcg)
+print(fuselageXcg)
