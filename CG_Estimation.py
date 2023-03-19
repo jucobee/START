@@ -106,7 +106,7 @@ W_mainlanding = 0.0106 * (Wl**0.888) * (Nl**0.25) * (Lm**0.4) * (Nmw**0.321) * (
 W_noselanding = 0.032 * (Wl**0.646) * (Nl**0.2) * (Ln**0.5) * (Nnw**0.45)
 
 
-# Xcg values in feet measured from leading edge of wing
+# Xcg values in feet measured from leading edge of wing(Calculated if leading edge of wing moved forward by 2.1ft)
 wingXcg = 5.41 * 0.25
 fuelXcg = 5.41 * 0.35
 passengersXcg = 6.27 + 2.1
@@ -118,7 +118,7 @@ horizontalXcg = 44.59 + 2.1
 verticalXcg = 33.3375 + 2.1
 noselandingXcg = -20 + 2.1
 mainlandingXcg = 5 + 2.1
-fuselageXcg = 3.55
+fuselageXcg = 3.55 + 2.1
 
 
 sum1 = (Wwing * wingXcg) + (Wfuel * fuelXcg) + (Wpass * passengersXcg) + (Wcrew * crewXcg) + (Wbaggage * baggageXcg) + (Wbattery * batteryXcg) + (Wengine * engineXcg) + (Wht * horizontalXcg) + (Wvt * verticalXcg) + (W_noselanding * noselandingXcg) + (W_mainlanding * mainlandingXcg) + (Wfusel * fuselageXcg)
