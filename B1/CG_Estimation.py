@@ -49,7 +49,7 @@ Wengine = 2.575 * (((gas_turb + EM)/2)**0.922) * 2 # TOTAL ENGINE WEIGHT
 
 
 Sw = 826.134   # Wing area
-bw = 115.76
+bw = 115.76 # Wing span
 Wfw = Wfuel  # Weight of fuel in wing
 ARw = 16.22  # Aspect ratio of wing
 Gammaw = 5 * (np.pi / 180)   # Wing sweep angle
@@ -106,6 +106,63 @@ W_mainlanding = 0.0106 * (Wl**0.888) * (Nl**0.25) * (Lm**0.4) * (Nmw**0.321) * (
 W_noselanding = 0.032 * (Wl**0.646) * (Nl**0.2) * (Ln**0.5) * (Nnw**0.45)
 
 
+Kng = 1 # 1.017 for pylon-mounted nacelle; = 1.0 otherwise
+NLt = 1 # nacelle length, ft
+Nw = 1 # nacelle width, ft
+Wec = 1 # weight of engine and contents, lb (per nacelle)
+Nen = 2 # number of engines (total for aircraft)
+Sn = 1 # nacelle wetted area, ft2
+W_nacellegroup = 0.6724*Kng*NLt**.1*Nw**0.294*Nz**0.119*Wec**0.611*Nen**0.984*Sn**0.224
+
+Lec =1 #routing distance from engine front to cockpit,ft
+W_enginecontrols = 5*Nen+0.80*Lec
+
+Wen = 1 # engine weight, each, lb
+W_starter = 49.19*(Nen*Wen/1000)**0.541
+
+Vt=1 # total fuel volume, gal
+Vi=1 # integral tanks volume, gal
+Vp=1 # self-sealing tanks, gal
+Nt=1 # number of fuel tanks
+W_fuelsystem = 2.405*Vt**.606*(1+Vi/Vt)**-1*(1+Vp/Vt)*Nt**0.5
+
+Nf=1 # number of separate functions performed by surface controls, including rudder, aileron, elevator, flaps, spoiler, and speed brakes
+Nm=1 # number of surface controls driven by mechanical actuation instead of hydraulics
+Scs=1 # total control surface area, ft2
+Iyaw=1 # yawing moment of inertia, lb*ft2
+W_flightcontrols = 145.9*Nf**0.554*(1+Nm/Nf)**-1*Scs**.2*(Iyaw*10**-16)**.07
+
+WAPUuninstalled=1 # weight of APU, uninstalled
+W_APUinstalled = 2.2*WAPUuninstalled
+
+Kr=1 # 1.133 if reciprocating engine; = 1.0 otherwise
+Ktp=0.793 # 0.793 if turboprop; = 1 .0 otherwise
+Nc=1 # number of crew 
+Lf=1 # total fuselage length
+Bw=1 # wingspan
+W_instruments = 4.509*Kr*Ktp*Nc**.541*Nen*(Lf+Bw)**0.5
+
+W_hydraulics=0.2673*Nf*(Lf+Bw)**.937
+
+Rkva=1 # system electrical rating, typically 40-60 for transports, kV · A 
+La=1 # electrical routing distance, generators to avionics to cockpit, ft
+Ngen=1 # number of generators (typically = Nen)
+W_electrical=7.291*Rkva**0.782*La**.346*Ngen**.1
+
+Wuav=1 # uninstalled avionics weight, lb (typically = 800-1400 lb)
+W_avionics=1.73*Wuav**.983
+
+Wc=1 # maximum cargo weight, lb
+W_furnishings=0.0577*Nc**.1*Wc**.393**Sf**.75
+
+Np=1 # number of personnel onboard (crew and passengers)
+W_airconditioning=62.36*Np**.25*(Vpr/1000)**.604*Wuav**.1
+
+W_antiice=.0002**Wdg
+
+W_handlinggear=3.0*10**-4*Wdg
+
+
 # Xcg values in feet measured from leading edge of wing(Calculated if leading edge of wing moved forward by 2.1ft)
 wingXcg = 5.41 * 0.25
 fuelXcg = 5.41 * 0.35
@@ -119,7 +176,6 @@ verticalXcg = 33.3375 + 2.1
 noselandingXcg = -20 + 2.1
 mainlandingXcg = 5 + 2.1
 fuselageXcg = 3.55 + 2.1
-
 
 sum1 = (Wwing * wingXcg) + (Wfuel * fuelXcg) + (Wpass * passengersXcg) + (Wcrew * crewXcg) + (Wbaggage * baggageXcg) + (Wbattery * batteryXcg) + (Wengine * engineXcg) + (Wht * horizontalXcg) + (Wvt * verticalXcg) + (W_noselanding * noselandingXcg) + (W_mainlanding * mainlandingXcg) + (Wfusel * fuselageXcg)
 sum2 = Wwing + Wfuel + Wpass + Wcrew + Wbaggage + Wbattery + Wengine + Wht + Wvt + W_noselanding + W_mainlanding + Wfusel
