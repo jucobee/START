@@ -199,5 +199,5 @@ componentsXcg = dict(zip(['wingXcg','fuelXcg','passengersXcg','crewXcg','baggage
 print(components)
 MTOW = sum(components.values())
 print(MTOW)
-XCG = sum(components.values()*componentsXcg.values()) / sum(components.values())
+XCG = sum(components[i]*componentsXcg[i] for i in components) / sum(components.values())
 print('Center of gravity from wing LE: {} ft'.format(XCG))
