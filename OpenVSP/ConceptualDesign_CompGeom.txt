@@ -1,98 +1,22 @@
 ...Comp Geom...
-13 Num Comps
-32 Total Num Meshes
-42696 Total Num Tris
+2 Num Comps
+4 Total Num Meshes
+44800 Total Num Tris
 
 Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
- 1938.995   1775.850   3939.314   3919.809  Fuselage       
-  415.341    285.082    115.455     86.098  Main Gear Fairing
-  196.143    186.192     35.524     35.524  Horizontal Stabilizer
-  325.274    286.139    140.813    134.581  Vertical Stabilizer
-  839.330    747.861    264.375    255.931  Main Wing      
-  839.399    747.923    265.306    256.832  Main Wing      
-  537.362    321.166    130.295     84.607  Fairing        
-  441.818    364.253     49.626     44.451  Truss Brace    
-  223.386    189.306    169.093    155.686  Turboprop      
-  223.386    188.700    169.093    155.187  Turboprop      
-  116.233     57.532     14.639      7.873  Inlet          
-  116.233     57.532     14.639      7.873  Inlet          
-    5.122      4.023      0.003      0.002  Inlet          
-    5.122      4.023      0.003      0.002  Inlet          
-    5.122      4.005      0.003      0.002  Inlet          
-    5.122      4.005      0.003      0.002  Inlet          
-   20.971      0.000      7.224      0.000  Propeller Cone 
-   20.971      0.000      7.224      0.000  Propeller Cone 
-   16.917     15.902      1.270      1.270  Propeller      
-   16.917     15.805      1.270      1.270  Propeller      
-   16.917     15.736      1.270      1.270  Propeller      
-   16.917     15.901      1.270      1.270  Propeller      
-   16.917     15.943      1.270      1.270  Propeller      
-   16.917     15.817      1.270      1.270  Propeller      
-   16.917     15.841      1.270      1.270  Propeller      
-   16.917     15.690      1.270      1.270  Propeller      
-   16.917     15.786      1.270      1.270  Propeller      
-   16.917     15.828      1.270      1.270  Propeller      
-   16.917     15.785      1.270      1.270  Propeller      
-   16.917     15.766      1.270      1.270  Propeller      
+   76.956     76.956     29.129     29.129  Inner Fuel     
+   76.956     76.956     29.129     29.129  Inner Fuel     
+  103.407    103.407     33.388     33.388  Outer Fuel     
+  103.407    103.407     33.388     33.388  Outer Fuel     
 -------------------------------------------------
- 6478.331   5413.392   5337.874   5159.704  Totals         
+  360.728    360.728    125.036    125.036  Totals         
 
 Tag_Theo_Area   Tag_Wet_Area    Tag_Name
-      415.341        285.082    Main Gear Fairing_Surf0
-       73.608         69.052    Horizontal Stabilizer_Surf0
-       73.608         69.052    Horizontal Stabilizer_Surf1
-      256.799        217.664    Vertical Stabilizer_Surf0
-      650.644        559.175    Main Wing_Surf0
-      650.742        559.266    Main Wing_Surf1
-      537.362        321.166    Fairing_Surf0  
-      220.909        182.127    Truss Brace_Surf0
-      220.909        182.127    Truss Brace_Surf1
-      223.386        189.306    Turboprop_Surf0
-      223.386        188.700    Turboprop_Surf1
-      116.233         57.532    Inlet_Surf0    
-      116.233         57.532    Inlet_Surf1    
-        5.122          4.023    Inlet_Surf0    
-        5.122          4.023    Inlet_Surf1    
-        5.122          4.005    Inlet_Surf0    
-        5.122          4.005    Inlet_Surf1    
-       12.106          0.000    Propeller Cone_Surf0
-       12.106          0.000    Propeller Cone_Surf1
-       16.917         15.902    Propeller_Surf0
-       16.917         15.805    Propeller_Surf1
-       16.917         15.736    Propeller_Surf2
-       16.917         15.901    Propeller_Surf3
-       16.917         15.943    Propeller_Surf4
-       16.917         15.817    Propeller_Surf5
-       16.917         15.841    Propeller_Surf6
-       16.917         15.690    Propeller_Surf7
-       16.917         15.786    Propeller_Surf8
-       16.917         15.828    Propeller_Surf9
-       16.917         15.785    Propeller_Surf10
-       16.917         15.766    Propeller_Surf11
-       24.463         24.044    Horizontal Stabilizer_Surf0,SS_CONT_0
-       24.463         24.044    Horizontal Stabilizer_Surf1,SS_CONT_0
-       68.475         68.475    Vertical Stabilizer_Surf0,SS_CONT_0
-       24.392         24.392    Main Wing_Surf0,SS_CONT_0
-       26.826         26.826    Main Wing_Surf0,SS_CONT_1
-       11.107         11.107    Main Wing_Surf0,SS_CONT_2
-       57.595         57.595    Main Wing_Surf0,SS_CONT_3
-       52.259         52.259    Main Wing_Surf0,SS_CONT_4
-       16.508         16.508    Main Wing_Surf0,SS_CONT_5
-       24.392         24.392    Main Wing_Surf1,SS_CONT_0
-       26.826         26.826    Main Wing_Surf1,SS_CONT_1
-       11.107         11.107    Main Wing_Surf1,SS_CONT_2
-       57.576         57.576    Main Wing_Surf1,SS_CONT_3
-       52.262         52.262    Main Wing_Surf1,SS_CONT_4
-       16.494         16.494    Main Wing_Surf1,SS_CONT_5
-        8.865          0.000    Propeller Cone_Surf0,SS_LINE_0
-        8.865          0.000    Propeller Cone_Surf1,SS_LINE_0
-       13.421         13.421    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door
-       12.699         12.699    Fuselage_Surf0,Passenger Door,Passenger Door
-       20.111         20.111    Fuselage_Surf0,Aft Cargo Hold Door,Passenger Door
-     1847.112       1683.967    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door
-       18.999         18.999    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Forward Cargo Hold Door,Passenger Door
-        9.124          9.124    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,Passenger Door
-       17.529         17.529    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,SS_RECT_5
-WARNING: 2 open meshes merged
-     Merged: Horizontal Stabilizer
-     Merged: Truss Brace
+        0.000          0.000    Turboprop_S_Surf0
+        0.000          0.000    Turboprop_S_Surf1
+        0.000          0.000    Inlet_S_Surf0  
+        0.000          0.000    Inlet_S_Surf1  
+        0.000          0.000    Inlet_S_Surf0  
+        0.000          0.000    Inlet_S_Surf1  
+        0.000          0.000    Inlet_S_Surf0  
+        0.000          0.000    Inlet_S_Surf1  
