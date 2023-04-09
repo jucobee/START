@@ -34,7 +34,7 @@ eta_h = 0.85  # tail efficiency (0.9 is typical for low tails, so we probably wa
 Kf = .589     # Empirical factor, 0.589 is the value for a quarter chord position on the body at 0.45 of the body length
 Lf = 79       # Fuselage length
 Wf = 9.4       # Maximum width of fuselage
-Xcg = 2.978     # Aircraft center of gravity from leading edge of wing
+Xcg = 3.11     # Aircraft center of gravity from leading edge of wing
 Lh =  40 - Xcg     # Distance from CG back to tail
 
 

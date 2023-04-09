@@ -153,7 +153,7 @@ Wuav=1000 # uninstalled avionics weight, lb (typically = 800-1400 lb)
 W_avionics=1.73*Wuav**.983
 
 Wc=Wbaggage+0 # maximum cargo weight, lb
-W_furnishings=0.0577*Nc**.1*Wc**.393**Sf**.75
+W_furnishings=0.0577*Nc**.1*Wc**.393*Sf**.75
 
 Np=53 # number of personnel onboard (crew and passengers)
 W_airconditioning=62.36*Np**.25*(Vpr/1000)**.604*Wuav**.1
@@ -164,52 +164,41 @@ W_handlinggear=3.0*10**-4*Wdg
 
 
 # Xcg values in feet measured from leading edge of wing(Calculated if leading edge of wing moved forward by 2.1ft)
-wingXcg = 5.41 * 0.25
-fuelXcg = 5.41 * 0.35
-passengersXcg = 6.27 + 2.1
-crewXcg = -22.25 + 2.1
-baggageXcg = 20 + 2.1
-batteryXcg = 5.41*0.35
-engineXcg = 0.05
-horizontalXcg = 44.59 + 2.1
-verticalXcg = 33.3375 + 2.1
-noselandingXcg = -20 + 2.1
-mainlandingXcg = 5 + 2.1
-fuselageXcg = 3.55 + 2.1
+wingXcg = 5.41 * 0.25   # At quarter chord of wing
+fuelXcg = 5.41 * 0.35      # Fuel sits about a third of the way along the chord of the wing
+passengersXcg = 4.8 # Passenger weight slightly behind wing LE
+crewXcg = -4.77
+baggageXcg = 15.69
+batteryXcg = 5.41*0.55
+engineXcg = 0.0
+horizontalXcg = 48.17
+verticalXcg = 41.854
+noselandingXcg = -20.858
+mainlandingXcg = 4.444
+fuselageXcg = 6.007
+nacelleXcg = 4.708    # Nacelle group cg sits almost level with the wing leading edge
+engcontXcg = 10.021
+starterXcg = 0.0
+fuelsysXcg = 5.41 * 0.25
+flightcontXcg = 10.021
+APUxCG = 46.717
+instrumentsXcg = -26.172
+hydraulicsXcg = 22.3
+electricalXcg = -0.805
+avionicsXcg = -26.172
+furnishingsXcg = 4.8
+airconXcg = 3.461
+antiiceXcg = 0
+handlinggearXcg = 0
 
 components = dict(zip(['Wwing ', ' Wfuel ', ' Wpass ', ' Wcrew ', ' Wbaggage ', ' Wbattery ', ' Wengine ', ' Wht ', ' Wvt ', ' Wfusel ', ' W_noselanding ', ' W_mainlanding ', 'W_nacellegroup ', ' W_enginecontrols ', ' W_starter ', ' W_fuelsystem ', ' W_flightcontrols ', ' W_APUinstalled ', ' W_instruments ', ' W_hydraulics ', ' W_electrical ', ' W_avionics ', ' W_furnishings ', ' W_airconditioning ', ' W_antiice ', ' W_handlinggear'],
                   [Wwing , Wfuel , Wpass , Wcrew , Wbaggage , Wbattery , Wengine , Wht , Wvt , Wfusel , W_noselanding , W_mainlanding ,W_nacellegroup , W_enginecontrols , W_starter , W_fuelsystem , W_flightcontrols , W_APUinstalled , W_instruments , W_hydraulics , W_electrical , W_avionics , W_furnishings , W_airconditioning , W_antiice , W_handlinggear]))
-sum1 = (Wwing * wingXcg) + (Wfuel * fuelXcg) + (Wpass * passengersXcg) + (Wcrew * crewXcg) + (Wbaggage * baggageXcg) + (Wbattery * batteryXcg) + (Wengine * engineXcg) + (Wht * horizontalXcg) + (Wvt * verticalXcg) + (W_noselanding * noselandingXcg) + (W_mainlanding * mainlandingXcg) + (Wfusel * fuselageXcg)
+componentsXcg = dict(zip(['wingXcg','fuelXcg','passengersXcg','crewXcg','baggageXcg','batteryXcg','engineXcg','horizontalXcg','verticalXcg','noselandingXcg','mainlandingXcg','fuselageXcg','nacelleXcg','engcontXcg','starterXcg','fuelsysXcg','flightcontXcg','APUxCG','instrumentsXcg','hydraulicsXcg','electricalXcg','avionicsXcg','furnishingsXcg','airconXcg','antiiceXcg','handlinggearXcg'],
+                         [wingXcg,fuelXcg,passengersXcg,crewXcg,baggageXcg,batteryXcg,engineXcg,horizontalXcg,verticalXcg,fuselageXcg,noselandingXcg,mainlandingXcg,nacelleXcg,engcontXcg,starterXcg,fuelsysXcg,flightcontXcg,APUxCG,instrumentsXcg,hydraulicsXcg,electricalXcg,avionicsXcg,furnishingsXcg,airconXcg,antiiceXcg,handlinggearXcg]))
 
-
-print(components)
+# print(components)
 MTOW = sum(components.values())
-print(MTOW)
-# XCG = sum1 / sum2
-# print('Center of gravity from wing LE: {} ft'.format(XCG))
-# print(' ')
-# print(Wwing)
-# print(Wfuel)
-# print(Wpass)
-# print(Wcrew)
-# print(Wbaggage)
-# print(Wbattery)
-# print(Wengine)
-# print(Wht)
-# print(Wvt)
-# print(W_noselanding)
-# print(W_mainlanding)
-# print(Wfusel)
-# print(' ')
-# print(wingXcg)
-# print(fuelXcg)
-# print(passengersXcg)
-# print(crewXcg)
-# print(baggageXcg)
-# print(batteryXcg)
-# print(engineXcg)
-# print(horizontalXcg)
-# print(verticalXcg)
-# print(noselandingXcg)
-# print(mainlandingXcg)
-# print(fuselageXcg)
+XCG = sum(np.array([*components.values()])*np.array([*componentsXcg.values()])) / sum(components.values())
+
+print('MTOW: {} lbs'.format(MTOW))
+print('Center of gravity from wing LE: {} ft'.format(XCG))
