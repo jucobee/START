@@ -194,10 +194,11 @@ handlinggearXcg = 0
 components = dict(zip(['Wwing ', ' Wfuel ', ' Wpass ', ' Wcrew ', ' Wbaggage ', ' Wbattery ', ' Wengine ', ' Wht ', ' Wvt ', ' Wfusel ', ' W_noselanding ', ' W_mainlanding ', 'W_nacellegroup ', ' W_enginecontrols ', ' W_starter ', ' W_fuelsystem ', ' W_flightcontrols ', ' W_APUinstalled ', ' W_instruments ', ' W_hydraulics ', ' W_electrical ', ' W_avionics ', ' W_furnishings ', ' W_airconditioning ', ' W_antiice ', ' W_handlinggear'],
                   [Wwing , Wfuel , Wpass , Wcrew , Wbaggage , Wbattery , Wengine , Wht , Wvt , Wfusel , W_noselanding , W_mainlanding ,W_nacellegroup , W_enginecontrols , W_starter , W_fuelsystem , W_flightcontrols , W_APUinstalled , W_instruments , W_hydraulics , W_electrical , W_avionics , W_furnishings , W_airconditioning , W_antiice , W_handlinggear]))
 componentsXcg = dict(zip(['wingXcg','fuelXcg','passengersXcg','crewXcg','baggageXcg','batteryXcg','engineXcg','horizontalXcg','verticalXcg','noselandingXcg','mainlandingXcg','fuselageXcg','nacelleXcg','engcontXcg','starterXcg','fuelsysXcg','flightcontXcg','APUxCG','instrumentsXcg','hydraulicsXcg','electricalXcg','avionicsXcg','furnishingsXcg','airconXcg','antiiceXcg','handlinggearXcg'],
-                         [wingXcg,fuelXcg,passengersXcg,crewXcg,baggageXcg,batteryXcg,engineXcg,horizontalXcg,verticalXcg,noselandingXcg,mainlandingXcg,fuselageXcg,nacelleXcg,engcontXcg,starterXcg,fuelsysXcg,flightcontXcg,APUxCG,instrumentsXcg,hydraulicsXcg,electricalXcg,avionicsXcg,furnishingsXcg,airconXcg,antiiceXcg,handlinggearXcg]))
+                         [wingXcg,fuelXcg,passengersXcg,crewXcg,baggageXcg,batteryXcg,engineXcg,horizontalXcg,verticalXcg,fuselageXcg,noselandingXcg,mainlandingXcg,nacelleXcg,engcontXcg,starterXcg,fuelsysXcg,flightcontXcg,APUxCG,instrumentsXcg,hydraulicsXcg,electricalXcg,avionicsXcg,furnishingsXcg,airconXcg,antiiceXcg,handlinggearXcg]))
 
 print(components)
 MTOW = sum(components.values())
 print(MTOW)
-XCG = sum(components.values()*componentsXcg.values()) / sum(components.values())
+print(components.values())
+XCG = sum(np.array([*components.values()])*np.array([*componentsXcg.values()])) / sum(components.values())
 print('Center of gravity from wing LE: {} ft'.format(XCG))
