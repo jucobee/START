@@ -16,7 +16,7 @@ W_crew = crew * (W_crew + W_crew_baggage)
 
 
 ### Fuel Fractions ###
-# Naming convention: W_{flight segment} = Weight at the end of 'flight segment'
+# Naming convention: W_{flight segment} = Weight at the *END* of 'flight segment'
 
 W_initial = 55030               # initial weight at start of taxi
 PSFC_hp = 0.483                 # Power Specific Fuel Consumption in lbm/(hp*hr)
@@ -67,7 +67,7 @@ def getCruiseWfrac(num_segments):
     W = np.empty(num_segments + 1)              # Weight array  
     W[0] = W_climb                        # Weight at start of cruise (AKA weight at end of climb)
     seg_Wfraction = np.empty(num_segments)      # Weight fraction of each segment
-    cruise_Wfraction = np.empty(num_segments+1) # Total weight fraction
+    cruise_Wfraction = np.empty(num_segments + 1) # Total weight fraction
     cruise_Wfraction[0] = 1.0                   # Initialize at 1.0
 
     for i in range(num_segments):
@@ -78,7 +78,8 @@ def getCruiseWfrac(num_segments):
         W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
         # Total cruise weight fraction is reduced by amount of current segment's weight fraction
-        cruise_Wfraction[i+1] = cruise_Wfraction[i] - (1 - seg_Wfraction[i])
+        # cruise_Wfraction[i+1] = cruise_Wfraction[i] - (1 - seg_Wfraction[i])
+        cruise_Wfraction[i+1] = cruise_Wfraction[i] * seg_Wfraction[i]
         #print(cruise_Wfraction[i+1])
     
     return cruise_Wfraction[:-1]
