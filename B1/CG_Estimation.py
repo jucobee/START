@@ -18,7 +18,7 @@ nose landing gear
 main landing gear
 
 '''
-MTOW = 57006
+MTOW = 55029
 # Number of pilots
 pilots = 2
 # Number of attendants
@@ -41,7 +41,8 @@ diam = 9
 Wcrew = wt_crew * crew  # Total weight of crew
 Wpass = passengers * wt_passengers  # Total weight of passengers
 Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
-Wfuel = MTOW * 0.11  # Fuel weight
+#Wfuel = MTOW * 0.11  # Fuel weight
+Wfuel = 0
 Wbattery = MTOW * 0.09  # Battery weight
 gas_turb = (((5950 / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
 EM = (5950 / (5.22*1.34102209/2.20462262)) * 2  # Total electric motor weight
@@ -59,8 +60,9 @@ Nz = 2.458 * 1.5    # Ultimate load factor; 1.5 x limit load factor
 Wdg = MTOW  # Design gross weight
 q = (0.0010651 * (590.733 ** 2)) / 2   # Dynamic pressure at cruise
 Scsw = 0.2 * Sw
+W_strut = 394 #approximate wing strut weight
 
-Wwing = 0.0051 * ((Wdg * Nz)**0.557) * (Sw**0.649) * (ARw**0.5) * (tcw**-0.4) * ((1+lambdaw)**0.1) * ((np.cos(Gammaw))**-1) * (Scsw**0.1) * 0.82
+Wwing = 0.0051 * ((Wdg * Nz)**0.557) * (Sw**0.649) * (ARw**0.5) * (tcw**-0.4) * ((1+lambdaw)**0.1) * ((np.cos(Gammaw))**-1) * (Scsw**0.1) * 0.82 + W_strut
 
 Sht = 94.19  # Area of horizantle tail
 Gammaht = 16 * (np.pi / 180)  # Sweep angle of horizontal tail
@@ -69,7 +71,7 @@ tch = 0.14      # Thickness to chord ratio of horizontal tail root
 ARh = 4.4      # Aspect ratio of horizontal tail
 Fw = 4.5
 bh = 20.36
-Lt = 41.71
+Lt = 40.5
 Ky = 0.3 * Lt
 Se = 0.1 * Sht
 Wht = 0.0379 * (1.143) * ((1+(Fw/bh))**-0.25) * (Wdg**0.639) * (Nz**0.1) * (Sht**0.75) * (Lt**-1) * (Ky**0.704) * ((np.cos(Gammaht))**-1) * (ARh**0.166) * ((1+(Se/Sht))**0.1) * 0.83
@@ -81,7 +83,7 @@ tcv = 0.14  # Thickness to chord ratio of vertical tail root
 ARvt = 1.127 # Aspect ratio of vertical tail
 Wvt = 0.0026 * (2**0.225) * (Wdg**0.556) * (Nz**0.536) * (Lt**-0.5) * (Svt**0.5) * (Lt**0.875) * ((np.cos(Gammavt))**-1) * (ARvt**0.35) * (tcv**-0.5) * 0.83
 
-Lt = 40 + 1.5  # Tail length; wing quarter-MAC to tail quarter-MAC, ft
+Lt = 40.5  # Tail length; wing quarter-MAC to tail quarter-MAC, ft
 L = 79   # Fuselage structural length, ft
 D = 0.5    # Fuselage structural depth, ft
 Sf = 1775.85   # Fuselage wetted area, ft^2
@@ -94,7 +96,7 @@ Kws = 0.75 * ((1+2*lambdaw)/(1+lambdaw))*(bw*np.tan(Gammaw/L))
 Wfusel = 0.3280 * (Kd) * (Klg) * ((Wdg * Nz)**0.5) * (L**0.25) * (Sf**0.302) * ((1+Kws)**0.04) * ((L/D)**0.1) * 0.9
 
 Nl = 3.8 * 1.5  # ultimate landing load factor
-Wl = MTOW - (0.9 * Wfuel)   # Landing design gross weight
+Wl = MTOW - (0.11 * Wfuel)   # Landing design gross weight
 Lm = 60  # Length of main landing gear, in
 Ln = 54  # Lenght of nose landing gear, in
 Nmw = 8
@@ -158,9 +160,9 @@ W_furnishings=0.0577*Nc**.1*Wc**.393*Sf**.75
 Np=53 # number of personnel onboard (crew and passengers)
 W_airconditioning=62.36*Np**.25*(Vpr/1000)**.604*Wuav**.1
 
-W_antiice=.0002**Wdg
+W_antiice=.002*Wdg
 
-W_handlinggear=3.0*10**-4*Wdg
+W_handlinggear=(3.0*10**-4)*Wdg
 
 
 # Xcg values in feet measured from leading edge of wing(Calculated if leading edge of wing moved forward by 2.1ft)
@@ -174,7 +176,7 @@ engineXcg = 0.0
 horizontalXcg = 48.17
 verticalXcg = 41.854
 noselandingXcg = -20.858
-mainlandingXcg = 4.444
+mainlandingXcg = 12
 fuselageXcg = 6.007
 nacelleXcg = 4.708    # Nacelle group cg sits almost level with the wing leading edge
 engcontXcg = 10.021
@@ -202,3 +204,6 @@ XCG = sum(np.array([*components.values()])*np.array([*componentsXcg.values()])) 
 
 print('MTOW: {} lbs'.format(MTOW))
 print('Center of gravity from wing LE: {} ft'.format(XCG))
+#print(components)
+#print(componentsXcg)
+

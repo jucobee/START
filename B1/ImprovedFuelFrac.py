@@ -63,7 +63,7 @@ def ImprovedFuelFrac(MTOW):
 
     climb_Wfraction = getClimbWfrac(101)[-1]          
     W_climb = climb_Wfraction * W_takeoff               # weight at the end of climb/start of cruise in lbs
-
+    '''
     # Plot Climb
     for seg in [2,11,21,101]:
         climb_range = np.linspace(0,25000,seg)
@@ -74,7 +74,7 @@ def ImprovedFuelFrac(MTOW):
     plt.xlabel('Climb Altitude (ft)')
     plt.ylabel('Weight Fraction')
     plt.show()
-
+    '''
 
     ##### Cruise (multi-segment approach) #####
     # cruise range is not 1000nmi, we need to change this value
@@ -130,7 +130,7 @@ def ImprovedFuelFrac(MTOW):
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
         
         return T[:-1], cruise_fuelburn[:-1]
-
+    '''
     # Plot Cruise
     for seg in [2,11,21,101]:
         cruise_range = np.linspace(0,R / 6076.11549,seg)
@@ -167,7 +167,7 @@ def ImprovedFuelFrac(MTOW):
     plt.xlabel('Cruise Range km')
     plt.ylabel('Thrust lbs')
     plt.show()
-
+    '''
     cruise_Wfraction = getCruiseWfrac(101)[-1]
     W_cruise = cruise_Wfraction * W_climb  #End of cruise weight
 
@@ -185,7 +185,7 @@ def ImprovedFuelFrac(MTOW):
     # use previous methods based on statistics (Raymer 6.23)
     W_landing = W_descent * 0.997
 
-
+    '''
     print('Fuel Fractions:')
     print('Taxi: {}'.format(taxi_Wfraction))
     print('Takeoff: {}'.format(takeoff_Wfraction))
@@ -195,12 +195,14 @@ def ImprovedFuelFrac(MTOW):
     print('Descent: {}'.format(0.995))
     print('Landing: {}'.format(0.997))
     print()
-
+    '''
     total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
     W_final = W_landing
     W_fuel = W_initial - W_final
+    '''
     print('Final Fuel Fraction: {}'.format(total_Wfraction))
     print('Final Weight:', W_final)
-    print('Fuel Weight:', W_fuel)
+    print('Fuel Weight:', W_fuel
+    '''
 
     return W_fuel
