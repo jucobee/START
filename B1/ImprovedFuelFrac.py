@@ -1,21 +1,15 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-pilots = 2              # Number of pilots
-attend = 1              # Number of attendants
-crew = pilots + attend  # Total crew
-passengers = 50         # Number of passengers
-W_crew = 190           # Weight of each crew member in lbs
-W_passengers = 200     # Weight of each passenger in lbs
-W_crew_baggage = 30    # Weight of baggage for each crew member in lbs
-W_pass_baggage = 40    # Weight of baggage for each passenger in lbs
-
-# Total payload weight; Total crew weight
-W_payload = (passengers * (W_passengers + W_pass_baggage)) 
-W_crew = crew * (W_crew + W_crew_baggage) 
+#*** stealing these values from drag polar estimate, may need to change
+c_f = 0.0026                    # skin friction coefficient, Raymer 12.3
+C_D0 = c_f * 5                  # 
+AR = 16.22                   # aspect ratio, from openVSP model
+e_v = 0.80                      # span efficiency factor
+K = 1 / (np.pi * AR * e_v)   
 
 
-### Fuel Fractions ###
+############ Fuel Fractions ################
 # Naming convention: W_{flight segment} = Weight at the *END* of 'flight segment'
 
 W_initial = 55030               # initial weight at start of taxi
@@ -25,45 +19,73 @@ max_takeoff_power = 6000        # Carlos told me this value
 eta_p = 0.8                     # Propeller Efficiency of 0.8
 g = 32.17                       # Force of gravity in ft/s^2
 
-## Taxi ##
+##### Taxi #####
 idle_time = 15 * 60                     # 15 minutes converted to seconds?
 idle_power = max_takeoff_power * 0.05   # 5% of max takeoff power
 taxi_Wfraction = 1 - idle_time * (PSFC / eta_p) * (idle_power / W_initial)
 W_taxi = taxi_Wfraction * W_initial
 
-## Takeoff ##
-# Use above equation with 1 min. at maximum takeoff thrust (or power).
-# Or use the takeoff analysis shown in Chapter 17 of Raymer and break this phase into several constant-speed segments.
+##### Takeoff #####
 takeoff_time = 60                     # 1 minute converted to seconds?
 takeoff_Wfraction = 1 - idle_time * (PSFC / eta_p) * (max_takeoff_power / W_taxi)
 W_takeoff = takeoff_Wfraction * W_taxi
 
-## Climb ##
+##### Climb #####
 RoC = 1800/60                   # rate of climb  1800 ft/min converted to ft/s
+S_ref = 826.134                 # reference area (wing area) in ft^2
+rho = 10.66e-4                  #* density should be changed
+H = 25000                       # final altitude of 25,000 ft
 
-W_climb = 50000                 # weight at the end of climb/start of cruise in lbs
+def getClimbWfrac(num_segments):
+    seg_h = H / num_segments                # range of each segment
+    W = np.empty(num_segments + 1)              # Weight array  
+    W[0] = W_takeoff                        # Weight at start of climb (AKA weight at end of takeoff)
+    seg_Wfraction = np.empty(num_segments)      # Weight fraction of each segment
+    climb_Wfraction = np.empty(num_segments + 1) # Total weight fraction
+    climb_Wfraction[0] = 1.0                   # Initialize at 1.0
+
+    for i in range(num_segments):
+        # Breguet equation for each segment
+        V_inf = np.sqrt(2 * W[i] / (rho * S_ref) * np.sqrt(K / (3 * C_D0)))
+        C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
+        C_D = C_D0 + K * C_L**2
+        D = (rho * V_inf**2 / 2) * S_ref * C_D
+        delta_he = seg_h + V_inf**2 / g
+        seg_Wfraction[i] = np.exp(-(delta_he * PSFC) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
+        W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
+
+        # Total climb weight fraction is multiplied by current segment's weight fraction
+        climb_Wfraction[i+1] = climb_Wfraction[i] * seg_Wfraction[i]
+        #print(cruise_Wfraction[i+1])
+    
+    return climb_Wfraction[:-1]
+
+climb_Wfraction = getClimbWfrac(101)[-1]          
+W_climb = climb_Wfraction * W_takeoff               # weight at the end of climb/start of cruise in lbs
+
+# Plot Climb
+for seg in [2,11,21,101]:
+    climb_range = np.linspace(0,25000,seg)
+    plt.plot(climb_range, getClimbWfrac(seg), label='{} segments'.format(seg-1), marker='.')
+
+plt.legend(loc='best')
+plt.title('Climb Fuel Weight Fraction')
+plt.xlabel('Climb Altitude (ft)')
+plt.ylabel('Weight Fraction')
+plt.show()
 
 
-## Cruise (multi-segment approach) ##
+##### Cruise (multi-segment approach) #####
 # cruise range is not 1000nmi, we need to change this value
 R = 1000*6076.11549             # Cruise range of 1000 nmi converted to ft
 h = 25000                       # Cruise altitude 25000 ft
 LoD = 17                        # Lift to drag ratio depending on aircraft design
 E = 45*60                       # Assume endurance of 45 min converted to seconds
 
-### need to change this to density at 25,000 ft
+#*** need to change this to density at 25,000 ft
 rho = 10.66e-4                  # air density at cruise altitude of 28,000 ft
 V_inf = 275*1.6878098571        # cruise airspeed 275 kts converted to ft/s
-S_ref = 826.134                 # reference area (wing area) in ft^2
 
-#### stealing these values from drag polar estimate, may need to change
-c_f = 0.0026                    # skin friction coefficient, Raymer 12.3
-C_D0 = c_f * 5                  # 
-AR = 18.44588                   # aspect ratio, from openVSP model
-e_v = 0.80                      # span efficiency factor
-K = 1 / (np.pi * AR * e_v)   
-
-## Cruise ##
 def getCruiseWfrac(num_segments):
     seg_range = R / num_segments                # range of each segment
     W = np.empty(num_segments + 1)              # Weight array  
@@ -108,6 +130,7 @@ def getCruiseFuelBurn(num_segments):
     
     return T[:-1], cruise_fuelburn[:-1]
 
+# Plot Cruise
 for seg in [2,11,21,101]:
     cruise_range = np.linspace(0,R / 6076.11549,seg)
     plt.plot(cruise_range, getCruiseWfrac(seg), label='{} segments'.format(seg-1), marker='.')
@@ -118,6 +141,7 @@ plt.xlabel('Cruise Range (nmi)')
 plt.ylabel('Weight Fraction')
 plt.show()
 
+# Plot Fuel Burn Consumption
 for seg in [2,11,21,101]:
     cruise_range = np.linspace(0,1000,seg)
     T, fuelburn = getCruiseFuelBurn(seg)
@@ -131,6 +155,7 @@ plt.show()
 
 print(getCruiseFuelBurn(101)[1][-1]/1000/0.539957/6.99)
 
+# Plot Thrust
 for seg in [2,11,21,101]:
     cruise_range = np.linspace(0,1000,seg)
     T, fuelburn = getCruiseFuelBurn(seg)
@@ -142,17 +167,20 @@ plt.xlabel('Cruise Range km')
 plt.ylabel('Thrust lbs')
 plt.show()
 
-## Loiter ##
-W_cruise = getCruiseWfrac(101)[-1]*W_climb  #End of cruise weight
+cruise_Wfraction = getCruiseWfrac(101)[-1]
+W_cruise = cruise_Wfraction * W_climb  #End of cruise weight
+
+##### Loiter #####
 V_loiter = 150*1.6878098571        # loiter speed kts converted to ft/s given by Raymer
 E = 20*60                       # Assume endurance of 20 min converted to seconds (Raymer)
-W_loiter = W_cruise * np.exp(-E*V_loiter*PSFC/(eta_p*LoD))
+loiter_Wfraction = np.exp(-E*V_loiter*PSFC/(eta_p*LoD))
+W_loiter = W_cruise * loiter_Wfraction
 
-## Descent ##
+##### Descent #####
 # use previous methods based on statistics (Raymer 6.22)
 W_descent = W_loiter * 0.995
 
-## Landing ##
+##### Landing #####
 # use previous methods based on statistics (Raymer 6.23)
 W_landing = W_descent * 0.997
 
@@ -160,8 +188,16 @@ W_landing = W_descent * 0.997
 print('Fuel Fractions:')
 print('Taxi: {}'.format(taxi_Wfraction))
 print('Takeoff: {}'.format(takeoff_Wfraction))
-# print('Climb: {}'.format(climb_Wfraction))
-# print('Cruise: {}'.format(taxi_Wfraction))
-# print('Loiter: {}'.format(loiter_Wfraction))
-# print('Descent: {}'.format(descent_Wfraction))
-# print('Landing: {}'.format(landing_Wfraction))
+print('Climb: {}'.format(climb_Wfraction))
+print('Cruise: {}'.format(cruise_Wfraction))
+print('Loiter: {}'.format(loiter_Wfraction))
+print('Descent: {}'.format(0.995))
+print('Landing: {}'.format(0.997))
+print()
+
+total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
+W_final = W_landing
+W_fuel = W_initial - W_final
+print('Final Fuel Fraction: {}'.format(total_Wfraction))
+print('Final Weight:', W_final)
+print('Fuel Weight:', W_fuel)
