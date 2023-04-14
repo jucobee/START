@@ -62,6 +62,7 @@ AR = 18.44588                   # aspect ratio, from openVSP model
 e_v = 0.80                      # span efficiency factor
 K = 1 / (np.pi * AR * e_v)   
 
+## Cruise ##
 def getCruiseWfrac(num_segments):
     seg_range = R / num_segments                # range of each segment
     W = np.empty(num_segments + 1)              # Weight array  
@@ -83,6 +84,28 @@ def getCruiseWfrac(num_segments):
     
     return cruise_Wfraction[:-1]
 
+def getCruiseFuelBurn(num_segments):
+    seg_range = R / num_segments                # range of each segment
+    W = np.empty(num_segments + 1)              # Weight array  
+    T = np.empty(num_segments + 1)              # Thrust array
+    W[0] = W_climb                        # Weight at start of cruise (AKA weight at end of climb)
+    seg_Wfraction = np.empty(num_segments)      # Weight fraction of each segment
+    cruise_fuelburn = np.empty(num_segments+1)  # Total fuel consumed
+    seg_fuelburn = np.empty(num_segments)       # Fuel consumed of each segment
+
+    for i in range(num_segments):
+        # Breguet equation for each segment
+        C_L = 2*W[i] / (rho * V_inf**2 * S_ref) # Lift varies based on weight loss from fuel burn
+        T[i] = (W[i]/C_L) * (C_D0+K*C_L**2) # Induced drag is reduced so thrust is reduced
+
+        seg_fuelburn[i] = -PSFC*T[i]*seg_range/eta_p
+        cruise_fuelburn[i+1] = cruise_fuelburn[i] - seg_fuelburn[i]
+
+        seg_Wfraction[i] = np.exp(-(seg_range * PSFC) / (eta_p * LoD))
+        W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
+    
+    return T[:-1], cruise_fuelburn[:-1]
+
 for seg in [2,11,21,101]:
     cruise_range = np.linspace(0,R / 6076.11549,seg)
     plt.plot(cruise_range, getCruiseWfrac(seg), label='{} segments'.format(seg-1), marker='.')
@@ -91,6 +114,30 @@ plt.legend(loc='best')
 plt.title('Cruise Fuel Weight Fraction')
 plt.xlabel('Cruise Range (nmi)')
 plt.ylabel('Weight Fraction')
+plt.show()
+
+for seg in [2,11,21,101]:
+    cruise_range = np.linspace(0,1000,seg)
+    T, fuelburn = getCruiseFuelBurn(seg)
+    plt.plot(cruise_range, fuelburn, label='{} segments'.format(seg-1), marker='.')
+
+plt.legend(loc='best')
+plt.title('Fuel Burn Consumption')
+plt.xlabel('Cruise Range km')
+plt.ylabel('Fuel Burn Consumption lbs')
+plt.show()
+
+print(getCruiseFuelBurn(101)[1][-1]/1000/0.539957/6.99)
+
+for seg in [2,11,21,101]:
+    cruise_range = np.linspace(0,1000,seg)
+    T, fuelburn = getCruiseFuelBurn(seg)
+    plt.plot(cruise_range, T, label='{} segments'.format(seg-1), marker='.')
+
+plt.legend(loc='best')
+plt.title('Thrust')
+plt.xlabel('Cruise Range km')
+plt.ylabel('Thrust lbs')
 plt.show()
 
 ## Loiter ##
