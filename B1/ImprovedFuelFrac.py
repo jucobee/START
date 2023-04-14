@@ -43,6 +43,7 @@ RoC = 1800/60                   # rate of climb  1800 ft/min converted to ft/s
 
 W_climb = 50000                 # weight at the end of climb/start of cruise in lbs
 
+
 ## Cruise (multi-segment approach) ##
 # cruise range is not 1000nmi, we need to change this value
 R = 1000*6076.11549             # Cruise range of 1000 nmi converted to ft
@@ -142,12 +143,18 @@ plt.ylabel('Thrust lbs')
 plt.show()
 
 ## Loiter ##
+W_cruise = getCruiseWfrac(101)[-1]*W_climb  #End of cruise weight
+V_loiter = 150*1.6878098571        # loiter speed kts converted to ft/s given by Raymer
+E = 20*60                       # Assume endurance of 20 min converted to seconds (Raymer)
+W_loiter = W_cruise * np.exp(-E*V_loiter*PSFC/(eta_p*LoD))
 
 ## Descent ##
-# use previous methods based on statistics
+# use previous methods based on statistics (Raymer 6.22)
+W_descent = W_loiter * 0.995
 
 ## Landing ##
-# use previous methods based on statistics
+# use previous methods based on statistics (Raymer 6.23)
+W_landing = W_descent * 0.997
 
 
 print('Fuel Fractions:')
