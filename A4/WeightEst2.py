@@ -71,8 +71,7 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
 
-    print(Wi_W0)
-    Wi_W0 = np.array([1, 0.999, 0.95, 0.983, 0.918, 0.890])
+    
     print(Wi_W0)
     Wf_W0 = 1-Wi_W0[-1]
     Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
@@ -107,7 +106,7 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
 # format for hybrid parameter:
 # PHIvec = [Taxi&Takeoff, Climb, Cruise, Descent, Loiter, Landing]
 PHIvec = np.array([0.2, # Taxi&Takeoff
-          0.2, # Climb
+          0.36, # Climb
           0, # Cruise
           0, # Descent
           0, # Loiter

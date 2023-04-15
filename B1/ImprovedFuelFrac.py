@@ -206,20 +206,22 @@ def ImprovedFuelFrac(MTOW):
     '''
     total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
     Wi_W0 = np.array([taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
-    PHIvec = np.array([0.1, # Taxi&Takeoff
+    #print(Wi_W0)
+    PHIvec = np.array([0, 0.1, # Taxi&Takeoff
           0.36, # Climb
           0, # Cruise
           0, # Descent
-          0, # Loiter
-          0],float) # Landing
+          0 # Loiter
+          ],float) # Landing
     e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
     e_b= 500*(3600/1.3558179483314/0.06852177) # fpf/slug
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
-    Wf_W0 = 1-Wi_W0[-1]
-    print(Wi_W0[:-1])
+    #print(Wi_W0[:-1])
+    #print(Wi_W0[1:])
     Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
-    print(Wb_W0)
+    #print(Wb_W0)
+    Wb_W0 = 0.09
     W_bat = Wb_W0 * MTOW
     W_final = W_landing
     W_fuel = W_initial - W_final

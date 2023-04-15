@@ -210,6 +210,6 @@ while err > tol:
     MTOW = MTOWn
 
 print(MTOW)
-#print(XCG)
-#print(components)
-#print(componentsXcg) 
+print(XCG)
+print(components)
+print(componentsXcg) 
