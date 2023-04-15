@@ -205,13 +205,13 @@ def ImprovedFuelFrac(MTOW):
     print()
     '''
     total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
-    Wi_W0 = np.array([1, taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
+    Wi_W0 = np.array([taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
     PHIvec = np.array([0.1, # Taxi&Takeoff
           0.36, # Climb
           0, # Cruise
           0, # Descent
           0, # Loiter
-          0, 0],float) # Landing
+          0],float) # Landing
     e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
     e_b= 500*(3600/1.3558179483314/0.06852177) # fpf/slug
     for i in range(len(Wi_W0)-1):
