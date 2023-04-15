@@ -28,7 +28,7 @@ def ImprovedFuelFrac(MTOW):
 
     ##### Takeoff #####
     takeoff_time = 60                     # 1 minute converted to seconds?
-    takeoff_Wfraction = 1 - idle_time * (PSFC / eta_p) * (max_takeoff_power / W_taxi)
+    takeoff_Wfraction = 1 - takeoff_time * (PSFC / eta_p) * (max_takeoff_power / W_taxi)
     W_takeoff = takeoff_Wfraction * W_taxi
 
     ##### Climb #####
@@ -138,7 +138,7 @@ def ImprovedFuelFrac(MTOW):
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
         
         return T[:-1], cruise_fuelburn[:-1]
-    '''
+
     # Plot Cruise
     for seg in [2,11,21,101]:
         cruise_range = np.linspace(0,R / 6076.11549,seg)
@@ -162,8 +162,6 @@ def ImprovedFuelFrac(MTOW):
     plt.ylabel('Fuel Burn Consumption lbs')
     plt.show()
 
-    print(getCruiseFuelBurn(101)[1][-1]/1000/0.539957/6.99)
-
     # Plot Thrust
     for seg in [2,11,21,101]:
         cruise_range = np.linspace(0,1000,seg)
@@ -175,7 +173,7 @@ def ImprovedFuelFrac(MTOW):
     plt.xlabel('Cruise Range km')
     plt.ylabel('Thrust lbs')
     plt.show()
-    '''
+
     cruise_Wfraction = getCruiseWfrac(101)[-1]
     W_cruise = cruise_Wfraction * W_climb  #End of cruise weight
 
@@ -225,14 +223,16 @@ def ImprovedFuelFrac(MTOW):
     W_bat = Wb_W0 * MTOW
     W_final = W_landing
     W_fuel = W_initial - W_final
-    '''
+    
     print('Final Fuel Fraction: {}'.format(total_Wfraction))
     print('Final Weight:', W_final)
-    print('Fuel Weight:', W_fuel
-    '''
+    print('Fuel Weight:', W_fuel)
+    
     
     return W_fuel, W_bat
 
 #a,b=ImprovedFuelFrac(70000)
 #print(a)
 #print(b)
+
+ImprovedFuelFrac(53438)   # Run at least twice
