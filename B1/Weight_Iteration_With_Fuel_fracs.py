@@ -19,7 +19,7 @@ nose landing gear
 main landing gear
 
 '''
-MTOW = 57000
+MTOW = 70000
 tol = 1
 err = 50
 while err > tol:

@@ -100,8 +100,8 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
 
 # format for hybrid parameter:
 # PHIvec = [Taxi&Takeoff, Climb, Cruise, Descent, Loiter, Landing]
-PHIvec = np.array([0, # Taxi&Takeoff
-          0, # Climb
+PHIvec = np.array([0.2, # Taxi&Takeoff
+          0.2, # Climb
           0, # Cruise
           0, # Descent
           0, # Loiter

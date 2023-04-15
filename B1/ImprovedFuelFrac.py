@@ -44,15 +44,23 @@ def ImprovedFuelFrac(MTOW):
         seg_Wfraction = np.empty(num_segments)      # Weight fraction of each segment
         climb_Wfraction = np.empty(num_segments + 1) # Total weight fraction
         climb_Wfraction[0] = 1.0                   # Initialize at 1.0
-
+        eta_GB = 0.96 # de Vries
+        eta_GT = 0.40 # de Vries, 2035
+        eta_PM = 0.99 # de Vries
+        eta_EM1 = 0.97  # de Vries
+        e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
+        hybrid_ratio = 0.36
+        ERatio = 0.2                    # 1 is fully battery
         for i in range(num_segments):
+            # Hybrid PSFC
+            PSFC_hybrid = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(hybrid_ratio/(1-hybrid_ratio))))
             # Breguet equation for each segment
             V_inf = np.sqrt(2 * W[i] / (rho * S_ref) * np.sqrt(K / (3 * C_D0)))
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
             C_D = C_D0 + K * C_L**2
             D = (rho * V_inf**2 / 2) * S_ref * C_D
             delta_he = seg_h + V_inf**2 / g
-            seg_Wfraction[i] = np.exp(-(delta_he * PSFC) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
+            seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
             # Total climb weight fraction is multiplied by current segment's weight fraction
@@ -204,5 +212,7 @@ def ImprovedFuelFrac(MTOW):
     print('Final Weight:', W_final)
     print('Fuel Weight:', W_fuel
     '''
-
+    
     return W_fuel
+
+print(ImprovedFuelFrac(57000))
