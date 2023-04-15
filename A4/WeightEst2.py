@@ -58,7 +58,7 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
 
     PSFCvec = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(PHIvec/(1-PHIvec))))
     # PSFCvec_HP = (3600 * 550) * PSFCvec
-    print(PSFCvec)
+
     # Mission Weight fractions
     Wi_Wi1 = np.array([1 - 0.0004*PSFCvec[0]*(3600 * 550), # Taxi&Takeoff
         1 - h*PSFCvec[1]*0.15*550/ROC, # Climb
@@ -67,11 +67,15 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
         np.exp((-E*V*PSFCvec[4]) / (0.85*L_D))],float) # Loiter
     
     Wi_W0 = np.append(1,Wi_Wi1.copy())
+    
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
+
+    print(Wi_W0)
     Wf_W0 = 1-Wi_W0[-1]
     Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
 
+    #print(Wi_W0[:-1])
     # Calculate Weight
 
 
@@ -120,6 +124,8 @@ W0,We_W0,Wf_W0,Wb_W0 = WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess)
 We = We_W0 * W0
 # # W_elec = W0 - w_crew - w_payload - We
 W_elec = W0*Wb_W0
+print(Wb_W0)
+'''
 print("Fuel Fraction: {:3f}".format(Wf_W0))
 print("Fuel Weight: {:3f} lbm".format(Wf_W0*W0))
 print("Battery Fraction: {:3f}".format(Wb_W0))
@@ -130,7 +136,7 @@ print("Battery & Motor Weight: {:.3f} lbm".format(W_elec))
 print("Battery & Motor Weight Fraction: {:.3f}".format(W_elec/W0))
 print("Weight of Crew and Payload {:.3f} lbm".format(W_crew+W_payload))
 print(W_payload)
-
+'''
 # From 1st estimate: 821.836ft2, 5113.424bhp, 4398.445 ft2 wet
 
 

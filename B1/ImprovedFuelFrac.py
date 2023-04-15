@@ -49,8 +49,8 @@ def ImprovedFuelFrac(MTOW):
         eta_PM = 0.99 # de Vries
         eta_EM1 = 0.97  # de Vries
         e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
+        e_b= 500*(3600/1.3558179483314/0.06852177) # fpf/slug
         hybrid_ratio = 0.36
-        ERatio = 0.2                    # 1 is fully battery
         for i in range(num_segments):
             # Hybrid PSFC
             PSFC_hybrid = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(hybrid_ratio/(1-hybrid_ratio))))
@@ -86,13 +86,13 @@ def ImprovedFuelFrac(MTOW):
 
     ##### Cruise (multi-segment approach) #####
     # cruise range is not 1000nmi, we need to change this value
-    R = 700*6076.11549             # Cruise range of 1000 nmi converted to ft
+    R = 800*6076.11549             # Cruise range of 1000 nmi converted to ft
     h = 25000                       # Cruise altitude 25000 ft
     LoD = 17                        # Lift to drag ratio depending on aircraft design
     E = 45*60                       # Assume endurance of 45 min converted to seconds
 
     #*** need to change this to density at 25,000 ft
-    rho = 10.66e-4                  # air density at cruise altitude of 28,000 ft
+    rho = 10.66e-4                  # air density at cruise altitude of 25,000 ft
     V_inf = 275*1.6878098571        # cruise airspeed 275 kts converted to ft/s
 
     def getCruiseWfrac(num_segments):
@@ -205,6 +205,22 @@ def ImprovedFuelFrac(MTOW):
     print()
     '''
     total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
+    Wi_W0 = np.array([1, taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
+    PHIvec = np.array([0.1, # Taxi&Takeoff
+          0.36, # Climb
+          0, # Cruise
+          0, # Descent
+          0, # Loiter
+          0, 0],float) # Landing
+    e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
+    e_b= 500*(3600/1.3558179483314/0.06852177) # fpf/slug
+    for i in range(len(Wi_W0)-1):
+        Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
+    Wf_W0 = 1-Wi_W0[-1]
+    print(Wi_W0[:-1])
+    Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
+    print(Wb_W0)
+    W_bat = Wb_W0 * MTOW
     W_final = W_landing
     W_fuel = W_initial - W_final
     '''
@@ -213,6 +229,8 @@ def ImprovedFuelFrac(MTOW):
     print('Fuel Weight:', W_fuel
     '''
     
-    return W_fuel
+    return W_fuel, W_bat
 
-print(ImprovedFuelFrac(57000))
+#a,b=ImprovedFuelFrac(70000)
+#print(a)
+#print(b)

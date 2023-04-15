@@ -46,9 +46,9 @@ while err > tol:
     Wpass = passengers * wt_passengers  # Total weight of passengers
     Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-    Wfuel = ImprovedFuelFrac.ImprovedFuelFrac(MTOW)
+    Wfuel, Wbattery = ImprovedFuelFrac.ImprovedFuelFrac(MTOW)
 
-    Wbattery = MTOW * 0.09  # Battery weight
+    #Wbattery = MTOW * 0.11  # Battery weight
     gas_turb = (((5950 / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
     EM = (5950 / (5.22*1.34102209/2.20462262)) * 2  # Total electric motor weight
     Wengine = 2.575 * (((gas_turb + EM)/2)**0.922) * 2 # TOTAL ENGINE WEIGHT
@@ -210,6 +210,6 @@ while err > tol:
     MTOW = MTOWn
 
 print(MTOW)
-print(XCG)
-print(components)
-print(componentsXcg) 
+#print(XCG)
+#print(components)
+#print(componentsXcg) 
