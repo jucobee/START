@@ -78,7 +78,7 @@ def ImprovedFuelFrac(MTOW):
 
     ##### Cruise (multi-segment approach) #####
     # cruise range is not 1000nmi, we need to change this value
-    R = 1000*6076.11549             # Cruise range of 1000 nmi converted to ft
+    R = 700*6076.11549             # Cruise range of 1000 nmi converted to ft
     h = 25000                       # Cruise altitude 25000 ft
     LoD = 17                        # Lift to drag ratio depending on aircraft design
     E = 45*60                       # Assume endurance of 45 min converted to seconds

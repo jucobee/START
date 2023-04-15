@@ -19,8 +19,8 @@ nose landing gear
 main landing gear
 
 '''
-MTOW = 100000
-tol = 2
+MTOW = 57000
+tol = 1
 err = 50
 while err > tol:
     # Number of pilots
@@ -101,7 +101,7 @@ while err > tol:
     Wfusel = 0.3280 * (Kd) * (Klg) * ((Wdg * Nz)**0.5) * (L**0.25) * (Sf**0.302) * ((1+Kws)**0.04) * ((L/D)**0.1) * 0.9
 
     Nl = 3.8 * 1.5  # ultimate landing load factor
-    Wl = MTOW - (0.11 * Wfuel)   # Landing design gross weight
+    Wl = MTOW - (Wfuel)   # Landing design gross weight
     Lm = 60  # Length of main landing gear, in
     Ln = 54  # Lenght of nose landing gear, in
     Nmw = 8
@@ -211,3 +211,5 @@ while err > tol:
 
 print(MTOW)
 print(XCG)
+print(components)
+print(componentsXcg) 
