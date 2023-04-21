@@ -11,13 +11,6 @@ class Component:
         return self.C_f * self.FF * self.Q * self.S_wet
     
 
-
-
-M =    # Mach Number
-rho =  # Density
-V =     # Velocity
-mu =    # Dynamic Viscosity
-
 def dragComponents(M, rho, V, mu):
     wing = Component()
     hTail = Component()
