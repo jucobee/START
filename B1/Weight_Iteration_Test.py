@@ -48,32 +48,7 @@ while err > tol:
 
     #*** stealing these values from drag polar estimate, may need to change
 
-
-
-
-
     Wfuel = ImprovedFuelFrac.ImprovedFuelFrac(MTOW)
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     #Wfuel = 0
     Wbattery = MTOW * 0.09  # Battery weight

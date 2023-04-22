@@ -1,6 +1,6 @@
 import numpy as np
 
-class Component:
+class DragComponent:
     def __init__(self, C_f=None, FF=None, Q=None, S_wet=None):
         self.C_f = C_f
         self.FF = FF
@@ -11,12 +11,12 @@ class Component:
         return self.C_f * self.FF * self.Q * self.S_wet
     
 
-def dragComponents(M, rho, V, mu):
-    wing = Component()
-    hTail = Component()
-    vTail = Component()
-    nacelle = Component()
-    fuselage = Component()
+def dragDragComponents(M, rho, V, mu):
+    wing = DragComponent()
+    hTail = DragComponent()
+    vTail = DragComponent()
+    nacelle = DragComponent()
+    fuselage = DragComponent()
 
     wing.Q = 1
     hTail.Q = 1.05
