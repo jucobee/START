@@ -1,6 +1,7 @@
 import numpy as np
 import math
-import ImprovedFuelFrac
+import ImprovedWeightFracs
+import os 
 
 '''
 Weight categories:
@@ -20,11 +21,17 @@ main landing gear
 
 
 class WeightComponent:
-    def __init__(self, W=0, xCG=0, yCG=0, zCG=0):
+    def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
         self.weight = W
         self.xCG = xCG
         self.yCG = yCG
         self.zCG = zCG
+        self.Ixx = Ixx
+        self.Iyy = Iyy
+        self.Izz = Izz
+        self.Ixz = Ixz
+        self.Ixy = Ixy
+        self.Iyz = Iyz
 
 MTOW = 70000
 pilots = 2 # Number of pilots
@@ -48,7 +55,7 @@ while err > tol:
     Wpassengers = passengers * wt_passengers  # Total weight of passengers
     Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-    Wfuel, Wbattery = ImprovedFuelFrac.ImprovedFuelFrac(MTOW)
+    Wfuel, Wbattery = ImprovedWeightFracs.ImprovedWeightFracs(MTOW)
 
     #Wbattery = MTOW * 0.11  # Battery weight
     gas_turb = (((5950 / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
@@ -264,13 +271,28 @@ while err > tol:
     MTOWn=0
     for comp in weightComponents:
         MTOWn += comp.weight
-    print(MTOWn)
-    # MTOWn = sum(components.values())
-    # xCG = sum(np.array([*components.values()])*np.array([*componentsxCG.values()])) / sum(components.values())
+
+    xCG=0
+    for comp in weightComponents:
+        xCG += comp.weight*comp.xCG
+    xCG = xCG/MTOWn
+
     err = abs(MTOWn - MTOW)
     MTOW = MTOWn
 
 print(MTOW)
 print(xCG)
-print(components)
-print(componentsxCG) 
+
+
+
+# print('AAA')
+name='STARTG01'
+cd = os.getcwd() # Get current location of python script
+print(cd)
+with open('{}\\Planes\\{}\\{}.mass'.format(cd,name,name),'w') as file:
+    file.write('Lunit = 1 ft\nMunit = 0.03108486167 slug\nTunit = 1.0 s\n\n')
+    for comp in weightComponents:
+        file.write('{} {} {} {} {} {} {} {} {}\n'.format(comp.weight,comp.xCG,comp.yCG,comp.zCG,comp.Ixx,comp.Iyy,comp.Izz,comp.Ixz,comp.Ixy,comp.Iyz))
+
+    # file.writelines(ComponentHeader('MASS DEFINTION'))
+    # file.write(SectionHeader('MASS DEFINTION'))
