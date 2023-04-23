@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-def ImprovedFuelFrac(MTOW):
+def ImprovedWeightFracs(MTOW):
     #*** stealing these values from drag polar estimate, may need to change
     c_f = 0.0026                    # skin friction coefficient, Raymer 12.3
     C_D0 = c_f * 5                  # 
@@ -148,7 +148,7 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Cruise Fuel Weight Fraction')
     plt.xlabel('Cruise Range (nmi)')
     plt.ylabel('Weight Fraction')
-    plt.show()
+    # plt.show()
 
     # Plot Fuel Burn Consumption
     for seg in [2,11,21,101]:
@@ -160,7 +160,7 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Fuel Burn Consumption')
     plt.xlabel('Cruise Range km')
     plt.ylabel('Fuel Burn Consumption lbs')
-    plt.show()
+    # plt.show()
 
     # Plot Thrust
     for seg in [2,11,21,101]:
@@ -172,7 +172,7 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Thrust')
     plt.xlabel('Cruise Range km')
     plt.ylabel('Thrust lbs')
-    plt.show()
+    # plt.show()
 
     cruise_Wfraction = getCruiseWfrac(101)[-1]
     W_cruise = cruise_Wfraction * W_climb  #End of cruise weight
@@ -225,7 +225,7 @@ def ImprovedFuelFrac(MTOW):
     W_fuel = W_initial - W_final
     
     print('Final Fuel Fraction: {}'.format(total_Wfraction))
-    print('Final Weight:', W_final)
+    print('Landing Weight:', W_final)
     print('Fuel Weight:', W_fuel)
     
     
@@ -235,4 +235,4 @@ def ImprovedFuelFrac(MTOW):
 #print(a)
 #print(b)
 
-ImprovedFuelFrac(53438)   # Run at least twice
+# ImprovedFuelFrac(53438)   # Run at least twice

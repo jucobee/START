@@ -24,17 +24,17 @@ def dragDragComponents(M, rho, V, mu):
     nacelle.Q = 1.3
     fuselage.Q = 1
 
-    wing.S_wet = 
-    hTail.S_wet = 
-    vTail.S_wet = 
-    nacelle.S_wet = 
-    fuselage.S_wet = 
-    # Reference Lengths for Cf
-    fuselage_L = 
-    nacelle_L = 
-    wing_L = 
-    h_tail_L = 
-    v_tail_L = 
+    wing.S_wet = 1555.482       #ft^2
+    hTail.S_wet = 186.192
+    vTail.S_wet = 286.139
+    nacelle.S_wet = 127.751
+    fuselage.S_wet = 1830.348
+    # Reference Lengths for Cf (Characteristic Length = Volume_body / Area_surface, for those with unclear length)
+    fuselage_L = 79     #ft
+    nacelle_L = 18.543
+    wing_L = 7.15871
+    h_tail_L = 4.59891
+    v_tail_L = 11.3088
 
     ReW = (rho * V * wing_L) / mu
     ReH = (rho * V * h_tail_L) / mu
@@ -43,22 +43,22 @@ def dragDragComponents(M, rho, V, mu):
     ReF = (rho * V * fuselage_L) / mu
 
     # Max thickness of wings and tails
-    tc_wing = 
-    tc_h_tail = 
-    tc_v_tail = 
+    tc_wing = 0.096093*9.852
+    tc_h_tail = 0.119119*5.096
+    tc_v_tail = 0.119119*14.87
 
     # Chordwise location of max thickness
-    xc_wing = 
-    xc_h_tail = 
-    xc_v_tail = 
+    xc_wing = 0.35749*9.852
+    xc_h_tail = 0.298547*14.87
+    xc_v_tail = 0.298547*14.87
 
     # Sweep angle of wings and tails IN RADIANS
-    gammaW = 
-    gammaH = 
-    gammaV = 
+    gammaW = 0.087266       #rad
+    gammaH = 0.279253
+    gammaV = 0.715243
 
     # Fuselage form factor
-    Amax =  # Maximum cross sectional area of fuselage
+    Amax =  63.62 # Maximum cross sectional area of fuselage
     f = fuselage_L / (np.sqrt((4/np.pi)*Amax)) # Fineness Ratio
     if f < 6:
         fuselage.FF = (0.9 + (5 / (f**1.5)) + (f/400))
