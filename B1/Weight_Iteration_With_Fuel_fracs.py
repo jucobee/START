@@ -20,11 +20,17 @@ main landing gear
 
 
 class WeightComponent:
-    def __init__(self, W=0, xCG=0, yCG=0, zCG=0):
+    def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
         self.weight = W
         self.xCG = xCG
         self.yCG = yCG
         self.zCG = zCG
+        self.Ixx = Ixx
+        self.Iyy = Iyy
+        self.Izz = Izz
+        self.Ixz = Ixz
+        self.Ixy = Ixy
+        self.Iyz = Iyz
 
 MTOW = 70000
 pilots = 2 # Number of pilots
@@ -266,11 +272,12 @@ while err > tol:
         MTOWn += comp.weight
     print(MTOWn)
     # MTOWn = sum(components.values())
-    # xCG = sum(np.array([*components.values()])*np.array([*componentsxCG.values()])) / sum(components.values())
+    xCG=0
+    for comp in weightComponents:
+        xCG += comp.weight*comp.xCg
+    xCG = xCG/MTOWn
     err = abs(MTOWn - MTOW)
     MTOW = MTOWn
 
 print(MTOW)
 print(xCG)
-print(components)
-print(componentsxCG) 
