@@ -274,7 +274,7 @@ while err > tol:
     # MTOWn = sum(components.values())
     xCG=0
     for comp in weightComponents:
-        xCG += comp.weight*comp.xCg
+        xCG += comp.weight*comp.xCG
     xCG = xCG/MTOWn
     err = abs(MTOWn - MTOW)
     MTOW = MTOWn
