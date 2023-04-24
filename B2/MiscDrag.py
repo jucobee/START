@@ -15,7 +15,7 @@ Legend for flight_stg:
 def miscDrag(M, flight_stg):
     Sref =  # Reference area
     u =     # Upsweep angle in radians of aft section of fuselage
-    Amax =  # Maximum cross sectional area of fuselage
+    Amax =  63.62 # Maximum cross sectional area of fuselage
     Abase =  # Total area of all places where the aft fuselage angle to the freestream exceeds 20 degrees. See Raymer pg. 288 for clarification
     if flight_stg == 1:
         D_gear = 0

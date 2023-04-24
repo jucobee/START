@@ -29,7 +29,7 @@ def dragDragComponents(M, rho, V, mu):
     vTail.S_wet = 286.139
     nacelle.S_wet = 127.751
     fuselage.S_wet = 1830.348
-    # Reference Lengths for Cf (Characteristic Length = Volume_body / Area_surface, for those with unclear length)
+    # Reference Lengths for Cf
     fuselage_L = 79     #ft
     nacelle_L = 18.543
     wing_L = 7.15871
