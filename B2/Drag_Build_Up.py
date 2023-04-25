@@ -78,7 +78,7 @@ def dragDragComponents(M, rho, V, mu):
 
     def Cfcalc(Re, wL, wT):
         Cfl = 1.328 / np.sqrt(Re)
-        Cft = 0.455 / ((np.log10 * Re)**2.58 * (1 + 0.144*M**2)**0.65)
+        Cft = 0.455 / (((np.log10(Re))**2.58) * ((1 + 0.144*(M**2))**0.65))
         Cf = (Cfl * wL) + (Cft * wT)
         return Cf
     
