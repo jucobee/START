@@ -1,0 +1,13 @@
+  
+       MSES         Version 3.12
+  
+ Calculated polar for: NACA64210 Opt                   
+  
+ 1 1 Reynolds number fixed          Mach number fixed         
+  
+ xtrf =   0.020 (top)        0.050 (bottom)  
+ Mach =   0.100     Re =     1.000 e 6     Ncrit =   9.000  9.000
+ pi_p =  1.0000     eta_p =    1.0000
+  
+   alpha    CL        CD       CM       CDw       CDv       CDp      Mach      Re      Top_Xtr  Bot_Xtr
+  ------ -------- --------- -------- --------- --------- --------- ------- ---------- -------- --------
