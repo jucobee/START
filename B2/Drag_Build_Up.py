@@ -77,7 +77,7 @@ def dragDragComponents(M, rho, V, mu):
     vTail.FF = (1 + (0.6 / xc_v_tail)*tc_v_tail + 100*(tc_v_tail**4)) * (1.34 * (M**0.18)*(np.cos(gammaV)**0.28))
     hTail.FF = (1 + (0.6 / xc_h_tail)*tc_h_tail + 100*(tc_h_tail**4)) * (1.34 * (M**0.18)*(np.cos(gammaH)**0.28))
 
-    print('formfactor',wing.FF,vTail.FF,hTail.FF)
+    # print('formfactor',wing.FF,vTail.FF,hTail.FF)
 
 
     def Cfcalc(Re, wL, wT):
