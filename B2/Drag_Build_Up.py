@@ -24,7 +24,7 @@ def dragDragComponents(M, rho, V, mu):
     nacelle.Q = 1.3
     fuselage.Q = 1
 
-    wing.S_wet = 1555.482       #ft^2
+    wing.S_wet = 1678.729       #ft^2
     hTail.S_wet = 186.192
     vTail.S_wet = 286.139
     nacelle.S_wet = 127.751
@@ -58,7 +58,7 @@ def dragDragComponents(M, rho, V, mu):
     gammaV = 0.715243
 
     # Fuselage form factor
-    Amax =  63.62 # Maximum cross sectional area of fuselage
+    Amax =  86.1771 # Maximum cross sectional area of fuselage
     f = fuselage_L / (np.sqrt((4/np.pi)*Amax)) # Fineness Ratio
     if f < 6:
         fuselage.FF = (0.9 + (5 / (f**1.5)) + (f/400))
