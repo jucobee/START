@@ -20,21 +20,21 @@ def miscDrag(M, flight_stg):
     if flight_stg == 1:
         D_gear = 0
         D_fusel = (0.139 + 0.419*((M - 0.161)**2))
-        D_bluff = 3.83 * (u**2.5) * Amax
+        D_bluff = 0
         D_props = 0
         CDmisc = (1 / Sref) * (D_gear + D_fusel + D_bluff + D_props)
         return CDmisc
     elif flight_stg == 2:
         D_gear = 0
         D_fusel = (0.139 + 0.419*((M - 0.161)**2))
-        D_bluff = 3.83 * (u**2.5) * Amax
+        D_bluff = 0
         D_props = 0
         CDmisc = (1 / Sref) * (D_gear + D_fusel + D_bluff + D_props)
         return CDmisc
     elif flight_stg == 3:
         D_gear = 0.2
         D_fusel = (0.139 + 0.419*((M - 0.161)**2))
-        D_bluff = 3.83 * (u**2.5) * Amax
+        D_bluff = 0
         D_props = 0
         CDmisc = (1 / Sref) * (D_gear + D_fusel + D_bluff + D_props)
         return CDmisc
