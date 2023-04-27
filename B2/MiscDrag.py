@@ -32,7 +32,7 @@ def miscDrag(M, flight_stg):
         CDmisc = (1 / Sref) * (D_gear + D_fusel + D_bluff + D_props)
 
     elif flight_stg == 3:
-        D_gear = 0.2
+        D_gear = 0.9    #Raymer Table 12.5
         D_fusel = (0.139 + 0.419*((M - 0.161)**2))
         D_bluff = 0
         D_props = 0
@@ -46,7 +46,7 @@ def miscDrag(M, flight_stg):
         CDmisc = (1 / Sref) * (D_gear + D_fusel + D_bluff + D_props)
 
     elif flight_stg == 5:
-        D_gear = 0.2
+        D_gear = 0.9
         D_fusel = (0.139 + 0.419*((M - 0.161)**2))
         D_bluff = 3.83 * (u**2.5) * Amax
         D_props = 0
