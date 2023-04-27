@@ -51,7 +51,7 @@ inboard_flap 1.0 0.75 0. 0. 0. 1.0 ! name , gain , Xhinge , XYZhvec , SgnDup
 #____PANEL 2_______
 #______________
 SECTION                                                     |  (keyword)
-   0.9980   11.4220    0.0000    9.3026   0.000   11    3   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+   0.9980   11.4220    0.0000    9.3026   0.000   17    3   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
 
 AFIL 0.0 1.0
 Airfoils/NACA 64-210.dat
@@ -71,7 +71,7 @@ outboard_flap 1.0 0.75 0. 0. 0. 1.0 ! name , gain , Xhinge , XYZhvec , SgnDup
 
 
 SECTION                                                     |  (keyword)
-   2.997   34.267    0.0000    6.512   0.000    13    -2   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+   3.9965   45.6890    0.0000    5.116   0.000    11    -2   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
 
 AFIL 0.0 1.0
 Airfoils/NACA 64-210.dat
@@ -138,7 +138,7 @@ elevator 1.0 0.75 0. 0. 0. 1.0 ! name , gain , Xhinge , XYZhvec , SgnDup
 
 #______________
 SECTION                                                     |  (keyword)
-  48.2470   10.2198   10.8040    3.4492   0.000   19    3   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+  48.2470   12   10.8040    3.4492   0.000   19    3   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
 
 AFIL 0.0 1.0
 Airfoils/NACA 0012.dat
