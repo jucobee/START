@@ -19,8 +19,8 @@ def dragDragComponents(M, rho, V, mu):
     fuselage = DragComponent()
 
     wing.Q = 1
-    hTail.Q = 1.05
-    vTail.Q = 1.05
+    hTail.Q = 1.04
+    vTail.Q = 1.04
     nacelle.Q = 1.3
     fuselage.Q = 1
 
