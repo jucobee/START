@@ -81,10 +81,10 @@
 
  mxx  mxy  mxz   |    0.000       0.000       0.000      |
       myy  myz = |                1131.      0.5308E-15  |  slug
-           mzz   |                            5925.      |
+           mzz   |                            5337.      |
 
- Ixx -Ixy -Ixz   |   0.4072E+07 -0.1179E-09 -0.2125E+06  |
-      Iyy -Iyz = |               0.1035E+07  0.5752E-13  |  slug-ft^2
+ Ixx -Ixy -Ixz   |   0.3152E+07 -0.4428E-10 -0.2125E+06  |
+      Iyy -Iyz = |               0.1138E+07  0.5752E-13  |  slug-ft^2
            Izz   |                           0.2124E+07  |
 
  Use MSET to apply these mass,inertias to run cases
@@ -548,9 +548,9 @@
   Building bound-vortex velocity matrix...
 
  iter d(alpha)   d(beta)    d(pb/2V)   d(qc/2V)   d(rb/2V)   inboard_slainboard_flaoutboard_sloutboard_flelevator   
-   1  0.466E+00 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.301E+01
-   2 -0.230E-03 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.591E-02
-   3  0.784E-06 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.103E-04
+   1  0.824E+00 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.203E+01
+   2  0.421E-03 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.612E-03
+   3  0.815E-07 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.645E-06
  ---------------------------------------------------------------
  Vortex Lattice Output -- Total Forces
 
@@ -566,25 +566,25 @@
 
  Run case:  -unnamed-                              
 
-  Alpha =   0.46582     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =   0.82442     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =  -0.00183     Cltot =  -0.00055     Cl'tot =  -0.00053
-  CYtot =  -0.01068     Cmtot =   0.00000
-  CZtot =  -0.56321     Cntot =   0.00353     Cn'tot =   0.00354
+  CXtot =   0.00180     Cltot =  -0.00057     Cl'tot =  -0.00052
+  CYtot =  -0.01066     Cmtot =   0.00000
+  CZtot =  -0.56321     Cntot =   0.00352     Cn'tot =   0.00353
 
   CLtot =   0.56317
-  CDtot =   0.00641
-  CDvis =   0.00000     CDind = 0.0064095
-  CLff  =   0.56248     CDff  = 0.0063600    | Trefftz
-  CYff  =  -0.01043         e =    0.9762    | Plane  
+  CDtot =   0.00631
+  CDvis =   0.00000     CDind = 0.0063082
+  CLff  =   0.56253     CDff  = 0.0062635    | Trefftz
+  CYff  =  -0.01042         e =    0.9914    | Plane  
 
    inboard_slat    =   0.00000
    inboard_flap    =   0.00000
    outboard_slat   =   0.00000
    outboard_flap   =   0.00000
-   elevator        =  -3.00486
+   elevator        =  -2.02526
 
  ---------------------------------------------------------------
 
@@ -643,25 +643,25 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
  Run case:  -unnamed-                              
 
-  Alpha =   0.46582     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =   0.82442     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =  -0.00183     Cltot =  -0.00055     Cl'tot =  -0.00053
-  CYtot =  -0.01068     Cmtot =   0.00000
-  CZtot =  -0.56321     Cntot =   0.00353     Cn'tot =   0.00354
+  CXtot =   0.00180     Cltot =  -0.00057     Cl'tot =  -0.00052
+  CYtot =  -0.01066     Cmtot =   0.00000
+  CZtot =  -0.56321     Cntot =   0.00352     Cn'tot =   0.00353
 
   CLtot =   0.56317
-  CDtot =   0.00641
-  CDvis =   0.00000     CDind = 0.0064095
-  CLff  =   0.56248     CDff  = 0.0063600    | Trefftz
-  CYff  =  -0.01043         e =    0.9762    | Plane  
+  CDtot =   0.00631
+  CDvis =   0.00000     CDind = 0.0063082
+  CLff  =   0.56253     CDff  = 0.0062635    | Trefftz
+  CYff  =  -0.01042         e =    0.9914    | Plane  
 
    inboard_slat    =   0.00000
    inboard_flap    =   0.00000
    outboard_slat   =   0.00000
    outboard_flap   =   0.00000
-   elevator        =  -3.00486
+   elevator        =  -2.02526
 
  ---------------------------------------------------------------
 
@@ -669,35 +669,35 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
                              alpha                beta
                   ----------------    ----------------
- z' force CL |    CLa =   6.230889    CLb =  -0.003375
- y  force CY |    CYa =   0.007147    CYb =  -0.342160
- x' mom.  Cl'|    Cla =   0.004823    Clb =  -0.063962
- y  mom.  Cm |    Cma =  -2.645775    Cmb =   0.010833
- z' mom.  Cn'|    Cna =  -0.002098    Cnb =   0.098472
+ z' force CL |    CLa =   5.934217    CLb =  -0.003382
+ y  force CY |    CYa =   0.007451    CYb =  -0.342812
+ x' mom.  Cl'|    Cla =   0.004827    Clb =  -0.061800
+ y  mom.  Cm |    Cma =  -2.976506    Cmb =   0.010918
+ z' mom.  Cn'|    Cna =  -0.002241    Cnb =   0.098823
 
                      roll rate  p'      pitch rate  q'        yaw rate  r'
                   ----------------    ----------------    ----------------
- z' force CL |    CLp =   0.000869    CLq =  13.151865    CLr =   0.002215
- y  force CY |    CYp =  -0.000761    CYq =   0.156815    CYr =   0.249778
- x' mom.  Cl'|    Clp =  -0.688296    Clq =   0.017705    Clr =   0.161981
- y  mom.  Cm |    Cmp =  -0.006382    Cmq = -33.145254    Cmr =  -0.006729
- z' mom.  Cn'|    Cnp =  -0.056617    Cnq =  -0.056167    Cnr =  -0.080200
+ z' force CL |    CLp =   0.000880    CLq =  13.455069    CLr =   0.002174
+ y  force CY |    CYp =  -0.000919    CYq =   0.161152    CYr =   0.250145
+ x' mom.  Cl'|    Clp =  -0.621750    Clq =   0.017929    Clr =   0.155277
+ y  mom.  Cm |    Cmp =  -0.006375    Cmq = -40.366742    Cmr =  -0.006495
+ z' mom.  Cn'|    Cnp =  -0.056380    Cnq =  -0.058110    Cnr =  -0.080112
 
                   inboard_slat d01     inboard_flap d02     outboard_sla d03     outboard_fla d04     elevator     d05 
                   ----------------    ----------------    ----------------    ----------------    ----------------
- z' force CL |   CLd01 =   0.000428   CLd02 =   0.013562   CLd03 =   0.001161   CLd04 =   0.036617   CLd05 =   0.004725
- y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000023   CYd03 =   0.000000   CYd04 =   0.000007   CYd05 =   0.000014
- x' mom.  Cl'|   Cld01 =  -0.000000   Cld02 =  -0.000001   Cld03 =   0.000000   Cld04 =   0.000001   Cld05 =   0.000001
- y  mom.  Cm |   Cmd01 =   0.000619   Cmd02 =   0.002660   Cmd03 =   0.000814   Cmd04 =  -0.012620   Cmd05 =  -0.027375
- z' mom.  Cn'|   Cnd01 =   0.000000   Cnd02 =   0.000007   Cnd03 =   0.000000   Cnd04 =  -0.000002   Cnd05 =  -0.000005
- Trefftz drag| CDffd01 =   0.000009 CDffd02 =   0.000291 CDffd03 =   0.000024 CDffd04 =   0.000750 CDffd05 =  -0.000026
- span eff.   |    ed01 =   0.000099    ed02 =   0.002440    ed03 =   0.000322    ed04 =   0.011931    ed05 =   0.020420
+ z' force CL |   CLd01 =   0.000416   CLd02 =   0.013048   CLd03 =   0.001080   CLd04 =   0.033865   CLd05 =   0.005856
+ y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000023   CYd03 =   0.000000   CYd04 =   0.000007   CYd05 =   0.000016
+ x' mom.  Cl'|   Cld01 =  -0.000000   Cld02 =  -0.000001   Cld03 =   0.000000   Cld04 =   0.000001   Cld05 =   0.000002
+ y  mom.  Cm |   Cmd01 =   0.000655   Cmd02 =   0.004003   Cmd03 =   0.000717   Cmd04 =  -0.009918   Cmd05 =  -0.033954
+ z' mom.  Cn'|   Cnd01 =   0.000000   Cnd02 =   0.000007   Cnd03 =   0.000000   Cnd04 =  -0.000002   Cnd05 =  -0.000006
+ Trefftz drag| CDffd01 =   0.000010 CDffd02 =   0.000324 CDffd03 =   0.000021 CDffd04 =   0.000665 CDffd05 =   0.000033
+ span eff.   |    ed01 =  -0.000117    ed02 =  -0.005355    ed03 =   0.000382    ed04 =   0.014137    ed05 =   0.015404
 
 
 
- Neutral point  Xnp =   6.608618
+ Neutral point  Xnp =   7.193128
 
- Clb Cnr / Clr Cnb  =   0.321603    (  > 1 if spirally stable )
+ Clb Cnr / Clr Cnb  =   0.322641    (  > 1 if spirally stable )
 
  Operation of run case 1/1:   -unnamed-                              
  ==========================================================
@@ -975,7 +975,7 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
   D4  outboard  ->  outboard_fla=   0.000         
   D5  elevator  ->  Cm pitchmom =   0.000         
@@ -1015,9 +1015,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1045,11 +1045,11 @@ mrftot: fileid = DERMATS
 
  .OPER (case 1/1)   c>  
  iter d(alpha)   d(beta)    d(pb/2V)   d(qc/2V)   d(rb/2V)   inboard_slainboard_flaoutboard_sloutboard_flelevator   
-   1  0.114E+02 -0.000E+00 -0.000E+00  0.101E-17 -0.000E+00 -0.000E+00  0.100E+02 -0.000E+00  0.100E+02 -0.229E+02
-   2  0.563E+00 -0.000E+00  0.000E+00 -0.106E-17 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.797E+00
-   3  0.140E-02 -0.000E+00 -0.000E+00  0.495E-19 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.130E-01
-   4  0.343E-05 -0.000E+00 -0.000E+00  0.545E-21  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.290E-03
-   5 -0.764E-07 -0.000E+00 -0.000E+00 -0.179E-22 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.648E-05
+   1  0.100E+02 -0.000E+00 -0.000E+00  0.165E-17 -0.000E+00 -0.000E+00  0.150E+02 -0.000E+00  0.150E+02 -0.180E+02
+   2  0.589E+00 -0.000E+00  0.000E+00 -0.157E-17 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.825E+00
+   3  0.150E-02 -0.000E+00 -0.000E+00 -0.827E-19 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.892E-02
+   4  0.380E-05 -0.000E+00 -0.000E+00  0.103E-20  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.152E-03
+   5 -0.645E-07 -0.000E+00 -0.000E+00 -0.112E-23 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.259E-05
  ---------------------------------------------------------------
  Vortex Lattice Output -- Total Forces
 
@@ -1065,25 +1065,25 @@ mrftot: fileid = DERMATS
 
  Run case:  -unnamed-                              
 
-  Alpha =  12.46350     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =  11.43904     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.38244     Cltot =  -0.00034     Cl'tot =   0.00036
-  CYtot =  -0.00977     Cmtot =  -0.00000
-  CZtot =  -2.16857     Cntot =   0.00319     Cn'tot =   0.00319
+  CXtot =   0.34266     Cltot =  -0.00038     Cl'tot =   0.00028
+  CYtot =  -0.01012     Cmtot =  -0.00000
+  CZtot =  -2.17525     Cntot =   0.00331     Cn'tot =   0.00332
 
   CLtot =   2.20000
-  CDtot =   0.09459
-  CDvis =   0.00000     CDind = 0.0945881
-  CLff  =   2.21260     CDff  = 0.0946579    | Trefftz
-  CYff  =  -0.00974         e =    1.0146    | Plane  
+  CDtot =   0.09555
+  CDvis =   0.00000     CDind = 0.0955544
+  CLff  =   2.21247     CDff  = 0.0957851    | Trefftz
+  CYff  =  -0.00991         e =    1.0026    | Plane  
 
    inboard_slat    =   0.00000
-   inboard_flap    =  10.00000
+   inboard_flap    =  15.00000
    outboard_slat   =   0.00000
-   outboard_flap   =  10.00000
-   elevator        = -26.71307
+   outboard_flap   =  15.00000
+   elevator        = -20.79144
 
  ---------------------------------------------------------------
 
@@ -1098,9 +1098,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1142,25 +1142,25 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
  Run case:  -unnamed-                              
 
-  Alpha =  12.46350     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =  11.43904     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.38244     Cltot =  -0.00034     Cl'tot =   0.00036
-  CYtot =  -0.00977     Cmtot =  -0.00000
-  CZtot =  -2.16857     Cntot =   0.00319     Cn'tot =   0.00319
+  CXtot =   0.34266     Cltot =  -0.00038     Cl'tot =   0.00028
+  CYtot =  -0.01012     Cmtot =  -0.00000
+  CZtot =  -2.17525     Cntot =   0.00331     Cn'tot =   0.00332
 
   CLtot =   2.20000
-  CDtot =   0.09459
-  CDvis =   0.00000     CDind = 0.0945881
-  CLff  =   2.21260     CDff  = 0.0946579    | Trefftz
-  CYff  =  -0.00974         e =    1.0146    | Plane  
+  CDtot =   0.09555
+  CDvis =   0.00000     CDind = 0.0955544
+  CLff  =   2.21247     CDff  = 0.0957851    | Trefftz
+  CYff  =  -0.00991         e =    1.0026    | Plane  
 
    inboard_slat    =   0.00000
-   inboard_flap    =  10.00000
+   inboard_flap    =  15.00000
    outboard_slat   =   0.00000
-   outboard_flap   =  10.00000
-   elevator        = -26.71307
+   outboard_flap   =  15.00000
+   elevator        = -20.79144
 
  ---------------------------------------------------------------
 
@@ -1168,35 +1168,35 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
                              alpha                beta
                   ----------------    ----------------
- z' force CL |    CLa =   5.684903    CLb =  -0.002612
- y  force CY |    CYa =   0.011318    CYb =  -0.337618
- x' mom.  Cl'|    Cla =   0.003596    Clb =  -0.115130
- y  mom.  Cm |    Cma =  -2.705494    Cmb =   0.009609
- z' mom.  Cn'|    Cna =  -0.004471    Cnb =   0.110035
+ z' force CL |    CLa =   5.385326    CLb =  -0.002748
+ y  force CY |    CYa =   0.011405    CYb =  -0.343564
+ x' mom.  Cl'|    Cla =   0.003846    Clb =  -0.105770
+ y  mom.  Cm |    Cma =  -3.033448    Cmb =   0.010000
+ z' mom.  Cn'|    Cna =  -0.004456    Cnb =   0.109401
 
                      roll rate  p'      pitch rate  q'        yaw rate  r'
                   ----------------    ----------------    ----------------
- z' force CL |    CLp =   0.001154    CLq =  13.412269    CLr =   0.001698
- y  force CY |    CYp =   0.189353    CYq =   0.152530    CYr =   0.218418
- x' mom.  Cl'|    Clp =  -0.641906    Clq =   0.003483    Clr =   0.534360
- y  mom.  Cm |    Cmp =  -0.006952    Cmq = -35.935873    Cmr =  -0.004501
- z' mom.  Cn'|    Cnp =  -0.229285    Cnq =  -0.055871    Cnr =  -0.102121
+ z' force CL |    CLp =   0.001161    CLq =  13.658711    CLr =   0.001759
+ y  force CY |    CYp =   0.176963    CYq =   0.159639    CYr =   0.222995
+ x' mom.  Cl'|    Clp =  -0.580070    Clq =   0.004982    Clr =   0.500137
+ y  mom.  Cm |    Cmp =  -0.006976    Cmq = -43.086070    Cmr =  -0.004663
+ z' mom.  Cn'|    Cnp =  -0.223414    Cnq =  -0.058784    Cnr =  -0.099164
 
                   inboard_slat d01     inboard_flap d02     outboard_sla d03     outboard_fla d04     elevator     d05 
                   ----------------    ----------------    ----------------    ----------------    ----------------
- z' force CL |   CLd01 =   0.000701   CLd02 =   0.012503   CLd03 =   0.001858   CLd04 =   0.033815   CLd05 =   0.004538
- y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000021   CYd03 =   0.000000   CYd04 =   0.000007   CYd05 =   0.000013
+ z' force CL |   CLd01 =   0.000669   CLd02 =   0.012143   CLd03 =   0.001688   CLd04 =   0.031619   CLd05 =   0.005649
+ y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000022   CYd03 =   0.000000   CYd04 =   0.000006   CYd05 =   0.000015
  x' mom.  Cl'|   Cld01 =  -0.000000   Cld02 =  -0.000001   Cld03 =   0.000000   Cld04 =   0.000001   Cld05 =   0.000001
- y  mom.  Cm |   Cmd01 =   0.000591   Cmd02 =   0.002608   Cmd03 =   0.000773   Cmd04 =  -0.011759   Cmd05 =  -0.026928
- z' mom.  Cn'|   Cnd01 =   0.000000   Cnd02 =   0.000006   Cnd03 =  -0.000000   Cnd04 =  -0.000002   Cnd05 =  -0.000005
- Trefftz drag| CDffd01 =   0.000037 CDffd02 =   0.001165 CDffd03 =   0.000096 CDffd04 =   0.003015 CDffd05 =  -0.000007
- span eff.   |    ed01 =  -0.000013    ed02 =  -0.000627    ed03 =  -0.000001    ed04 =  -0.000323    ed05 =   0.004298
+ y  mom.  Cm |   Cmd01 =   0.000630   Cmd02 =   0.003898   Cmd03 =   0.000687   Cmd04 =  -0.009331   Cmd05 =  -0.033472
+ z' mom.  Cn'|   Cnd01 =   0.000000   Cnd02 =   0.000007   Cnd03 =   0.000000   Cnd04 =  -0.000002   Cnd05 =  -0.000005
+ Trefftz drag| CDffd01 =   0.000041 CDffd02 =   0.001321 CDffd03 =   0.000089 CDffd04 =   0.002790 CDffd05 =   0.000180
+ span eff.   |    ed01 =  -0.000066    ed02 =  -0.002479    ed03 =   0.000017    ed04 =   0.000251    ed05 =   0.003313
 
 
 
- Neutral point  Xnp =   6.998129
+ Neutral point  Xnp =   7.661706
 
- Clb Cnr / Clr Cnb  =   0.199959    (  > 1 if spirally stable )
+ Clb Cnr / Clr Cnb  =   0.191693    (  > 1 if spirally stable )
 
  Operation of run case 1/1:   -unnamed-                              
  ==========================================================
@@ -1209,9 +1209,9 @@ Enter filename, or <return> for screen output   s>   ---------------------------
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1250,9 +1250,9 @@ Enter filename, or <return> for screen output   s>   ---------------------------
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1294,9 +1294,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1335,9 +1335,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1394,9 +1394,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1434,9 +1434,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   10.00         
+  D2  inboard_  ->  inboard_flap=   15.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1474,9 +1474,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   10.00         
+  D4  outboard  ->  outboard_fla=   15.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1514,9 +1514,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   30.00         
+  D4  outboard  ->  outboard_fla=   35.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1544,11 +1544,11 @@ mrftot: fileid = DERMATS
 
  .OPER (case 1/1)   c>  
  iter d(alpha)   d(beta)    d(pb/2V)   d(qc/2V)   d(rb/2V)   inboard_slainboard_flaoutboard_sloutboard_flelevator   
-   1  0.224E+01 -0.000E+00 -0.000E+00 -0.939E-18 -0.000E+00 -0.000E+00  0.200E+02 -0.000E+00  0.200E+02 -0.107E+02
-   2  0.133E+00 -0.000E+00 -0.000E+00  0.942E-18 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.138E+00
-   3  0.171E-03 -0.000E+00 -0.000E+00 -0.227E-20  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.395E-02
-   4 -0.549E-06 -0.000E+00 -0.000E+00 -0.113E-21 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.112E-03
-   5  0.155E-07 -0.000E+00 -0.000E+00  0.885E-24  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.315E-05
+   1  0.286E+01 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.200E+02 -0.000E+00  0.200E+02 -0.777E+01
+   2  0.244E+00 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.200E+00
+   3  0.478E-03 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.318E-02
+   4  0.888E-06 -0.000E+00 -0.000E+00 -0.000E+00  0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.674E-04
+   5 -0.188E-07 -0.000E+00 -0.000E+00  0.188E-24 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00 -0.000E+00  0.143E-05
  ---------------------------------------------------------------
  Vortex Lattice Output -- Total Forces
 
@@ -1564,25 +1564,25 @@ mrftot: fileid = DERMATS
 
  Run case:  -unnamed-                              
 
-  Alpha =  14.83743     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =  14.54164     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.63057     Cltot =  -0.00032     Cl'tot =   0.00055
-  CYtot =  -0.01030     Cmtot =   0.00000
-  CZtot =  -3.24679     Cntot =   0.00336     Cn'tot =   0.00333
+  CXtot =   0.61226     Cltot =  -0.00035     Cl'tot =   0.00052
+  CYtot =  -0.01052     Cmtot =  -0.00000
+  CZtot =  -3.25040     Cntot =   0.00343     Cn'tot =   0.00340
 
   CLtot =   3.30000
-  CDtot =   0.22189
-  CDvis =   0.00000     CDind = 0.2218873
-  CLff  =   3.34596     CDff  = 0.2253233    | Trefftz
-  CYff  =  -0.00985         e =    0.9747    | Plane  
+  CDtot =   0.22348
+  CDvis =   0.00000     CDind = 0.2234790
+  CLff  =   3.34674     CDff  = 0.2272759    | Trefftz
+  CYff  =  -0.00994         e =    0.9668    | Plane  
 
    inboard_slat    =   0.00000
-   inboard_flap    =  30.00000
+   inboard_flap    =  35.00000
    outboard_slat   =   0.00000
-   outboard_flap   =  30.00000
-   elevator        = -37.30494
+   outboard_flap   =  35.00000
+   elevator        = -28.75557
 
  ---------------------------------------------------------------
 
@@ -1597,9 +1597,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   30.00         
+  D4  outboard  ->  outboard_fla=   35.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1641,25 +1641,25 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
  Run case:  -unnamed-                              
 
-  Alpha =  14.83743     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Alpha =  14.54164     pb/2V =  -0.00000     p'b/2V =  -0.00000
   Beta  =   0.00000     qc/2V =   0.00000
   Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
 
-  CXtot =   0.63057     Cltot =  -0.00032     Cl'tot =   0.00055
-  CYtot =  -0.01030     Cmtot =   0.00000
-  CZtot =  -3.24679     Cntot =   0.00336     Cn'tot =   0.00333
+  CXtot =   0.61226     Cltot =  -0.00035     Cl'tot =   0.00052
+  CYtot =  -0.01052     Cmtot =  -0.00000
+  CZtot =  -3.25040     Cntot =   0.00343     Cn'tot =   0.00340
 
   CLtot =   3.30000
-  CDtot =   0.22189
-  CDvis =   0.00000     CDind = 0.2218873
-  CLff  =   3.34596     CDff  = 0.2253233    | Trefftz
-  CYff  =  -0.00985         e =    0.9747    | Plane  
+  CDtot =   0.22348
+  CDvis =   0.00000     CDind = 0.2234790
+  CLff  =   3.34674     CDff  = 0.2272759    | Trefftz
+  CYff  =  -0.00994         e =    0.9668    | Plane  
 
    inboard_slat    =   0.00000
-   inboard_flap    =  30.00000
+   inboard_flap    =  35.00000
    outboard_slat   =   0.00000
-   outboard_flap   =  30.00000
-   elevator        = -37.30494
+   outboard_flap   =  35.00000
+   elevator        = -28.75557
 
  ---------------------------------------------------------------
 
@@ -1667,35 +1667,35 @@ Enter filename, or <return> for screen output   s>   ---------------------------
 
                              alpha                beta
                   ----------------    ----------------
- z' force CL |    CLa =   5.058581    CLb =  -0.002555
- y  force CY |    CYa =   0.012886    CYb =  -0.348733
- x' mom.  Cl'|    Cla =   0.003467    Clb =  -0.158839
- y  mom.  Cm |    Cma =  -2.659624    Cmb =   0.009708
- z' mom.  Cn'|    Cna =  -0.005180    Cnb =   0.127389
+ z' force CL |    CLa =   4.751079    CLb =  -0.002633
+ y  force CY |    CYa =   0.013181    CYb =  -0.353583
+ x' mom.  Cl'|    Cla =   0.003587    Clb =  -0.138275
+ y  mom.  Cm |    Cma =  -3.006007    Cmb =   0.010011
+ z' mom.  Cn'|    Cna =  -0.005282    Cnb =   0.123965
 
                      roll rate  p'      pitch rate  q'        yaw rate  r'
                   ----------------    ----------------    ----------------
- z' force CL |    CLp =   0.001252    CLq =  13.455142    CLr =   0.001695
- y  force CY |    CYp =   0.291603    CYq =   0.158266    CYr =   0.188643
- x' mom.  Cl'|    Clp =  -0.596234    Clq =   0.000707    Clr =   0.758664
- y  mom.  Cm |    Cmp =  -0.007308    Cmq = -36.978234    Cmr =  -0.004332
- z' mom.  Cn'|    Cnp =  -0.339975    Cnq =  -0.057805    Cnr =  -0.133981
+ z' force CL |    CLp =   0.001267    CLq =  13.647884    CLr =   0.001714
+ y  force CY |    CYp =   0.274505    CYq =   0.164283    CYr =   0.189079
+ x' mom.  Cl'|    Clp =  -0.536628    Clq =   0.001209    Clr =   0.714733
+ y  mom.  Cm |    Cmp =  -0.007312    Cmq = -43.903810    Cmr =  -0.004358
+ z' mom.  Cn'|    Cnp =  -0.333185    Cnq =  -0.060315    Cnr =  -0.126796
 
                   inboard_slat d01     inboard_flap d02     outboard_sla d03     outboard_fla d04     elevator     d05 
                   ----------------    ----------------    ----------------    ----------------    ----------------
- z' force CL |   CLd01 =   0.000883   CLd02 =   0.012096   CLd03 =   0.002318   CLd04 =   0.032733   CLd05 =   0.004476
- y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000022   CYd03 =   0.000000   CYd04 =   0.000007   CYd05 =   0.000014
+ z' force CL |   CLd01 =   0.000874   CLd02 =   0.011654   CLd03 =   0.002179   CLd04 =   0.030416   CLd05 =   0.005523
+ y  force CY |   CYd01 =  -0.000001   CYd02 =  -0.000023   CYd03 =   0.000000   CYd04 =   0.000007   CYd05 =   0.000016
  x' mom.  Cl'|   Cld01 =  -0.000000   Cld02 =  -0.000001   Cld03 =   0.000000   Cld04 =   0.000001   Cld05 =   0.000001
- y  mom.  Cm |   Cmd01 =   0.000579   Cmd02 =   0.002535   Cmd03 =   0.000757   Cmd04 =  -0.011471   Cmd05 =  -0.026664
+ y  mom.  Cm |   Cmd01 =   0.000614   Cmd02 =   0.003785   Cmd03 =   0.000669   Cmd04 =  -0.009044   Cmd05 =  -0.032939
  z' mom.  Cn'|   Cnd01 =   0.000000   Cnd02 =   0.000007   Cnd03 =  -0.000000   Cnd04 =  -0.000002   Cnd05 =  -0.000005
- Trefftz drag| CDffd01 =   0.000057 CDffd02 =   0.001817 CDffd03 =   0.000150 CDffd04 =   0.004795 CDffd05 =  -0.000084
- span eff.   |    ed01 =  -0.000010    ed02 =  -0.000441    ed03 =  -0.000003    ed04 =  -0.000721    ed05 =   0.003019
+ Trefftz drag| CDffd01 =   0.000063 CDffd02 =   0.002026 CDffd03 =   0.000137 CDffd04 =   0.004355 CDffd05 =   0.000232
+ span eff.   |    ed01 =  -0.000041    ed02 =  -0.001519    ed03 =   0.000010    ed04 =  -0.000106    ed05 =   0.002283
 
 
 
- Neutral point  Xnp =   7.376782
+ Neutral point  Xnp =   8.188938
 
- Clb Cnr / Clr Cnb  =   0.220200    (  > 1 if spirally stable )
+ Clb Cnr / Clr Cnb  =   0.197883    (  > 1 if spirally stable )
 
  Operation of run case 1/1:   -unnamed-                              
  ==========================================================
@@ -1708,9 +1708,9 @@ Enter filename, or <return> for screen output   s>   ---------------------------
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   30.00         
+  D4  outboard  ->  outboard_fla=   35.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1749,9 +1749,9 @@ Enter filename, or <return> for screen output   s>   ---------------------------
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   30.00         
+  D4  outboard  ->  outboard_fla=   35.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 
@@ -1793,9 +1793,9 @@ mrftot: fileid = DERMATS
   P itch rate   ->  qc/2V       =   0.000         
   Y aw   rate   ->  rb/2V       =   0.000         
   D1  inboard_  ->  inboard_slat=   0.000         
-  D2  inboard_  ->  inboard_flap=   30.00         
+  D2  inboard_  ->  inboard_flap=   35.00         
   D3  outboard  ->  outboard_sla=   0.000         
-  D4  outboard  ->  outboard_fla=   30.00         
+  D4  outboard  ->  outboard_fla=   35.00         
   D5  elevator  ->  Cm pitchmom =   0.000         
   ------------      ------------------------
 

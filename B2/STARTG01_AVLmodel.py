@@ -46,13 +46,13 @@ def STARTG01_AVL(phase=1,alpha=0,T=1):
         if phase == 1: # set flaps
             flaps(0) 
         elif phase == 2:
-            flaps(20) 
+            flaps(15) 
         elif phase == 3:
-            flaps(20) 
+            flaps(15) 
         elif phase == 4:
-            flaps(45) 
+            flaps(35) 
         elif phase == 5:
-            flaps(45) 
+            flaps(35) 
         
         AVLsp.addInput('X') #run
         AVLsp.saveOutput('FT','polar\\P{}_A{}'.format(phase,alpha) ) # save case data
@@ -93,9 +93,9 @@ if __name__ == "__main__":
     AVLsp.addInput('C1\n')
     # AVLsp.addInput('D1 D1 0')
     AVLsp.addInput('A C 2.2')
-    AVLsp.addInput('D2 D2 10')
+    AVLsp.addInput('D2 D2 15')
     # AVLsp.addInput('D3 D3 0')
-    AVLsp.addInput('D4 D4 10')
+    AVLsp.addInput('D4 D4 15')
     # AVLsp.addInput('D5 PM 0')
     AVLsp.addInput('X')
     AVLsp.addInput('ST\n')
@@ -111,9 +111,9 @@ if __name__ == "__main__":
     AVLsp.addInput('C1\n')
     # AVLsp.addInput('D1 D1 0')
     AVLsp.addInput('A C 3.3')
-    AVLsp.addInput('D2 D2 30')
+    AVLsp.addInput('D2 D2 35')
     # AVLsp.addInput('D3 D3 0')
-    AVLsp.addInput('D4 D4 30')
+    AVLsp.addInput('D4 D4 35')
     # AVLsp.addInput('D5 PM 0')
     AVLsp.addInput('X')
     AVLsp.addInput('ST\n')
