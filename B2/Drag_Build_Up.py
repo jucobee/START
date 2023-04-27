@@ -42,15 +42,17 @@ def dragDragComponents(M, rho, V, mu):
     ReN = (rho * V * nacelle_L) / mu
     ReF = (rho * V * fuselage_L) / mu
 
-    # Max thickness of wings and tails
-    tc_wing = 0.096093*9.852
-    tc_h_tail = 0.119119*5.096
-    tc_v_tail = 0.119119*14.87
 
-    # Chordwise location of max thickness
-    xc_wing = 0.35749*9.852
-    xc_h_tail = 0.298547*14.87
-    xc_v_tail = 0.298547*14.87
+    # Max thickness of wings and tails (ratio)
+    tc_wing = 0.096093
+    tc_h_tail = 0.119119
+    tc_v_tail = 0.119119
+
+
+    # Chordwise location of max thickness (ratio)
+    xc_wing = 0.35749
+    xc_h_tail = 0.298547
+    xc_v_tail = 0.298547
 
     # Sweep angle of wings and tails IN RADIANS
     gammaW = 0.087266       #rad
@@ -75,11 +77,13 @@ def dragDragComponents(M, rho, V, mu):
     vTail.FF = (1 + (0.6 / xc_v_tail)*tc_v_tail + 100*(tc_v_tail**4)) * (1.34 * (M**0.18)*(np.cos(gammaV)**0.28))
     hTail.FF = (1 + (0.6 / xc_h_tail)*tc_h_tail + 100*(tc_h_tail**4)) * (1.34 * (M**0.18)*(np.cos(gammaH)**0.28))
 
+    # print('formfactor',wing.FF,vTail.FF,hTail.FF)
+
 
     def Cfcalc(Re, wL, wT):
-        Cfl = 1.328 / np.sqrt(Re)
-        Cft = 0.455 / (((np.log10(Re))**2.58) * ((1 + 0.144*(M**2))**0.65))
-        Cf = (Cfl * wL) + (Cft * wT)
+        Cf_lam = 1.328 / np.sqrt(Re)
+        Cf_turb = 0.455 / (((np.log10(Re))**2.58) * ((1 + 0.144*(M**2))**0.65))
+        Cf = (Cf_lam * wL) + (Cf_turb * wT)
         return Cf
     
     wing.C_f = Cfcalc(ReW, 0.5, 0.5)
