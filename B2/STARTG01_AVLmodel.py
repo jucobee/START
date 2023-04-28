@@ -83,10 +83,10 @@ if __name__ == "__main__":
     AVLsp.saveOutput('ST','cruise_stab')
 
     # Trimmed for cruise at 25kft, 275 ktas
-    # delevator = -2.712107452329664E+00
-    # dCM/da: -2.472052986715643E+00
-    # dCN/db: 9.858979130699302E-02
-    # dCl/db: -6.103720339649699E-02
+    # delevator = -2.025263382235408E+00
+    # dCM/da: -2.976505617474167E+00
+    # dCN/db: 9.882347864467708E-02
+    # dCl/db: -6.180025626223679E-02
 
 
     AVLsp.addInput('oper')
@@ -102,10 +102,10 @@ if __name__ == "__main__":
     AVLsp.saveOutput('ST','takeoff_stab')
 
     # Trimmed for CL=2.2, flaps 15 deg
-    # delevator = -2.387550832246752E+01
-    # dCM/da: -2.532687610965178E+00
-    # dCN/db: 1.108476910278335E-01 
-    # dCl/db: -1.051719944520866E-01
+    # delevator = -2.079144021503641E+01
+    # dCM/da: -3.033447955664601E+00
+    # dCN/db: 1.094011615515749E-01
+    # dCl/db: -1.057696877033421E-01
 
     AVLsp.addInput('oper')
     AVLsp.addInput('C1\n')
@@ -119,11 +119,11 @@ if __name__ == "__main__":
     AVLsp.addInput('ST\n')
     AVLsp.saveOutput('ST','landing_stab')
 
-    # Trimmed for CL=3.3, flaps 45 deg
-    # delevator = -2.922187155599264E+01
-    # dCM/da: -2.474091604088925E+00
-    # dCN/db: 1.283649711479978E-01
-    # dCl/db: -1.428365524939934E-01 
+    # Trimmed for CL=3.3, flaps 35 deg
+    # delevator = -2.875557496812263E+01
+    # dCM/da: -3.006006645280893E+00
+    # dCN/db: 1.239651415854076E-01
+    # dCl/db: -1.382750681113420E-01
 
 
     # AVLsp.addInput('X')
