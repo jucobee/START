@@ -1,7 +1,9 @@
 DERMATS
 VERSION 1.0
 Vortex Lattice Output -- Total Forces
-STARTG01                                                    
+STARTG01                                        
+
+ 7.193127580623601E+00-3.383665524389960E+00
      5      | # surfaces
    126      | # strips
   1358      | # vortices
