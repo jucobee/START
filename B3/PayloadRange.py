@@ -14,19 +14,15 @@ wpass =  200 + 40# Weight per passenger
 
 
 MPW = MZFW - OEW    # Max Payload Weight
-MFW =   # Max fuel weight
+MFW = 3420.54  # Max fuel weight
 PPF = MTOW - OEW    # Payload + Fuel
 
 
 ### MISSION BREAKDOWN ###
-TCD =   # Total cruise distance (nm)
-TCF =   # Total cruise fuel (lb)
+TCD = 1000  # Total cruise distance (nm)
+TCF = 2774.78  # Total cruise fuel (lb)
 CSR = TCD / TCF     # Cruise Specific Range (nm/lb)
-NCR =       # Non-cruise Range
-NCF =       # Non-cruise fuel
+NCR = 234      # Non-cruise Range
+NCF = 126.9      # Non-cruise fuel
 
-FWT =       # Fuel for warmup and taxi
-FNC =       # Fuel for non-cruise segments
-CF =        # Contingency fuel
-RF =        # Reserve fuel
 
