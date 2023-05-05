@@ -38,6 +38,7 @@ def ImprovedWeightFracs(MTOW):
     H = 25000                       # final altitude of 25,000 ft
 
     def getClimbWfrac(num_segments):
+        NCR=0 # non cruise range
         seg_h = H / num_segments                # range of each segment
         W = np.empty(num_segments + 1)              # Weight array  
         W[0] = W_takeoff                        # Weight at start of climb (AKA weight at end of takeoff)
@@ -56,6 +57,7 @@ def ImprovedWeightFracs(MTOW):
             PSFC_hybrid = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(hybrid_ratio/(1-hybrid_ratio))))
             # Breguet equation for each segment
             V_inf = np.sqrt(2 * W[i] / (rho * S_ref) * np.sqrt(K / (3 * C_D0)))
+            print(V_inf)
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
             C_D = C_D0 + K * C_L**2
             D = (rho * V_inf**2 / 2) * S_ref * C_D
@@ -96,6 +98,7 @@ def ImprovedWeightFracs(MTOW):
     V_inf = 275*1.6878098571        # cruise airspeed 275 kts converted to ft/s
 
     def getCruiseWfrac(num_segments):
+        
         seg_range = R / num_segments                # range of each segment
         W = np.empty(num_segments + 1)              # Weight array  
         W[0] = W_climb                        # Weight at start of cruise (AKA weight at end of climb)
@@ -113,6 +116,7 @@ def ImprovedWeightFracs(MTOW):
             # Total cruise weight fraction is reduced by amount of current segment's weight fraction
             # cruise_Wfraction[i+1] = cruise_Wfraction[i] - (1 - seg_Wfraction[i])
             cruise_Wfraction[i+1] = cruise_Wfraction[i] * seg_Wfraction[i]
+            
             #print(cruise_Wfraction[i+1])
         
         return cruise_Wfraction[:-1]
@@ -228,11 +232,11 @@ def ImprovedWeightFracs(MTOW):
     print('Landing Weight:', W_final)
     print('Fuel Weight:', W_fuel)
     
-    
+    print(MTOW*Wi_W0)
     return W_fuel, W_bat
 
 #a,b=ImprovedFuelFrac(70000)
 #print(a)
 #print(b)
 
-# ImprovedFuelFrac(53438)   # Run at least twice
+ImprovedFuelFrac(53438)   # Run at least twice

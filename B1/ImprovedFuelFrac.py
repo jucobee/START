@@ -59,7 +59,7 @@ def ImprovedFuelFrac(MTOW):
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
             C_D = C_D0 + K * C_L**2
             D = (rho * V_inf**2 / 2) * S_ref * C_D
-            delta_he = seg_h + V_inf**2 / g
+            delta_he = seg_h + 0*V_inf**2 / g # assume delta v is small
             seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
@@ -81,14 +81,14 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Climb Fuel Weight Fraction')
     plt.xlabel('Climb Altitude (ft)')
     plt.ylabel('Weight Fraction')
-    plt.show()
+    # plt.show()
     '''
 
     ##### Cruise (multi-segment approach) #####
     # cruise range is not 1000nmi, we need to change this value
     R = 800*6076.11549             # Cruise range of 1000 nmi converted to ft
     h = 25000                       # Cruise altitude 25000 ft
-    LoD = 17                        # Lift to drag ratio depending on aircraft design
+    LoD = 177                        # Lift to drag ratio depending on aircraft design
     E = 45*60                       # Assume endurance of 45 min converted to seconds
 
     #*** need to change this to density at 25,000 ft
@@ -148,7 +148,7 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Cruise Fuel Weight Fraction')
     plt.xlabel('Cruise Range (nmi)')
     plt.ylabel('Weight Fraction')
-    plt.show()
+    # plt.show()
 
     # Plot Fuel Burn Consumption
     for seg in [2,11,21,101]:
@@ -160,7 +160,7 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Fuel Burn Consumption')
     plt.xlabel('Cruise Range km')
     plt.ylabel('Fuel Burn Consumption lbs')
-    plt.show()
+    # plt.show()
 
     # Plot Thrust
     for seg in [2,11,21,101]:
@@ -172,14 +172,14 @@ def ImprovedFuelFrac(MTOW):
     plt.title('Thrust')
     plt.xlabel('Cruise Range km')
     plt.ylabel('Thrust lbs')
-    plt.show()
+    # plt.show()
 
     cruise_Wfraction = getCruiseWfrac(101)[-1]
     W_cruise = cruise_Wfraction * W_climb  #End of cruise weight
 
     ##### Loiter #####
     V_loiter = 150*1.6878098571        # loiter speed kts converted to ft/s given by Raymer
-    E = 20*60                       # Assume endurance of 20 min converted to seconds (Raymer)
+    E = 45*60                       # Assume endurance of 20 min converted to seconds (Raymer)
     loiter_Wfraction = np.exp(-E*V_loiter*PSFC/(eta_p*LoD))
     W_loiter = W_cruise * loiter_Wfraction
 
@@ -204,7 +204,7 @@ def ImprovedFuelFrac(MTOW):
     '''
     total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
     Wi_W0 = np.array([taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
-    #print(Wi_W0)
+    print(Wi_W0)
     PHIvec = np.array([0, 0.1, # Taxi&Takeoff
           0.36, # Climb
           0, # Cruise
@@ -228,7 +228,7 @@ def ImprovedFuelFrac(MTOW):
     print('Final Weight:', W_final)
     print('Fuel Weight:', W_fuel)
     
-    
+    print(MTOW*Wi_W0)
     return W_fuel, W_bat
 
 #a,b=ImprovedFuelFrac(70000)
