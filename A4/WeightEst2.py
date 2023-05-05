@@ -18,7 +18,7 @@ wt_crew_baggage = 30 # lbm
 wt_pass_baggage = 40 # lbm
 # Total payload weight
 W_payload = (passengers * (wt_passengers + wt_pass_baggage)) 
-
+print(W_payload)
 # Total crew weight
 W_crew = crew * (wt_crew + wt_crew_baggage)
 
@@ -71,7 +71,7 @@ def WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess):
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
 
-    print(Wi_W0)
+    #print(Wi_W0)
     Wf_W0 = 1-Wi_W0[-1]
     Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
 
@@ -121,7 +121,7 @@ W0,We_W0,Wf_W0,Wb_W0 = WeightEstimation(PHIvec,WS,WP_ICE,WP_EM1,W0_guess)
 We = We_W0 * W0
 # # W_elec = W0 - w_crew - w_payload - We
 W_elec = W0*Wb_W0
-print(Wb_W0)
+#print(Wb_W0)
 '''
 print("Fuel Fraction: {:3f}".format(Wf_W0))
 print("Fuel Weight: {:3f} lbm".format(Wf_W0*W0))

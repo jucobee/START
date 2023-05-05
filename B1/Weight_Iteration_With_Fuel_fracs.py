@@ -1,6 +1,6 @@
 import numpy as np
 import math
-import ImprovedWeightFracs
+import ImprovedFuelFrac
 import os 
 
 '''
@@ -55,7 +55,7 @@ while err > tol:
     Wpassengers = passengers * wt_passengers  # Total weight of passengers
     Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-    Wfuel, Wbattery = ImprovedWeightFracs.ImprovedWeightFracs(MTOW)
+    Wfuel, Wbattery = ImprovedFuelFrac.ImprovedFuelFrac(MTOW)
 
     #Wbattery = MTOW * 0.11  # Battery weight
     gas_turb = (((5950 / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
@@ -281,6 +281,7 @@ while err > tol:
     MTOW = MTOWn
 
 print(MTOW)
+print(MTOW-Wfuel-Wcrew-Wpassengers-Wbaggage)
 print(xCG)
 
 
