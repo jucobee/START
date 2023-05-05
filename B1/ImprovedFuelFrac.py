@@ -38,6 +38,7 @@ def ImprovedFuelFrac(MTOW):
     H = 25000                       # final altitude of 25,000 ft
 
     def getClimbWfrac(num_segments):
+        NCR = 0
         seg_h = H / num_segments                # range of each segment
         W = np.empty(num_segments + 1)              # Weight array  
         W[0] = W_takeoff                        # Weight at start of climb (AKA weight at end of takeoff)
@@ -62,10 +63,13 @@ def ImprovedFuelFrac(MTOW):
             delta_he = seg_h + 0*V_inf**2 / g # assume delta v is small
             seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
-
+            
             # Total climb weight fraction is multiplied by current segment's weight fraction
             climb_Wfraction[i+1] = climb_Wfraction[i] * seg_Wfraction[i]
             #print(cruise_Wfraction[i+1])
+            NCR += delta_he/3000*550*V_inf/6076
+
+        print(NCR)
         
         return climb_Wfraction[:-1]
 
