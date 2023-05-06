@@ -15,33 +15,31 @@ wpass =  200 + 40# Weight per passenger
 
 
 MPW = MZFW - OEW    # Max Payload Weight
-MPW2 = 21428.57
 MFW = 4972  # Max fuel weight
-PPF = MTOW - OEW    # Payload + Fuel
 
 payloads = [0, 0, 0, 0]
 ranges = [0, 0, 0, 0]
 
-## Harmonic Range
-FW = MTOW - OEW - 13000
-NCF = 2198
-HDF = 0.805 * 2198
-print(FW)
-MFW2 = (1 - 0.05) * (FW - HDF) 
-CFW = MFW2 - 2198
-TCD = 1000  # Total cruise distance (nm)
+TDR = 1000  # Total design range (nm)
 TCF = 2774.78  # Total cruise fuel (lb)
-CSR = TCD / TCF     # Cruise Specific Range (nm/lb)
-TCD = CFW * CSR
+NCF = 2198
 NCR = 234      # Non-cruise Range
+CSR = (TDR - NCR) / TCF     # Cruise Specific Range (nm/lb)
+
+## Harmonic Range
+FW = MTOW - OEW - MPW
+HDF = 0.205 * 2198
+MFW2 = (1 - 0.05) * (FW - HDF) 
+CFW = MFW2 - NCF
+TCD = CFW * CSR
 TR = TCD + NCR  # Total range
-payloads[0] = MPW2
-payloads[1] = MPW2
+payloads[0] = MPW
+payloads[1] = MPW
 ranges[1] = TR
 
 # Fuel Range #
-FW = MTOW - OEW - 5500
-MFW = 0.95 * (5500 - HDF)
+FW = MTOW - OEW - 6200
+MFW = 0.95 * (6200 - HDF)
 CFW = MFW - NCF
 CR = CFW * CSR
 TR = CR + NCR
@@ -49,12 +47,12 @@ payloads[2] = FW
 ranges[2] = TR
 
 # Ferry #
-CFW = 5500 - NCF
+CFW = 6200 - NCF
 CR = CFW * CSR
 TR = CR + NCR
 ranges[3] = TR
-print(payloads)
 print(ranges)
+
 
 plt.figure()
 plt.plot(ranges,payloads)
