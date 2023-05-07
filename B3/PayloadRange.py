@@ -15,7 +15,6 @@ wpass =  200 + 40# Weight per passenger
 
 
 MPW = MZFW - OEW    # Max Payload Weight
-print(MPW)
 MFW = 4972  # Max fuel weight
 
 payloads = [0, 0, 0, 0]
@@ -27,6 +26,7 @@ TCF = 2774.78  # Total cruise fuel (lb)
 NCF = 2198
 NCR = 234      # Non-cruise Range
 CSR = (TDR - NCR) / TCF     # Cruise Specific Range (nm/lb)
+
 
 ## Harmonic Range
 FW = MTOW - OEW - MPW
@@ -50,9 +50,10 @@ ranges[2] = TR
 
 # Ferry #
 CFW = 6200 - NCF
-CR = CFW * CSR
+CR = CFW * CSR 
 TR = CR + NCR
 ranges[3] = TR
+print(payloads)
 print(ranges)
 
 
