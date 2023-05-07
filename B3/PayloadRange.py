@@ -15,9 +15,11 @@ wpass =  200 + 40# Weight per passenger
 
 
 MPW = MZFW - OEW    # Max Payload Weight
+print(MPW)
 MFW = 4972  # Max fuel weight
 
 payloads = [0, 0, 0, 0]
+designPaylods = [12000, 12000, 12000, 12000]
 ranges = [0, 0, 0, 0]
 
 TDR = 1000  # Total design range (nm)
@@ -56,9 +58,11 @@ print(ranges)
 
 plt.figure()
 plt.plot(ranges,payloads)
+plt.plot(ranges, designPaylods, color = 'r', label = '50 pass @ 200 lbs each')
 plt.xlabel('Range (nmi)')
 plt.ylabel('Payload (lbs)')
 plt.title('Payload Range')
+plt.legend()
 plt.show()
 
   
