@@ -1,0 +1,27 @@
+...Comp Geom...
+7 Num Comps
+9 Total Num Meshes
+16828 Total Num Tris
+
+Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
+ 1939.458    875.803   3946.253    351.521  Fuselage       
+  196.143     93.096     35.525      3.326  Horizontal Stabilizer
+  325.274    143.069    140.819     12.218  Vertical Stabilizer
+ 1682.874    780.924    530.823     48.590  Main Wing      
+  537.362    160.504    130.295      7.677  Fairing        
+  537.362    104.701    130.295      5.008  Landing Fairing
+61685.354    760.792  804092.166  804092.166                 
+-------------------------------------------------
+66903.827   2918.890  809006.177   2384.613  Totals         
+
+Tag_Theo_Area   Tag_Wet_Area    Tag_Name
+        0.000          0.000    Fuselage_S_Surf0
+        0.000          0.000    Horizontal Stabilizer_S_Surf0
+        0.000          0.000    Vertical Stabilizer_S_Surf0
+        0.000          0.000    Main Wing_S_Surf0
+        0.000          0.000    Fairing_S_Surf0
+        0.000          0.000    Truss Brace_S_Surf0
+        0.000          0.000    Landing Fairing_S_Surf0
+WARNING: 2 open meshes merged
+     Merged: Horizontal Stabilizer
+     Merged: Main Wing

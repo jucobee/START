@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from dragpolar import dragpolar
 
 def ImprovedWeightFracs(MTOW):
     #*** stealing these values from drag polar estimate, may need to change
@@ -9,13 +10,12 @@ def ImprovedWeightFracs(MTOW):
     e_v = 0.80                      # span efficiency factor
     K = 1 / (np.pi * AR * e_v)   
 
-
     ############ Fuel Fractions ################
     # Naming convention: W_{flight segment} = Weight at the *END* of 'flight segment'
 
     W_initial = MTOW               # initial weight at start of taxi
-    PSFC_hp = 0.483                 # Power Specific Fuel Consumption in lbm/(hp*hr)
-    PSFC = (0.483) / (3600 * 550)   # lbm/(fpf*s)
+    PSFC_hp = (1.80371945e-07) * (3600 * 550)                 # Power Specific Fuel Consumption in lbm/(hp*hr)
+    PSFC = 1.80371945e-07  # lbm/(fpf*s)
     max_takeoff_power = 6000        # Carlos told me this value
     eta_p = 0.8                     # Propeller Efficiency of 0.8
     g = 32.17                       # Force of gravity in ft/s^2
@@ -57,7 +57,8 @@ def ImprovedWeightFracs(MTOW):
             # Breguet equation for each segment
             V_inf = np.sqrt(2 * W[i] / (rho * S_ref) * np.sqrt(K / (3 * C_D0)))
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
-            C_D = C_D0 + K * C_L**2
+            # C_D = C_D0 + K * C_L**2
+            C_D = dragpolar(2,C_L)
             D = (rho * V_inf**2 / 2) * S_ref * C_D
             delta_he = seg_h + V_inf**2 / g
             seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
@@ -106,7 +107,7 @@ def ImprovedWeightFracs(MTOW):
         for i in range(num_segments):
             # Breguet equation for each segment
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
-            LoD = C_L / (C_D0 + K*C_L**2)
+            LoD = C_L / dragpolar(1,C_L)
             seg_Wfraction[i] = np.exp(-(seg_range * PSFC) / (eta_p * LoD))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
@@ -129,9 +130,9 @@ def ImprovedWeightFracs(MTOW):
         for i in range(num_segments):
             # Breguet equation for each segment
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref) # Lift varies based on weight loss from fuel burn
-            T[i] = (W[i]/C_L) * (C_D0+K*C_L**2) # Induced drag is reduced so thrust is reduced
+            T[i] = (W[i]/C_L) * (dragpolar(1,C_L)) # Induced drag is reduced so thrust is reduced
 
-            seg_fuelburn[i] = -PSFC*T[i]*seg_range/eta_p
+            seg_fuelburn[i] = -PSFC*T[i]*V_inf*seg_range/eta_p
             cruise_fuelburn[i+1] = cruise_fuelburn[i] - seg_fuelburn[i]
 
             seg_Wfraction[i] = np.exp(-(seg_range * PSFC) / (eta_p * LoD))
@@ -228,11 +229,11 @@ def ImprovedWeightFracs(MTOW):
     print('Landing Weight:', W_final)
     print('Fuel Weight:', W_fuel)
     
-    
+    plt.show()
     return W_fuel, W_bat
 
 #a,b=ImprovedFuelFrac(70000)
 #print(a)
 #print(b)
 
-# ImprovedFuelFrac(53438)   # Run at least twice
+ImprovedWeightFracs(55000)  # Run at least twice

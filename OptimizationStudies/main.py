@@ -78,6 +78,7 @@ eta_EM1 = eta[3]  # de Vries
 
 def weightEst0(PHIvec,W0_guess):
     PSFCvec = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(PHIvec/(1-PHIvec))))
+    print(PSFCvec)
     # PSFCvec_HP = (3600 * 550) * PSFCvec
     L_D  = 17 + (PHIvec[0]+PHIvec[1])/2*(22-17)
     print(PSFCvec)

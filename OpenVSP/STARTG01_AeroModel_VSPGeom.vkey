@@ -1,0 +1,11 @@
+# VSPGEOM Tag Key File
+H:/Desktop/Desktop Folder/Davis/EAE130/START/OpenVSP/STARTG01_AeroModel_VSPGeom.vspgeom
+6
+
+# tag#,geom#,surf#,gname,gid,ssname1,ssname2,...,ssid1,ssid2,...
+1,4,0,Fuselage_S,DXQPSRGRUN
+2,5,0,Horizontal Stabilizer_S,CDDQMEXDDU
+3,2,0,Vertical Stabilizer_S,KWWPMVSGIK
+4,1,0,Main Wing_S,OSEEKFPXZB
+5,0,0,Fairing_S,TWOLBPDKGG
+6,3,0,Landing Fairing_S,ITGKZPKYOB
