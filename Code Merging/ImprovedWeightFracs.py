@@ -3,12 +3,17 @@ import numpy as np
 from dragpolar import dragpolar
 
 def ImprovedWeightFracs(MTOW):
+
+
+
     #*** stealing these values from drag polar estimate, may need to change
     c_f = 0.0026                    # skin friction coefficient, Raymer 12.3
-    C_D0 = c_f * 5                  # 
+    C_D0 = 0.012                # 
     AR = 16.22                   # aspect ratio, from openVSP model
-    e_v = 0.80                      # span efficiency factor
+    e_v = 0.98                      # span efficiency factor
     K = 1 / (np.pi * AR * e_v)   
+    
+    dpobj = dragpolar()
 
     ############ Fuel Fractions ################
     # Naming convention: W_{flight segment} = Weight at the *END* of 'flight segment'
@@ -16,8 +21,8 @@ def ImprovedWeightFracs(MTOW):
     W_initial = MTOW               # initial weight at start of taxi
     PSFC_hp = (1.80371945e-07) * (3600 * 550)                 # Power Specific Fuel Consumption in lbm/(hp*hr)
     PSFC = 1.80371945e-07  # lbm/(fpf*s)
-    max_takeoff_power = 6000        # Carlos told me this value
-    eta_p = 0.8                     # Propeller Efficiency of 0.8
+    max_takeoff_power = 6000*550        # Carlos told me this value, fpf/s
+    eta_p = 0.85                     # Propeller Efficiency of 0.8
     g = 32.17                       # Force of gravity in ft/s^2
 
     ##### Taxi #####
@@ -27,7 +32,7 @@ def ImprovedWeightFracs(MTOW):
     W_taxi = taxi_Wfraction * W_initial
 
     ##### Takeoff #####
-    takeoff_time = 60                     # 1 minute converted to seconds?
+    takeoff_time = 1*60                     # 1 minute converted to seconds?
     takeoff_Wfraction = 1 - takeoff_time * (PSFC / eta_p) * (max_takeoff_power / W_taxi)
     W_takeoff = takeoff_Wfraction * W_taxi
 
@@ -36,7 +41,7 @@ def ImprovedWeightFracs(MTOW):
     S_ref = 826.134                 # reference area (wing area) in ft^2
     rho = 10.66e-4                  #* density should be changed
     H = 25000                       # final altitude of 25,000 ft
-
+    
     def getClimbWfrac(num_segments):
         seg_h = H / num_segments                # range of each segment
         W = np.empty(num_segments + 1)              # Weight array  
@@ -58,10 +63,10 @@ def ImprovedWeightFracs(MTOW):
             V_inf = np.sqrt(2 * W[i] / (rho * S_ref) * np.sqrt(K / (3 * C_D0)))
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
             # C_D = C_D0 + K * C_L**2
-            C_D = dragpolar(2,C_L)
+            C_D = dpobj.CD(2,C_L)
             D = (rho * V_inf**2 / 2) * S_ref * C_D
-            delta_he = seg_h + V_inf**2 / g
-            seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power * V_inf))))
+            delta_he = seg_h + 0*V_inf**2 / g
+            seg_Wfraction[i] = np.exp(-(delta_he * PSFC_hybrid) / (eta_p * (1 - D/(max_takeoff_power / V_inf))))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
             # Total climb weight fraction is multiplied by current segment's weight fraction
@@ -69,9 +74,10 @@ def ImprovedWeightFracs(MTOW):
             #print(cruise_Wfraction[i+1])
         
         return climb_Wfraction[:-1]
-
+    print('climbing')
     climb_Wfraction = getClimbWfrac(101)[-1]          
     W_climb = climb_Wfraction * W_takeoff               # weight at the end of climb/start of cruise in lbs
+    print(climb_Wfraction)
     '''
     # Plot Climb
     for seg in [2,11,21,101]:
@@ -107,7 +113,7 @@ def ImprovedWeightFracs(MTOW):
         for i in range(num_segments):
             # Breguet equation for each segment
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref)
-            LoD = C_L / dragpolar(1,C_L)
+            LoD = C_L / dpobj.CD(1,C_L)
             seg_Wfraction[i] = np.exp(-(seg_range * PSFC) / (eta_p * LoD))
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
 
@@ -130,7 +136,7 @@ def ImprovedWeightFracs(MTOW):
         for i in range(num_segments):
             # Breguet equation for each segment
             C_L = 2*W[i] / (rho * V_inf**2 * S_ref) # Lift varies based on weight loss from fuel burn
-            T[i] = (W[i]/C_L) * (dragpolar(1,C_L)) # Induced drag is reduced so thrust is reduced
+            T[i] = (W[i]/C_L) * (dpobj.CD(1,C_L)) # Induced drag is reduced so thrust is reduced
 
             seg_fuelburn[i] = -PSFC*T[i]*V_inf*seg_range/eta_p
             cruise_fuelburn[i+1] = cruise_fuelburn[i] - seg_fuelburn[i]
@@ -139,40 +145,40 @@ def ImprovedWeightFracs(MTOW):
             W[i+1] = seg_Wfraction[i] * W[i] # modify weight value for next segment
         
         return T[:-1], cruise_fuelburn[:-1]
-
+    print('cruised')
     # Plot Cruise
-    for seg in [2,11,21,101]:
-        cruise_range = np.linspace(0,R / 6076.11549,seg)
-        plt.plot(cruise_range, getCruiseWfrac(seg), label='{} segments'.format(seg-1), marker='.')
+    # for seg in [2,11,21,101]:
+    #     cruise_range = np.linspace(0,R / 6076.11549,seg)
+    #     plt.plot(cruise_range, getCruiseWfrac(seg), label='{} segments'.format(seg-1), marker='.')
 
-    plt.legend(loc='best')
-    plt.title('Cruise Fuel Weight Fraction')
-    plt.xlabel('Cruise Range (nmi)')
-    plt.ylabel('Weight Fraction')
+    # plt.legend(loc='best')
+    # plt.title('Cruise Fuel Weight Fraction')
+    # plt.xlabel('Cruise Range (nmi)')
+    # plt.ylabel('Weight Fraction')
     # plt.show()
 
     # Plot Fuel Burn Consumption
-    for seg in [2,11,21,101]:
-        cruise_range = np.linspace(0,1000,seg)
-        T, fuelburn = getCruiseFuelBurn(seg)
-        plt.plot(cruise_range, fuelburn, label='{} segments'.format(seg-1), marker='.')
+    # for seg in [2,11,21,101]:
+    #     cruise_range = np.linspace(0,1000,seg)
+    #     T, fuelburn = getCruiseFuelBurn(seg)
+    #     plt.plot(cruise_range, fuelburn, label='{} segments'.format(seg-1), marker='.')
 
-    plt.legend(loc='best')
-    plt.title('Fuel Burn Consumption')
-    plt.xlabel('Cruise Range km')
-    plt.ylabel('Fuel Burn Consumption lbs')
+    # plt.legend(loc='best')
+    # plt.title('Fuel Burn Consumption')
+    # plt.xlabel('Cruise Range km')
+    # plt.ylabel('Fuel Burn Consumption lbs')
     # plt.show()
 
-    # Plot Thrust
-    for seg in [2,11,21,101]:
-        cruise_range = np.linspace(0,1000,seg)
-        T, fuelburn = getCruiseFuelBurn(seg)
-        plt.plot(cruise_range, T, label='{} segments'.format(seg-1), marker='.')
+    # # Plot Thrust
+    # for seg in [2,11,21,101]:
+    #     cruise_range = np.linspace(0,1000,seg)
+    #     T, fuelburn = getCruiseFuelBurn(seg)
+    #     plt.plot(cruise_range, T, label='{} segments'.format(seg-1), marker='.')
 
-    plt.legend(loc='best')
-    plt.title('Thrust')
-    plt.xlabel('Cruise Range km')
-    plt.ylabel('Thrust lbs')
+    # plt.legend(loc='best')
+    # plt.title('Thrust')
+    # plt.xlabel('Cruise Range km')
+    # plt.ylabel('Thrust lbs')
     # plt.show()
 
     cruise_Wfraction = getCruiseWfrac(101)[-1]
@@ -203,23 +209,23 @@ def ImprovedWeightFracs(MTOW):
     print('Landing: {}'.format(0.997))
     print()
     '''
-    total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
-    Wi_W0 = np.array([taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction, loiter_Wfraction, 0.995], float)
+    total_Wfraction = taxi_Wfraction * takeoff_Wfraction * climb_Wfraction**2 * cruise_Wfraction * loiter_Wfraction * 0.995 * 0.997
+    Wi_W0 = np.array([taxi_Wfraction, takeoff_Wfraction, climb_Wfraction, cruise_Wfraction,climb_Wfraction, loiter_Wfraction, 0.995], float)
     #print(Wi_W0)
     PHIvec = np.array([0, 0.1, # Taxi&Takeoff
           0.36, # Climb
           0, # Cruise
           0, # Descent
-          0 # Loiter
-          ],float) # Landing
+          0, # Loiter
+          0],float) # Landing
     e_f = 43.15*(1e6/1.3558179483314/0.06852177) 
     e_b= 500*(3600/1.3558179483314/0.06852177) # fpf/slug
     for i in range(len(Wi_W0)-1):
         Wi_W0[i+1] = Wi_W0[i]*Wi_W0[i+1]
-    #print(Wi_W0[:-1])
+    print(Wi_W0)
     #print(Wi_W0[1:])
-    Wb_W0 = sum(e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1]))) / 0.8 # battery fraction, divide by .8 for min charge
-    #print(Wb_W0)
+    Wb_W0 = e_f/e_b*(Wi_W0[:-1]-Wi_W0[1:])*(PHIvec[:-1]/(1-PHIvec[:-1])) / 0.8 # battery fraction, divide by .8 for min charge
+    print('Battery Weight Fraction: {}'.format(Wb_W0))
     Wb_W0 = 0.09
     W_bat = Wb_W0 * MTOW
     W_final = W_landing
@@ -229,11 +235,11 @@ def ImprovedWeightFracs(MTOW):
     print('Landing Weight:', W_final)
     print('Fuel Weight:', W_fuel)
     
-    plt.show()
+    # plt.show()
     return W_fuel, W_bat
 
 #a,b=ImprovedFuelFrac(70000)
 #print(a)
-#print(b)
-
-ImprovedWeightFracs(55000)  # Run at least twice
+# #print(b)
+if __name__ == "__main__":
+    ImprovedWeightFracs(55000)  # Run at least twice

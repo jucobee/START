@@ -1,6 +1,6 @@
 import numpy as np
 import math
-import ImprovedWeightFracs
+from ImprovedWeightFracs import ImprovedWeightFracs
 import os 
 
 '''
@@ -18,7 +18,7 @@ baggage/cargo
 nose landing gear
 main landing gear
 '''
-def WeightBuildUp():
+def WeightBuildUp(WS,WP):
     class WeightComponent:
         def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
             self.weight = W
@@ -44,8 +44,8 @@ def WeightBuildUp():
 
 
 
-    tol = 1
-    err = 50
+    tol = 1e-2
+    err = 1
     while err > tol:
         diam = 9
 
@@ -54,41 +54,42 @@ def WeightBuildUp():
         Wpassengers = passengers * wt_passengers  # Total weight of passengers
         Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-        Wfuel, Wbattery = ImprovedWeightFracs.ImprovedWeightFracs(MTOW)
+        Wfuel, Wbattery = ImprovedWeightFracs(MTOW)
 
         #Wbattery = MTOW * 0.11  # Battery weight
-        gas_turb = (((5950 / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
-        EM = (5950 / (5.22*1.34102209/2.20462262)) * 2  # Total electric motor weight
+        P_total = MTOW/WP
+        gas_turb = (((P_total / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
+        EM = (P_total / (5.22*1.34102209/2.20462262)) * 2  # Total electric motor weight
         Wengine = 2.575 * (((gas_turb + EM)/2)**0.922) * 2 # TOTAL ENGINE WEIGHT
 
-        Sw = 826.134   # Wing area
+        Sw = MTOW/WS   # Wing area
         bw = 115.76 # Wing span
         Wfw = Wfuel  # Weight of fuel in wing
-        ARw = 16.22  # Aspect ratio of wing
+        ARw = bw**2/Sw  # Aspect ratio of wing
         Gammaw = 5 * (np.pi / 180)   # Wing sweep angle
         lambdaw = 0.4 # Wing taper ratio
         tcw = 0.16    # Thickness to chord ratio of wing root 
-        Nz = 2.458 * 1.5    # Ultimate load factor; 1.5 x limit load factor
+        Nz = 2.5 * 1.5    # Ultimate load factor; 1.5 x limit load factor
         Wdg = MTOW  # Design gross weight
-        q = (0.0010651 * (590.733 ** 2)) / 2   # Dynamic pressure at cruise
+        q = (0.0010651 * (275*1.68780986)** 2) / 2   # Dynamic pressure at cruise
         Scsw = 0.2 * Sw
-        W_strut = 394 #approximate wing strut weight
+        W_strut = 394 #approximate wing strut weight <---????
 
         Wwing = 0.0051 * ((Wdg * Nz)**0.557) * (Sw**0.649) * (ARw**0.5) * (tcw**-0.4) * ((1+lambdaw)**0.1) * ((np.cos(Gammaw))**-1) * (Scsw**0.1) * 0.82 + W_strut
 
-        Sht = 94.19  # Area of horizantle tail
+        Sht = Sw/826.134*94.19  # Area of horizantle tail
         Gammaht = 16 * (np.pi / 180)  # Sweep angle of horizontal tail
         lambdah = 0.4  # Taper ratio of horizontal tail
         tch = 0.14      # Thickness to chord ratio of horizontal tail root
-        ARh = 4.4      # Aspect ratio of horizontal tail
-        Fw = 4.5
         bh = 20.36
+        ARh = bh**2/Sht      # Aspect ratio of horizontal tail
+        Fw = 4.5
         Lt = 40.5
         Ky = 0.3 * Lt
         Se = 0.1 * Sht
         Wht = 0.0379 * (1.143) * ((1+(Fw/bh))**-0.25) * (Wdg**0.639) * (Nz**0.1) * (Sht**0.75) * (Lt**-1) * (Ky**0.704) * ((np.cos(Gammaht))**-1) * (ARh**0.166) * ((1+(Se/Sht))**0.1) * 0.83
 
-        Svt = 146.09  # Area of vertical tail
+        Svt = Sw/826.134*146.09  # Area of vertical tail
         Gammavt = 30 * (np.pi / 180)  # Sweep angle of vertical tail
         lambdavt = 0.8 # Taper ratio of vertical tail
         tcv = 0.14  # Thickness to chord ratio of vertical tail root
