@@ -17,7 +17,6 @@ def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
             float) 
     '''
     
-    
     ## Assumptions:
     dpobj = dragpolar()
     g=32.17 # from Earth, ft/s^2

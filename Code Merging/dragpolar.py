@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 class dragpolar:
-    def __init__(self):
+    def __init__(self,AR=17.51):
         '''
         Legend for flight_stg:
 
@@ -94,7 +94,6 @@ class dragpolar:
             # print("Fuselage: ", all_components[3].CalculateDrag() / S_ref)
             # print("Nacelle: ", all_components[4].CalculateDrag() / S_ref)
 
-
             CD0s.append(Sumcomps + C_D_leakpro + C_D_missing)
         # print(CD0s)
 
@@ -120,11 +119,11 @@ class dragpolar:
 
         # plt.figure()
 
-        CD1=CD0s[0]+CDi1
-        CD2=CD0s[1]+CDi2
-        CD3=CD0s[2]+CDi3
-        CD4=CD0s[3]+CDi4
-        CD5=CD0s[4]+CDi5
+        CD1=CD0s[0]+np.array(CDi1)*17.51/AR
+        CD2=CD0s[1]+np.array(CDi2)*17.51/AR
+        CD3=CD0s[2]+np.array(CDi3)*17.51/AR
+        CD4=CD0s[3]+np.array(CDi4)*17.51/AR
+        CD5=CD0s[4]+np.array(CDi5)*17.51/AR
         self.CLs = [CL1,CL2,CL3,CL4,CL5]
         self.CDs = [CD1,CD2,CD3,CD4,CD5]
 

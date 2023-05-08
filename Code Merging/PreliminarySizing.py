@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from dragpolar import dragpolar
 from labellines import labelLines # pip install matplotlib-label-lines
 
-def PrelimSize():
+def PrelimSize(CL_max_L = 3.3):
     dpobj = dragpolar()
     
     ## Drag Polar Estimate
@@ -108,7 +108,7 @@ def PrelimSize():
         # return ((n_engines_max/n_engines)*((((k_s**2)/CL_max)*(CD_0))+(CL_max/((k_s**2)*np.pi*e_v*AR))+G))*np.ones(N)
         return ((n_engines_max/n_engines)*((dpobj.CD(cfg,CL_max))/CL_max+G))*np.ones(N)
 
-    CL_max_L = 3.3
+    # CL_max_L = 3.3
     # TO climb
     n_engines_max = 2
     n_engines = 1
@@ -214,7 +214,7 @@ def PrelimSize():
     wp_ceil = 550 / (tw_ceil * (V_target / eta_p_max))
 
     ## Approach Speed (in terms of stall speed)
-    CL_max_L = 3.3 # (Roskam)
+    # CL_max_L = 3.3 # (Roskam)
     V_a = 141*1.68780986 # ft/s approach speed, requirement
     V_so = V_a/1.3
     ws_approach_SLp18 = 1/2*rho_SLp18F*V_so**2*CL_max_L*np.ones(N)/Wl_Wto 
@@ -313,5 +313,6 @@ def PrelimSize():
 
     return ws_landing_SLp18[0],np.interp(ws_landing_SLp18[0],ws,np.minimum(wp_cruise_min,wp_tofl))
 
-# WS,WP = PrelimSize()
-# print(WS,WP)
+if __name__ == "__main__":
+    WS,WP = PrelimSize(CL_max_L=4)
+    print(WS,WP)
