@@ -4,7 +4,7 @@ from dragpolar import dragpolar
 from ambiance import Atmosphere
 
 
-def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
+def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec,R=1000,Rmax=1000):
     '''
     now using variable hybridization:
     PHIvec = np.array([[0, 0], # Taxi
@@ -15,6 +15,8 @@ def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
             [0, 0], # Loiter
             [0, 0]], # Landing
             float) 
+
+    also, use nmi for range
     '''
     
     ## Assumptions:
@@ -47,13 +49,14 @@ def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
         eta_p = 0.75 # assumed, Gudmundsson
         V = 275*1.6878098571   # needs update
         h=np.linspace(H[0],H[-1],seg+1) # height vector
-        dh = H[-1]-H[0] # change in height per segment\
+        dh = (H[-1]-H[0])/seg # change in height per segment\
         PSFC = np.linspace(PSFC[0],PSFC[1],seg+1)
         # print(PSFC)
         Wi = [Wi]
         NCR = 0
         for i in range(seg+1):
             rho = Atmosphere(h[i]/3.2808399).density[0]*0.00194032033 # initial density
+            # print(rho)
             q = rho/2*V**2 # dynamic pressure
             C_L = Wi[i]/(S*q);
             D = q*S*dpobj.CD(2,C_L)
@@ -65,10 +68,25 @@ def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
             Ps = V*(0.9*eta_p*P/V-D)/Wi[i]
             print(Ps)
             NCR += dh/Ps*V
-        return (Wi[-1]/Wi[0]), NCR
+        return (Wi[-1]/Wi[0]), NCR/6076.11549 
         
-    
-
+    def WF_cruise(Wi,R,PSFC,seg): # Cruise
+        eta_p = 0.75 # assumed, Gudmundsson
+        V = 275*1.6878098571   # needs update
+        PSFC = np.linspace(PSFC[0],PSFC[1],seg+1)
+        Wi = [Wi]
+        R=np.linspace(0,R,seg+1) # range vector
+        dR = H[-1]-H[0] # change in range per segment
+        for i in range(seg+1):
+            rho = Atmosphere(25000/3.2808399).density[0]*0.00194032033 # initial density
+            # print(rho)
+            q = rho/2*V**2 # dynamic pressure
+            C_L = Wi[i]/(S*q);
+            LoD = C_L / dpobj.CD(1,C_L)
+            Wjp1_Wj = np.exp(-PSFC[i]*dR/(eta_p * LoD))
+            # print(Wjp1_Wj)
+            Wi.append(Wjp1_Wj*Wi[-1])
+        return (Wi[-1]/Wi[0])
 
     ## Run the mission
     # Startup, Warmup, Taxi
@@ -84,8 +102,13 @@ def ImprovedWeightFracsV2(MTOW,WS,WP,PHIvec):
     # Climb
     H = [0,25000] # ft
     Wip1_Wi_Climb,NCR = WF_climb(Wf,H,PSFC_hybrid[2],101)
+    Wf = Wf*Wip1_Wi_Climb
 
-    print(Wip1_Wi_SWT,Wip1_Wi_TO,Wip1_Wi_Climb,NCR)
+    # Cruise
+    R = 1000-NCR
+    Wip1_Wi_Cruise = WF_cruise(Wf,R,PSFC_hybrid[3],101)
+
+    print(Wip1_Wi_SWT,Wip1_Wi_TO,Wip1_Wi_Climb,NCR,R,Wip1_Wi_Cruise)
     
     
     # PSFC_hybrid = 1/(eta_GB*e_f/g*(eta_GT+eta_PM*eta_EM1*(PHI/(1-PHI))))
