@@ -64,6 +64,7 @@ plt.xlabel('Range (nmi)')
 plt.ylabel('Payload (lbs)')
 plt.title('Payload Range')
 plt.legend()
+#plt.savefig('payloadrange.svg')
 plt.show()
 
   

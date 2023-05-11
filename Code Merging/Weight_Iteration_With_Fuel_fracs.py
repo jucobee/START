@@ -18,7 +18,7 @@ baggage/cargo
 nose landing gear
 main landing gear
 '''
-def WeightBuildUp(WS,WP):
+def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
     class WeightComponent:
         def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
             self.weight = W
@@ -32,7 +32,7 @@ def WeightBuildUp(WS,WP):
             self.Ixy = Ixy
             self.Iyz = Iyz
 
-    MTOW = 70000
+    MTOW = 50000
     pilots = 2 # Number of pilots
     attend = 1  # Number of attendants
     crew = pilots + attend # Total crew
@@ -41,7 +41,6 @@ def WeightBuildUp(WS,WP):
     wt_passengers = 200 # Weight of each passenger, lbs
     wt_crew_baggage = 30 # Weight of baggage for each crew member, lbs
     wt_pass_baggage = 40 # Weight of baggage for each passenger, lbs
-
 
 
     tol = 1e-2
@@ -54,7 +53,7 @@ def WeightBuildUp(WS,WP):
         Wpassengers = passengers * wt_passengers  # Total weight of passengers
         Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-        Wfuel, Wbattery = ImprovedWeightFracs(MTOW)
+        Wfuel, Wbattery = ImprovedWeightFracs(MTOW,V_cruise,ARw)
 
         #Wbattery = MTOW * 0.11  # Battery weight
         P_total = MTOW/WP
@@ -63,15 +62,17 @@ def WeightBuildUp(WS,WP):
         Wengine = 2.575 * (((gas_turb + EM)/2)**0.922) * 2 # TOTAL ENGINE WEIGHT
 
         Sw = MTOW/WS   # Wing area
-        bw = 115.76 # Wing span
+        bw = np.sqrt(Sw*ARw) # Wing Span
+        # print('span',Sw,ARw,bw)
+        # bw = 115.76 # Wing span
         Wfw = Wfuel  # Weight of fuel in wing
-        ARw = bw**2/Sw  # Aspect ratio of wing
+        # ARw = bw**2/Sw  # Aspect ratio of wing
         Gammaw = 5 * (np.pi / 180)   # Wing sweep angle
         lambdaw = 0.4 # Wing taper ratio
         tcw = 0.16    # Thickness to chord ratio of wing root 
         Nz = 2.5 * 1.5    # Ultimate load factor; 1.5 x limit load factor
         Wdg = MTOW  # Design gross weight
-        q = (0.0010651 * (275*1.68780986)** 2) / 2   # Dynamic pressure at cruise
+        q = (0.0010651 * (V_cruise)** 2) / 2   # Dynamic pressure at cruise
         Scsw = 0.2 * Sw
         W_strut = 394 #approximate wing strut weight <---????
 
@@ -281,18 +282,20 @@ def WeightBuildUp(WS,WP):
         MTOW = MTOWn
 
     print(MTOW)
-    print(xCG)
+    # print(xCG)
+    
+    return MTOW
 
 
-
-    # print('AAA')
-    name='STARTG01'
-    cd = os.getcwd() # Get current location of python script
-    print(cd)
-    with open('{}\\Planes\\{}\\{}.mass'.format(cd,name,name),'w') as file:
-        file.write('Lunit = 1 ft\nMunit = 0.03108486167 slug\nTunit = 1.0 s\n\n')
-        for comp in weightComponents:
-            file.write('{} {} {} {} {} {} {} {} {}\n'.format(comp.weight,comp.xCG,comp.yCG,comp.zCG,comp.Ixx,comp.Iyy,comp.Izz,comp.Ixz,comp.Ixy,comp.Iyz))
+    # # print('AAA')
+    # name='STARTG01'
+    # cd = os.getcwd() # Get current location of python script
+    # print(cd)
+    # with open('{}\\Planes\\{}\\{}.mass'.format(cd,name,name),'w') as file:
+    #     file.write('Lunit = 1 ft\nMunit = 0.03108486167 slug\nTunit = 1.0 s\n\n')
+    #     for comp in weightComponents:
+    #         file.write('{} {} {} {} {} {} {} {} {}\n'.format(comp.weight,comp.xCG,comp.yCG,comp.zCG,comp.Ixx,comp.Iyy,comp.Izz,comp.Ixz,comp.Ixy,comp.Iyz))
 
     # file.writelines(ComponentHeader('MASS DEFINTION'))
     # file.write(SectionHeader('MASS DEFINTION'))
+
