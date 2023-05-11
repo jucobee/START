@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 from dragpolar import dragpolar
+import openmdao.api as om
 from ambiance import Atmosphere
 
 
@@ -37,6 +38,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
     ## Dimensionalize:
     S = MTOW/WS
     P = MTOW/WP*550
+    seg_def = 3
 
     ## Defining Weight Fraction Functions
     def WF_SWT(Wi,t,PHI): # Startup, Warmup, Taxi
@@ -206,7 +208,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Climb
         H = [0,25000] # ft
-        Wip1_Wi_Climb,Wbi_Wi,NCR = WF_climb(Wi[-1],H,PHIvec[2],101)
+        Wip1_Wi_Climb,Wbi_Wi,NCR = WF_climb(Wi[-1],H,PHIvec[2],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_Climb)
         Wip1_Wi.append(Wip1_Wi_Climb)
         Wbip1_Wi.append(Wbi_Wi)
@@ -215,7 +217,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
         # Cruise
         R = R_req-NCR
         h=25000
-        Wip1_Wi_Cruise,Wbi_Wi = WF_cruise(Wi[-1],h,R,PHIvec[3],101)
+        Wip1_Wi_Cruise,Wbi_Wi = WF_cruise(Wi[-1],h,R,PHIvec[3],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_Cruise)
         Wip1_Wi.append(Wip1_Wi_Cruise)
         Wbip1_Wi.append(Wbi_Wi)
@@ -223,7 +225,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Descent 
         H = [25000,5000] # ft
-        Wip1_Wi_Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[4],101)
+        Wip1_Wi_Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[4],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_Descent)
         Wip1_Wi.append(Wip1_Wi_Descent)
         Wbip1_Wi.append(Wbi_Wi)
@@ -233,7 +235,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Divert Climb
         H = [5000,15000] # ft
-        Wip1_Wi_DClimb,Wbi_Wi,NCR = WF_climb(Wi[-1],H,PHIvec[5],101)
+        Wip1_Wi_DClimb,Wbi_Wi,NCR = WF_climb(Wi[-1],H,PHIvec[5],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_DClimb)
         Wip1_Wi.append(Wip1_Wi_DClimb)
         Wbip1_Wi.append(Wbi_Wi)
@@ -242,7 +244,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
         # Divert Cruise
         R = 200-NCR
         h= 15000
-        Wip1_Wi_DCruise,Wbi_Wi = WF_cruise(Wi[-1],h,R,PHIvec[7],101)
+        Wip1_Wi_DCruise,Wbi_Wi = WF_cruise(Wi[-1],h,R,PHIvec[7],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_DCruise)
         Wip1_Wi.append(Wip1_Wi_DCruise)
         Wbip1_Wi.append(Wbi_Wi)
@@ -250,7 +252,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Divert 1st Descent 
         H = [15000,0] # ft
-        Wip1_Wi_D1Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[8],101)
+        Wip1_Wi_D1Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[8],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_D1Descent)
         Wip1_Wi.append(Wip1_Wi_D1Descent)
         Wbip1_Wi.append(Wbi_Wi)
@@ -258,7 +260,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Loiter 
         E = 30*60 # s
-        Wip1_Wi_Loiter,Wbi_Wi = WF_loiter(Wi[-1],h,E,PHIvec[8],101)
+        Wip1_Wi_Loiter,Wbi_Wi = WF_loiter(Wi[-1],h,E,PHIvec[8],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_Loiter)
         Wip1_Wi.append(Wip1_Wi_Loiter)
         Wbip1_Wi.append(Wbi_Wi)
@@ -266,11 +268,11 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         # Divert Last Descent 
         H = [5000,0] # ft
-        Wip1_Wi_D2Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[9],101)
+        Wip1_Wi_D2Descent,Wbi_Wi = WF_descent(Wi[-1],H,PHIvec[9],seg_def)
         Wi.append(Wi[-1]*Wip1_Wi_D2Descent)
         Wip1_Wi.append(Wip1_Wi_D2Descent)
         Wbip1_Wi.append(Wbi_Wi)
-        print('Landing Weight: {:.3f}'.format(Wi[-1]))
+        # print('Landing Weight: {:.3f}'.format(Wi[-1]))
         
         Wb_W0 = sum(np.array(Wbip1_Wi)*np.array(Wi[0:-1])/Wi[0])
         Wf_W0 = (Wi[0]-Wi[-1])/Wi[0]
@@ -280,7 +282,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
 
     Wb_W0,Wf_W0 = runMission(PHIvec,R_req)
-    print('{:.0f} nmi block fuel: {:.3f}'.format(R_req,Wf_W0*MTOW))
+    # print('{:.0f} nmi block fuel: {:.3f}'.format(R_req,Wf_W0*MTOW))
 
     # Wb_W0,Wf_W0 = runMission(PHIvec,R_req=500)
     # print('500 nmi block fuel: {:.3f}'.format(Wf_W0*MTOW))
