@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from ImprovedWeightFracs import ImprovedWeightFracs
+from ImprovedWeightFracsV2 import MissionFractions
 import os 
 
 '''
@@ -18,7 +19,7 @@ baggage/cargo
 nose landing gear
 main landing gear
 '''
-def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
+def WeightBuildUp(WS,WP,PHIvec,V_cruise=1.68780986*275,ARw=17.5,):
     class WeightComponent:
         def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
             self.weight = W
@@ -43,8 +44,8 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
     wt_pass_baggage = 40 # Weight of baggage for each passenger, lbs
 
 
-    tol = 1e-2
-    err = 1
+    tol = 1
+    err = 1.1
     while err > tol:
         diam = 9
 
@@ -53,7 +54,12 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
         Wpassengers = passengers * wt_passengers  # Total weight of passengers
         Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-        Wfuel, Wbattery = ImprovedWeightFracs(MTOW,V_cruise,ARw)
+        
+
+        Wb_W0,Wf_W0 = MissionFractions(MTOW,WS,WP,PHIvec,R_req=1000,Rmax=1000)
+
+        Wfuel=Wf_W0*MTOW
+        Wbattery=Wb_W0*MTOW
 
         #Wbattery = MTOW * 0.11  # Battery weight
         P_total = MTOW/WP
@@ -299,3 +305,19 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
     # file.writelines(ComponentHeader('MASS DEFINTION'))
     # file.write(SectionHeader('MASS DEFINTION'))
 
+if __name__ == "__main__":
+    WS = 69.36423531558572
+    WP = 8.564498702867692
+    PHIvec = np.array([[0, 0], # Taxi
+            [0.36, 0.36],      # Takeoff
+            [0.2, 0.2],        # Climb
+            [0, 0],            # Cruise
+            [0, 0],            # Descent
+            [0, 0],            # Divert Climb
+            [0, 0],            # Divert
+            [0, 0],            # Divert First Descent
+            [0, 0],            # Loiter
+            [0, 0],            # Divert Final Descent
+            [0, 0]],           # Landing
+            float)
+    WeightBuildUp(WS,WP,PHIvec,V_cruise=1.68780986*275,ARw=17.51)
