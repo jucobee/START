@@ -1,26 +1,18 @@
 ...Comp Geom...
 1 Num Comps
-2 Total Num Meshes
-2800 Total Num Tris
+1 Total Num Meshes
+3560 Total Num Tris
 
 Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
-  839.330    839.330    264.375    264.375  Main Wing      
-  839.399    839.399    265.306    265.306  Main Wing      
+ 1938.995   1938.995   3939.005   3939.005  Fuselage       
 -------------------------------------------------
- 1678.729   1678.729    529.681    529.681  Totals         
+ 1938.995   1938.995   3939.005   3939.005  Totals         
 
 Tag_Theo_Area   Tag_Wet_Area    Tag_Name
-      650.644        650.644    Main Wing_Surf0
-      650.742        650.742    Main Wing_Surf1
-       24.392         24.392    Main Wing_Surf0,SS_CONT_0
-       26.826         26.826    Main Wing_Surf0,SS_CONT_1
-       11.107         11.107    Main Wing_Surf0,SS_CONT_2
-       57.595         57.595    Main Wing_Surf0,SS_CONT_3
-       52.259         52.259    Main Wing_Surf0,SS_CONT_4
-       16.508         16.508    Main Wing_Surf0,SS_CONT_5
-       24.392         24.392    Main Wing_Surf1,SS_CONT_0
-       26.826         26.826    Main Wing_Surf1,SS_CONT_1
-       11.107         11.107    Main Wing_Surf1,SS_CONT_2
-       57.576         57.576    Main Wing_Surf1,SS_CONT_3
-       52.262         52.262    Main Wing_Surf1,SS_CONT_4
-       16.494         16.494    Main Wing_Surf1,SS_CONT_5
+       13.421         13.421    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door
+       12.699         12.699    Fuselage_Surf0,Passenger Door,Passenger Door
+       20.111         20.111    Fuselage_Surf0,Aft Cargo Hold Door,Passenger Door
+     1847.112       1847.112    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door
+       18.999         18.999    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Forward Cargo Hold Door,Passenger Door
+        9.124          9.124    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,Passenger Door
+       17.529         17.529    Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,SS_RECT_5

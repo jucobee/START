@@ -28,7 +28,7 @@ def dragDragComponents(M, rho, V, mu):
     hTail.S_wet = 186.192
     vTail.S_wet = 286.139
     nacelle.S_wet = 127.751
-    fuselage.S_wet = 1830.348
+    fuselage.S_wet = 1939
     # Reference Lengths for Cf
     fuselage_L = 79     #ft
     nacelle_L = 18.543
@@ -41,6 +41,7 @@ def dragDragComponents(M, rho, V, mu):
     ReV = (rho * V * v_tail_L) / mu
     ReN = (rho * V * nacelle_L) / mu
     ReF = (rho * V * fuselage_L) / mu
+    
 
 
     # Max thickness of wings and tails (ratio)
@@ -62,6 +63,7 @@ def dragDragComponents(M, rho, V, mu):
     # Fuselage form factor
     Amax =  86.1771 # Maximum cross sectional area of fuselage
     f = fuselage_L / (np.sqrt((4/np.pi)*Amax)) # Fineness Ratio
+    #print("Fineness ratio: {}".format(f))
     if f < 6:
         fuselage.FF = (0.9 + (5 / (f**1.5)) + (f/400))
     else:
@@ -70,7 +72,7 @@ def dragDragComponents(M, rho, V, mu):
 
     # Nacelle form factor
     nacelle.FF = (1 + (0.35/f))
-
+    
 
     # Wings and tails
     wing.FF = (1 + (0.6 / xc_wing)*tc_wing + 100*(tc_wing**4)) * (1.34 * (M**0.18)*(np.cos(gammaW)**0.28))
@@ -82,15 +84,19 @@ def dragDragComponents(M, rho, V, mu):
 
     def Cfcalc(Re, wL, wT):
         Cf_lam = 1.328 / np.sqrt(Re)
+        #print(Cf_lam)
         Cf_turb = 0.455 / (((np.log10(Re))**2.58) * ((1 + 0.144*(M**2))**0.65))
+        #print(Cf_turb)
         Cf = (Cf_lam * wL) + (Cf_turb * wT)
         return Cf
     
-    wing.C_f = Cfcalc(ReW, 0.5, 0.5)
-    hTail.C_f = Cfcalc(ReH, 0.5, 0.5)
-    vTail.C_f = Cfcalc(ReV, 0.5, 0.5)
-    fuselage.C_f = Cfcalc(ReF, 0.25, 0.75)
-    nacelle.C_f = Cfcalc(ReN, 0.1, 0.9)
+    wing.C_f = Cfcalc(ReW, 500000/ReW, 1-(500000/ReW))
+    #print(wing.C_f)
+    hTail.C_f = Cfcalc(ReH, 500000/ReH, 1-(500000/ReH))
+    vTail.C_f = Cfcalc(ReV, 500000/ReV, 1-(500000/ReV))
+    fuselage.C_f = Cfcalc(ReF, 500000/ReF, 1-500000/ReF)
+    #print(fuselage.C_f)
+    nacelle.C_f = Cfcalc(ReN, 500000/ReN, 1-(500000/ReN))
 
     return [wing, hTail, vTail, fuselage, nacelle]
     
