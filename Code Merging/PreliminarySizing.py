@@ -3,8 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dragpolar import dragpolar
 from labellines import labelLines # pip install matplotlib-label-lines
+from PowerMatrix import PowertrainMatrix
 
-def PrelimSize(CL_max_L = 3.3):
+def PrelimSize(PHIvec,CL_max_L = 3.3,verbose=False):
     dpobj = dragpolar()
     
     ## Drag Polar Estimate
@@ -228,7 +229,7 @@ def PrelimSize(CL_max_L = 3.3):
     ws_landing_SLp18=(((rho_SLp18F/rho_SL)*CL_max_L)*(s_L - s_a))/80*np.ones(N)/Wl_Wto
     ws_landing_p18_5kft=(((rho_p18F_5kft/rho_SL)*CL_max_L)*(s_L - s_a))/80*np.ones(N)/Wl_Wto
 
-
+    '''
     # plotting TW
     # plt.figure(figsize=(8,7))
     # plt.title('T/W - W/S')
@@ -263,57 +264,132 @@ def PrelimSize(CL_max_L = 3.3):
     # plt.savefig('A3fig/TW_Plot.svg')
     # plt.legend(loc='best')
     # plt.show()
-
+    '''
     # plotting WP
-    plt.figure(figsize=(8,7))
+    if verbose == True:
+        plt.figure(figsize=(8,7))
 
-    plt.title('W/P - W/S')
-    plt.xlabel("W/S $(lb/ft^2)$")
-    plt.ylabel("W/P $(lbm/bhp)$")
+        plt.title('W/P - W/S')
+        plt.xlabel("W/S $(lb/ft^2)$")
+        plt.ylabel("W/P $(lbm/bhp)$")
 
-    plt.plot(ws, wp_tofl, label='Takeoff field length, ISA+18F', linestyle='-')
-    plt.plot(ws, wp_tofl_5kft, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
+        plt.plot(ws, wp_tofl, label='Takeoff field length, ISA+18F', linestyle='-')
+        plt.plot(ws, wp_tofl_5kft, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
 
-    # plt.plot(ws_tofl, wp, label='Takeoff field length, ISA+18F', linestyle='-')
-    # plt.plot(ws_tofl_5kft, wp, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
+        plt.plot(ws, wp_climb_TO, label='Takeoff climb OEI', linestyle='-')
+        plt.plot(ws, wp_climb_TC, label='Transition climb OEI', linestyle='-')
+        plt.plot(ws, wp_climb_SSC, label='Second Segment Climb OEI', linestyle='-')
+        plt.plot(ws, wp_climb_ERC, label='En-route CLimb OEI', linestyle='-')
+        plt.plot(ws, wp_climb_BLC_AEO, label='Balked Landing Climb AEO', linestyle='-')
+        plt.plot(ws, wp_climb_BLC_OEI, label='Balked Landing Climb OEI', linestyle='-')
 
-    plt.plot(ws, wp_climb_TO, label='Takeoff climb OEI', linestyle='-')
-    plt.plot(ws, wp_climb_TC, label='Transition climb OEI', linestyle='-')
-    plt.plot(ws, wp_climb_SSC, label='Second Segment Climb OEI', linestyle='-')
-    plt.plot(ws, wp_climb_ERC, label='En-route CLimb OEI', linestyle='-')
-    plt.plot(ws, wp_climb_BLC_AEO, label='Balked Landing Climb AEO', linestyle='-')
-    plt.plot(ws, wp_climb_BLC_OEI, label='Balked Landing Climb OEI', linestyle='-')
+        plt.plot(ws, wp_ceil, label='Ceiling', linestyle='-')
 
-    plt.plot(ws, wp_ceil, label='Ceiling', linestyle='-')
-    # plt.plot(ws, wp_maneuver, label='2.5g Maneuver', linestyle='-')
+        plt.plot(ws, wp_cruise_min, label='25kft Cruise @ 275kts', linestyle='-')
+        plt.plot(ws, wp_cruise_target, label='25kft Cruise @ 350kts', linestyle='-')
 
-    plt.plot(ws, wp_cruise_min, label='28kft Cruise @ 275kts', linestyle='-')
-    plt.plot(ws, wp_cruise_target, label='28kft Cruise @ 350kts', linestyle='-')
+        plt.plot(ws_approach_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Approach @ 141kts, ISA+18F', linestyle='-')
+        plt.plot(ws_approach_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Approach @ 141kts, ISA+18F, 5kft', linestyle='-')
+        plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
+        plt.plot(ws_landing_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Landing field length, ISA+18F, 5kft', linestyle='-')
 
-    plt.plot(ws_approach_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Approach @ 141kts, ISA+18F', linestyle='-')
-    plt.plot(ws_approach_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Approach @ 141kts, ISA+18F, 5kft', linestyle='-')
-    plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
-    plt.plot(ws_landing_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Landing field length, ISA+18F, 5kft', linestyle='-')
+        plt.ylim(0, 30), plt.xlim(0, 170)
 
-    # plt.plot(ws, tw_climb, label='Takeoff climb', linestyle='-')
+        plt.minorticks_on()
+        labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
+        plt.scatter(ws_landing_SLp18[0],wp_climb_BLC_OEI[0], zorder=5,color='red',label='Design Point')
 
-    plt.ylim(0, 30), plt.xlim(0, 170)
-    # plt.grid()
-    plt.minorticks_on()
-    labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
-    plt.scatter(ws_landing_SLp18[0],wp_climb_BLC_OEI[0], zorder=5,color='red',label='Design Point')
+        
+
+        plt.fill_between(
+                x= ws, 
+                y1= np.minimum(wp_cruise_min,wp_tofl),
+                where= (0 < ws)&(ws <= ws_landing_SLp18[0]),
+                color= "b",
+                alpha= 0.2)
+    
 
 
-    plt.fill_between(
-            x= ws, 
-            y1= np.minimum(wp_cruise_min,wp_tofl),
-            where= (0 < ws)&(ws <= ws_landing_SLp18[0]),
-            color= "b",
-            alpha= 0.2)
+    # plot GT and EM1 requirements
+    PT_TO = PowertrainMatrix((PHIvec[1][0]),0)+1e-10
+    PT_climb = PowertrainMatrix(np.max(PHIvec[2]),0)+1e-10
+    PT_cruise = PowertrainMatrix(np.max(PHIvec[3]),0)+1e-10
+    
+    # PT_landing = PowertrainMatrix(np.max(PHIvec[10]),0)
+
+    # plt.figure(figsize=(8,7))
+    # GT
+    wp_tofl_GT = wp_tofl/PT_TO[1]
+    wp_climb_BLC_OEI_GT = wp_climb_BLC_OEI/PT_climb[1]
+    wp_cruise_min_GT =  wp_cruise_min/PT_cruise[1]
+
+    if verbose == True:
+        plt.figure(figsize=(8,7))
+        plt.plot(ws, wp_tofl_GT, label='Takeoff field length, ISA+18F', linestyle='-')
+        plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
+        plt.plot(ws, wp_climb_BLC_OEI_GT, label='Balked Landing Climb OEI', linestyle='-')
+        plt.plot(ws, wp_cruise_min_GT, label='25kft Cruise @ 275kts', linestyle='-')
+        plt.ylim(0, 30), plt.xlim(0, 170)
+        labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
+
+    WP_GT = np.interp(ws_landing_SLp18[0],ws,np.minimum(np.minimum(wp_cruise_min_GT,wp_tofl_GT),wp_climb_BLC_OEI_GT))
+
+    
+    # EM1
+    wp_tofl_EM1 = abs(wp_tofl/PT_TO[4])
+    wp_climb_BLC_OEI_EM1 = abs(wp_climb_BLC_OEI/PT_climb[4])
+    wp_cruise_min_EM1 =  abs(wp_cruise_min/PT_cruise[4])
+    if verbose == True:
+        plt.figure(figsize=(8,7))
+        plt.plot(ws, wp_tofl_EM1, label='Takeoff field length, ISA+18F', linestyle='-')
+        plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
+        plt.plot(ws, wp_climb_BLC_OEI_EM1, label='Balked Landing Climb OEI', linestyle='-')
+        plt.plot(ws, wp_cruise_min_EM1, label='25kft Cruise @ 275kts', linestyle='-')
+        plt.ylim(0, 30), plt.xlim(0, 170)
+        labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
+
+    WP_EM1 = np.interp(ws_landing_SLp18[0],ws,np.minimum(np.minimum(wp_cruise_min_EM1,wp_tofl_EM1),wp_climb_BLC_OEI_EM1))
+
     plt.show()
-    return ws_landing_SLp18[0],np.interp(ws_landing_SLp18[0],ws,np.minimum(wp_cruise_min,wp_tofl))
+    return ws_landing_SLp18[0],np.interp(ws_landing_SLp18[0],ws,np.minimum(wp_cruise_min,wp_tofl)),WP_GT,WP_EM1
 
 if __name__ == "__main__":
-    
-    WS,WP = PrelimSize(CL_max_L=3.3)
-    print(WS,WP)
+    PHIvec = np.array([[0, 0], # 0: Taxi
+        [0.36, 0.36],      # 1: Takeoff
+        [0.2, 0.2],        # 2: Climb
+        [0, 0],            # 3: Cruise
+        [0, 0],            # 4: Descent
+        [0, 0],            # 5: Divert Climb
+        [0, 0],            # 6: Divert
+        [0, 0],            # 7: Divert First Descent
+        [0, 0],            # 8: Loiter
+        [0, 0],            # 9: Divert Final Descent
+        [0, 0]],           # 10: Landing
+        float)
+    PHIvec = np.array([[0.06369971, 0.31903651],
+            [0.96385417, 0.71884486],
+            [0.96173562, 0.00945743],
+            [0.21274627, 0.78550783],
+            [0.99974305, 0.00426302],
+            [0.00117523, 0.16083328],
+            [0.04747238, 0.07949061],
+            [0.127311  , 0.25506034],
+            [1.        , 0.08457946],
+            [0.3926251 , 0.07309257],
+            [0.38544507, 0.05145903]],           # 10: Landing
+            float)
+    PHIvec = np.array([[1.32516673e-09, 7.18779952e-13],
+            [1.66439223e-01, 3.60000000e-01],
+            [1.09784120e-07, 1.10974506e-01],
+            [4.47433200e-08, 4.28847835e-08],
+            [9.99975897e-01, 1.05208305e-07],
+            [2.75081443e-09, 2.45336508e-09],
+            [1.42694826e-12, 8.91842679e-14],
+            [5.50808210e-09, 5.45565654e-09],
+            [2.24460494e-10, 1.34217063e-08],
+            [9.99998986e-01, 1.73535430e-08],
+            [0.00000000e+00, 1.00000000e-06]],           # 10: Landing
+            float)    
+
+    WS,WP,WP_GT,WP_EM1 = PrelimSize(PHIvec,CL_max_L=3.3,verbose=True)
+    print(WS,WP,WP_GT,WP_EM1)

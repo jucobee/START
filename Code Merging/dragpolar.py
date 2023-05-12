@@ -119,11 +119,17 @@ class dragpolar:
 
         # plt.figure()
 
-        CD1=CD0s[0]+np.array(CDi1)*17.51/AR
-        CD2=CD0s[1]+np.array(CDi2)*17.51/AR
-        CD3=CD0s[2]+np.array(CDi3)*17.51/AR
-        CD4=CD0s[3]+np.array(CDi4)*17.51/AR
-        CD5=CD0s[4]+np.array(CDi5)*17.51/AR
+        # CD1=CD0s[0]+np.array(CDi1)*17.51/AR
+        # CD2=CD0s[1]+np.array(CDi2)*17.51/AR
+        # CD3=CD0s[2]+np.array(CDi3)*17.51/AR
+        # CD4=CD0s[3]+np.array(CDi4)*17.51/AR
+        # CD5=CD0s[4]+np.array(CDi5)*17.51/AR
+
+        CD1=0.02+np.array(CDi1)*17.51/AR
+        CD2=0.02+np.array(CDi2)*17.51/AR
+        CD3=0.02+np.array(CDi3)*17.51/AR
+        CD4=0.02+np.array(CDi4)*17.51/AR
+        CD5=0.02+np.array(CDi5)*17.51/AR
         self.CLs = [CL1,CL2,CL3,CL4,CL5]
         self.CDs = [CD1,CD2,CD3,CD4,CD5]
 
