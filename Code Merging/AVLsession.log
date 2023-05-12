@@ -1,0 +1,102 @@
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.35
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+  Caveat computor
+ ===================================================
+
+ ==========================================================
+   Quit    Exit program
+
+  .OPER    Compute operating-point run cases
+  .MODE    Eigenvalue analysis of run cases
+  .TIME    Time-domain calculations
+
+   LOAD f  Read configuration input file
+   MASS f  Read mass distribution file
+   CASE f  Read run case file
+
+   CINI    Clear and initialize run cases
+   MSET i  Apply mass file data to stored run case(s)
+
+  .PLOP    Plotting options
+   NAME s  Specify new configuration name
+
+ AVL   c>   
+ Reading file: Planes/STARTG01/STARTG01.avl  ...
+
+ Configuration: STARTG01                                                    
+ 
+   Building surface: Main Wing                               
+
+ ** Read error on line   43 ...
+ Airfoils/NACA 64-210.dat
+ ** File not processed. Current geometry may be corrupted.
+
+ AVL   c>   
+ Mass distribution read ...
+ 
+ Mass        =   0.4968E+05  Munit
+ Mass        =    1544.      slug
+ 
+ Ref. x,y,z  =    0.000       0.000       0.000      Lunit
+ C.G. x,y,z  =    3.424       0.000       0.000      Lunit
+ C.G. x,y,z  =    3.424       0.000       0.000      ft
+ 
+ Ixx -Ixy -Ixz   |    0.000       0.000       0.000      |
+      Iyy -Iyz = |               0.1222E+06   0.000      |  slug-ft^2
+           Izz   |                           0.1222E+06  |
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Apparent mass, inertia
+ 
+ mxx  mxy  mxz   |    0.000       0.000       0.000      |
+      myy  myz = |                0.000       0.000      |  slug
+           mzz   |                            0.000      |
+ 
+ Ixx -Ixy -Ixz   |    0.000       0.000       0.000      |
+      Iyy -Iyz = |                0.000       0.000      |  slug-ft^2
+           Izz   |                            0.000      |
+ 
+ Use MSET to apply these mass,inertias to run cases
+
+ AVL   c>  
+ Enter index of target run case (0=all, -1=abort):  0
+
+ AVL   c>   
+ * Configuration not defined
+
+ AVL   c>   M    command not recognized.  Type a "?" for list
+
+ AVL   c>   G    command not recognized.  Type a "?" for list
+
+ AVL   c>   D    command not recognized.  Type a "?" for list
+
+ AVL   c>  
+ AVL   c>  
+ AVL   c>   
+ * Configuration not defined
+
+ AVL   c>   A    command not recognized.  Type a "?" for list
+
+ AVL   c>   D    command not recognized.  Type a "?" for list
+
+ AVL   c>   D    command not recognized.  Type a "?" for list
+
+ AVL   c>   D    command not recognized.  Type a "?" for list
+
+ AVL   c>   X    command not recognized.  Type a "?" for list
+
+ AVL   c>   MRF  command not recognized.  Type a "?" for list
+
+ AVL   c>   FT   command not recognized.  Type a "?" for list
+
+ AVL   c>   POLA command not recognized.  Type a "?" for list
+
+ AVL   c>   O    command not recognized.  Type a "?" for list
+
+ AVL   c>  
+ AVL   c>  
