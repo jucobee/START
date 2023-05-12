@@ -265,54 +265,55 @@ def PrelimSize(CL_max_L = 3.3):
     # plt.show()
 
     # plotting WP
-    # plt.figure(figsize=(8,7))
+    plt.figure(figsize=(8,7))
 
-    # plt.title('W/P - W/S')
-    # plt.xlabel("W/S $(lb/ft^2)$")
-    # plt.ylabel("W/P $(lbm/bhp)$")
+    plt.title('W/P - W/S')
+    plt.xlabel("W/S $(lb/ft^2)$")
+    plt.ylabel("W/P $(lbm/bhp)$")
 
-    # plt.plot(ws, wp_tofl, label='Takeoff field length, ISA+18F', linestyle='-')
-    # plt.plot(ws, wp_tofl_5kft, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
+    plt.plot(ws, wp_tofl, label='Takeoff field length, ISA+18F', linestyle='-')
+    plt.plot(ws, wp_tofl_5kft, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
 
-    # # plt.plot(ws_tofl, wp, label='Takeoff field length, ISA+18F', linestyle='-')
-    # # plt.plot(ws_tofl_5kft, wp, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
+    # plt.plot(ws_tofl, wp, label='Takeoff field length, ISA+18F', linestyle='-')
+    # plt.plot(ws_tofl_5kft, wp, label='Takeoff field length, ISA+18F, 5kft', linestyle='-')
 
-    # plt.plot(ws, wp_climb_TO, label='Takeoff climb OEI', linestyle='-')
-    # plt.plot(ws, wp_climb_TC, label='Transition climb OEI', linestyle='-')
-    # plt.plot(ws, wp_climb_SSC, label='Second Segment Climb OEI', linestyle='-')
-    # plt.plot(ws, wp_climb_ERC, label='En-route CLimb OEI', linestyle='-')
-    # plt.plot(ws, wp_climb_BLC_AEO, label='Balked Landing Climb AEO', linestyle='-')
-    # plt.plot(ws, wp_climb_BLC_OEI, label='Balked Landing Climb OEI', linestyle='-')
+    plt.plot(ws, wp_climb_TO, label='Takeoff climb OEI', linestyle='-')
+    plt.plot(ws, wp_climb_TC, label='Transition climb OEI', linestyle='-')
+    plt.plot(ws, wp_climb_SSC, label='Second Segment Climb OEI', linestyle='-')
+    plt.plot(ws, wp_climb_ERC, label='En-route CLimb OEI', linestyle='-')
+    plt.plot(ws, wp_climb_BLC_AEO, label='Balked Landing Climb AEO', linestyle='-')
+    plt.plot(ws, wp_climb_BLC_OEI, label='Balked Landing Climb OEI', linestyle='-')
 
-    # plt.plot(ws, wp_ceil, label='Ceiling', linestyle='-')
-    # # plt.plot(ws, wp_maneuver, label='2.5g Maneuver', linestyle='-')
+    plt.plot(ws, wp_ceil, label='Ceiling', linestyle='-')
+    # plt.plot(ws, wp_maneuver, label='2.5g Maneuver', linestyle='-')
 
-    # plt.plot(ws, wp_cruise_min, label='28kft Cruise @ 275kts', linestyle='-')
-    # plt.plot(ws, wp_cruise_target, label='28kft Cruise @ 350kts', linestyle='-')
+    plt.plot(ws, wp_cruise_min, label='28kft Cruise @ 275kts', linestyle='-')
+    plt.plot(ws, wp_cruise_target, label='28kft Cruise @ 350kts', linestyle='-')
 
-    # plt.plot(ws_approach_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Approach @ 141kts, ISA+18F', linestyle='-')
-    # plt.plot(ws_approach_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Approach @ 141kts, ISA+18F, 5kft', linestyle='-')
-    # plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
-    # plt.plot(ws_landing_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Landing field length, ISA+18F, 5kft', linestyle='-')
+    plt.plot(ws_approach_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Approach @ 141kts, ISA+18F', linestyle='-')
+    plt.plot(ws_approach_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Approach @ 141kts, ISA+18F, 5kft', linestyle='-')
+    plt.plot(ws_landing_SLp18[int(N/7):], np.flip(wp)[int(N/7):], label='Landing field length, ISA+18F', linestyle='-')
+    plt.plot(ws_landing_p18_5kft[int(N/6):], np.flip(wp)[int(N/6):], label='Landing field length, ISA+18F, 5kft', linestyle='-')
 
-    # # plt.plot(ws, tw_climb, label='Takeoff climb', linestyle='-')
+    # plt.plot(ws, tw_climb, label='Takeoff climb', linestyle='-')
 
-    # plt.ylim(0, 30), plt.xlim(0, 170)
-    # # plt.grid()
-    # plt.minorticks_on()
-    # labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
-    # plt.scatter(ws_landing_SLp18[0],wp_climb_BLC_OEI[0], zorder=5,color='red',label='Design Point')
+    plt.ylim(0, 30), plt.xlim(0, 170)
+    # plt.grid()
+    plt.minorticks_on()
+    labelLines(plt.gca().get_lines(), zorder=2.5,fontsize = 7,xvals=(0,150))
+    plt.scatter(ws_landing_SLp18[0],wp_climb_BLC_OEI[0], zorder=5,color='red',label='Design Point')
 
 
-    # plt.fill_between(
-    #         x= ws, 
-    #         y1= np.minimum(wp_cruise_min,wp_tofl),
-    #         where= (0 < ws)&(ws <= ws_landing_SLp18[0]),
-    #         color= "b",
-    #         alpha= 0.2)
-
+    plt.fill_between(
+            x= ws, 
+            y1= np.minimum(wp_cruise_min,wp_tofl),
+            where= (0 < ws)&(ws <= ws_landing_SLp18[0]),
+            color= "b",
+            alpha= 0.2)
+    plt.show()
     return ws_landing_SLp18[0],np.interp(ws_landing_SLp18[0],ws,np.minimum(wp_cruise_min,wp_tofl))
 
 if __name__ == "__main__":
-    WS,WP = PrelimSize(CL_max_L=4)
+    
+    WS,WP = PrelimSize(CL_max_L=3.3)
     print(WS,WP)

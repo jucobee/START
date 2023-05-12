@@ -1,6 +1,8 @@
 import numpy as np
 import math
 from ImprovedWeightFracs import ImprovedWeightFracs
+from ImprovedWeightFracsV2 import MissionFractions
+import openmdao.api as om
 import os 
 
 '''
@@ -18,7 +20,7 @@ baggage/cargo
 nose landing gear
 main landing gear
 '''
-def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
+def WeightBuildUp(WS,WP,PHIvec,V_cruise=1.68780986*275,ARw=17.5,):
     class WeightComponent:
         def __init__(self, W=0, xCG=0, yCG=0, zCG=0,Ixx=0,Iyy=0,Izz=0,Ixz=0,Ixy=0,Iyz=0):
             self.weight = W
@@ -32,7 +34,7 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
             self.Ixy = Ixy
             self.Iyz = Iyz
 
-    MTOW = 50000
+    MTOW = 46000
     pilots = 2 # Number of pilots
     attend = 1  # Number of attendants
     crew = pilots + attend # Total crew
@@ -43,8 +45,8 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
     wt_pass_baggage = 40 # Weight of baggage for each passenger, lbs
 
 
-    tol = 1e-2
-    err = 1
+    tol = 1
+    err = 1.1
     while err > tol:
         diam = 9
 
@@ -53,13 +55,25 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
         Wpassengers = passengers * wt_passengers  # Total weight of passengers
         Wbaggage = (wt_crew_baggage * crew) + (wt_pass_baggage * passengers)  # Total weight of baggage in hold
 
-        Wfuel, Wbattery = ImprovedWeightFracs(MTOW,V_cruise,ARw)
+        
+
+        Wb_W0,Wf_W0 = MissionFractions(MTOW,WS,WP,PHIvec,R_req=1000,Rmax=1000)
+
+        Wfuel=Wf_W0*MTOW
+        Wbattery=Wb_W0*MTOW
 
         #Wbattery = MTOW * 0.11  # Battery weight
         P_total = MTOW/WP
-        gas_turb = (((P_total / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
-        EM = (P_total / (5.22*1.34102209/2.20462262)) * 2  # Total electric motor weight
-        Wengine = 2.575 * (((gas_turb + EM)/2)**0.922) * 2 # TOTAL ENGINE WEIGHT
+        P_GT = P_total*(1-PHIvec[1][0])
+        P_EM = P_total*PHIvec[1][0]
+
+
+        
+        gas_turb = (((P_GT / 2)**0.9306) * 10**(-0.1205)) * 2  # Total gas turbine engine weight
+        EM = (P_EM / (5.22*1.34102209/2.20462262))  # Total electric motor weight, 5.22 kW/kg --> hp/lbf
+        Wengine = 2.575 * (((gas_turb)/2)**0.922) * 2 + EM # TOTAL ENGINE WEIGHT
+        
+        
 
         Sw = MTOW/WS   # Wing area
         bw = np.sqrt(Sw*ARw) # Wing Span
@@ -280,11 +294,13 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
 
         err = abs(MTOWn - MTOW)
         MTOW = MTOWn
-
+    print('GT: {:.3f}, EM: {:.3f}, W_engine: {:.3f}'.format(P_GT/gas_turb,P_EM/EM,P_total/Wengine))
     print(MTOW)
     # print(xCG)
-    
-    return MTOW
+    if math.isnan(MTOW):
+        return (1e7,1e7)
+    else:
+        return MTOW,Wfuel
 
 
     # # print('AAA')
@@ -299,3 +315,90 @@ def WeightBuildUp(WS,WP,V_cruise=1.68780986*275,ARw=17.5):
     # file.writelines(ComponentHeader('MASS DEFINTION'))
     # file.write(SectionHeader('MASS DEFINTION'))
 
+class BlockFuelOPT(om.ExplicitComponent):
+    """
+    Mission Analysis
+    """
+
+    def setup(self):
+        # Global Design Variable
+        self.add_input('PHIvec', val = np.array([[0, 0], # Taxi
+            [0.36, 0.36],      # Takeoff
+            [0.2, 0.2],        # Climb
+            [0, 0],            # Cruise
+            [0, 0],            # Descent
+            [0, 0],            # Divert Climb
+            [0, 0],            # Divert
+            [0, 0],            # Divert First Descent
+            [0, 0],            # Loiter
+            [0, 0],            # Divert Final Descent
+            [0, 0]],           # Landing
+            float))
+        self.add_output('Wf', val = 0)
+        # self.add_input('z', val=np.zeros(2))
+
+
+    def setup_partials(self):
+        # Finite difference all partials.
+        self.declare_partials('*', '*', method='fd')
+
+    def compute(self, inputs, outputs):
+        """
+        Evaluates block fuel
+        """
+
+        WS = 69.36423531558572
+        WP = 8.564498702867692
+        MTOW,Wfuel = WeightBuildUp(WS,WP,inputs['PHIvec'],V_cruise=1.68780986*275,ARw=17.51)
+        print(inputs['PHIvec'])
+        print('Wfuel {:.3f}'.format(Wfuel))
+        # outputs['Wip1_Wi'] = Wip1_Wi
+        outputs['Wf'] = Wfuel
+
+if __name__ == "__main__":
+    # build the model
+    prob = om.Problem()
+    prob.model.add_subsystem('BFOPT', BlockFuelOPT(), promotes_inputs=['PHIvec'])
+
+    # prob.model.set_input_defaults('x', x)
+    prob.model.set_input_defaults('PHIvec', np.array([[0, 0], # Taxi
+            [.36, 0.36],      # Takeoff
+            [0.2, 0.2],        # Climb
+            [0, 0],            # Cruise
+            [0, 0],            # Descent
+            [0, 0],            # Divert Climb
+            [0, 0],            # Divert
+            [0, 0],            # Divert First Descent
+            [0, 0],            # Loiter
+            [0, 0],            # Divert Final Descent
+            [0, 0]],           # Landing
+            float))
+
+    # setup the optimization 
+    prob.driver = om.ScipyOptimizeDriver()
+    prob.driver.options['optimizer'] = 'SLSQP'
+    prob.driver.options['maxiter'] = 1e5
+    prob.driver.options['tol'] = 1e-16
+
+    prob.model.add_design_var('PHIvec', lower=0, upper=1)
+    prob.model.add_objective('BFOPT.Wf',scaler=1)
+    
+
+    prob.setup()
+    prob.run_driver();
+    
+    # WS = 69.36423531558572
+    # WP = 8.564498702867692
+    # PHIvec = np.array([[0, 0], # Taxi
+    #         [0.36, 0.36],      # Takeoff
+    #         [0.2, 0.2],        # Climb
+    #         [0, 0],            # Cruise
+    #         [0, 0],            # Descent
+    #         [0, 0],            # Divert Climb
+    #         [0, 0],            # Divert
+    #         [0, 0],            # Divert First Descent
+    #         [0, 0],            # Loiter
+    #         [0, 0],            # Divert Final Descent
+    #         [0, 0]],           # Landing
+    #         float)
+    # WeightBuildUp(WS,WP,PHIvec,V_cruise=1.68780986*275,ARw=17.51)
