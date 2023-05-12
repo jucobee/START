@@ -83,6 +83,7 @@ class dragpolar:
         CD0s = []
         for i in range(len(flight_stages)):
             all_components = Drag_Build_Up.dragDragComponents(M[i], rho[i], V[i], mu[i])
+            print([component.CalculateDrag() for component in all_components])
             Sumcomps = (1/S_ref) * sum([component.CalculateDrag() for component in all_components])
             C_D_leakpro = 0.07 * Sumcomps
             C_D_missing = MiscDrag.miscDrag(M[i], flight_stages[i])
@@ -138,32 +139,32 @@ class dragpolar:
     
 
 
-# if __name__ == "__main__":
-# # print('PING')
-#     dpobj = dragpolar()
-#     CD = dpobj.CD(flight_stg_req=1,CL_req=0)
-#     print(CD)
-# # plt.plot(CL1,(CD1),label='Clean')
-# plt.plot(CL2,(CD2),label='Takeoff w/ Landing Gear Up')
-# plt.plot(CL3,(CD3),'--',label='Takeoff w/ Landing Gear Down')
-# plt.plot(CL4,(CD4),label='Landing w/ Landing Gear Up')
-# plt.plot(CL5,(CD5),'--',label='Landing w/ Landing Gear Down')
-# plt.xlabel('$C_L$')
-# plt.ylabel('$C_D$')
-# plt.title('Drag Polar')
-# plt.legend()
+if __name__ == "__main__":
+# print('PING')
+    dpobj = dragpolar()
+    CD = dpobj.CD(flight_stg_req=1,CL_req=0)
+    print(CD)
+    # plt.plot(CL1,(CD1),label='Clean')
+    # plt.plot(CL2,(CD2),label='Takeoff w/ Landing Gear Up')
+    # plt.plot(CL3,(CD3),'--',label='Takeoff w/ Landing Gear Down')
+    # plt.plot(CL4,(CD4),label='Landing w/ Landing Gear Up')
+    # plt.plot(CL5,(CD5),'--',label='Landing w/ Landing Gear Down')
+    # plt.xlabel('$C_L$')
+    # plt.ylabel('$C_D$')
+    # plt.title('Drag Polar')
+    # plt.legend()
 
 
-# plt.figure()
-# plt.plot(range(-15,15+1),CL1/(CD1),label='Clean')
-# plt.plot(range(-15,15+1),CL2/(CD2),label='Takeoff w/ Landing Gear Up')
-# plt.plot(range(-15,15+1),CL3/(CD3),'--',label='Takeoff w/ Landing Gear Down')
-# plt.plot(range(-15,15+1),CL4/(CD4),label='Landing w/ Landing Gear Up')
-# plt.plot(range(-15,15+1),CL5/(CD5),'--',label='Landing w/ Landing Gear Down')
-# plt.xlabel('$\\alpha$')
-# plt.ylabel('$C_L/C_D$')
-# plt.title('$C_L/C_D$ Polar')
-# plt.legend()
+    # plt.figure()
+    # plt.plot(range(-15,15+1),CL1/(CD1),label='Clean')
+    # plt.plot(range(-15,15+1),CL2/(CD2),label='Takeoff w/ Landing Gear Up')
+    # plt.plot(range(-15,15+1),CL3/(CD3),'--',label='Takeoff w/ Landing Gear Down')
+    # plt.plot(range(-15,15+1),CL4/(CD4),label='Landing w/ Landing Gear Up')
+    # plt.plot(range(-15,15+1),CL5/(CD5),'--',label='Landing w/ Landing Gear Down')
+    # plt.xlabel('$\\alpha$')
+    # plt.ylabel('$C_L/C_D$')
+    # plt.title('$C_L/C_D$ Polar')
+    # plt.legend()
 
 
-# plt.show()
+    # plt.show()

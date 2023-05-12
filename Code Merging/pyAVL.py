@@ -101,18 +101,31 @@ import time
 #         # file.writelines(ComponentHeader('MASS DEFINTION'))
 #         # file.write(SectionHeader('MASS DEFINTION'))
 '''
+
+def IsItWindows():
+    """Return ture if os is windows"""
+    return True if os.name == 'nt' else False
+
 class AVL:
     def __init__(self):
         self.inputList = '' 
         self.cd = os.getcwd()
         # print(self)
+
+        self.win = IsItWindows()
+        if self.win:
+            self.avlpath = '{}\\avl.exe'.format(self.cd)
+        else:
+            self.avlpath = '{}/avl3.35'.format(self.cd)
+
+
     def addInput(self,input):
         self.inputList += '{}\n'.format(input)
         # print(self.inputList)
     def clearInput(self):
         self.inputlist = ''
     def runAVL(self): # opens avl and runs all of the stored commands
-        self.AVLsp = subprocess.Popen('{}\\avl.exe'.format(self.cd),
+        self.AVLsp = subprocess.Popen(self.avlpath,
             shell=False,
             stdin=subprocess.PIPE,
             stdout=open('AVLsession.log', 'w'),         # Put the output of this terminal into the open log file
@@ -134,10 +147,17 @@ class AVL:
         self.addInput('\n \n \n')
         self.addInput('oper')
     def loadPlane(self,plane):
-        self.addInput('load Planes\\{}\\{}.avl'.format(plane,plane))
+        if self.win:
+            self.addInput('load Planes\\{}\\{}.avl'.format(plane,plane))
+        else:
+            self.addInput('load Planes/{}/{}.avl'.format(plane,plane))
     def loadMass(self,plane):
-        self.addInput('mass Planes\\{}\\{}.mass'.format(plane,plane))
-        self.addInput('mset\n0')
+        if self.win:
+            self.addInput('mass Planes\\{}\\{}.mass'.format(plane,plane))
+            self.addInput('mset\n0')
+        else:
+            self.addInput('mass Planes/{}/{}.mass'.format(plane,plane))
+            self.addInput('mset\n0')
     def setAtmosphere(self,altitude=0,temp_offset=0):
         # convert to units
         altitude = altitude/3.28084 # ft to m

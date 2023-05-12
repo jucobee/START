@@ -1,20 +1,12 @@
 Name, Theo_Area, Wet_Area, Theo_Vol, Wet_Vol
-Main Wing,839.330054,839.330054,264.375019,264.375019
-Main Wing,839.399036,839.399036,265.305582,265.305582
-Totals,1678.729090,1678.729090,529.680602,529.680602
+Fuselage,1938.995012,1938.995012,3939.004722,3939.004722
+Totals,1938.995012,1938.995012,3939.004722,3939.004722
 
 Tag_Name, Tag_Theo_Area, Tag_Wet_Area
-Main Wing_Surf0,650.643707,650.643707
-Main Wing_Surf1,650.741751,650.741751
-Main Wing_Surf0,SS_CONT_0,24.391511,24.391511
-Main Wing_Surf0,SS_CONT_1,26.825656,26.825656
-Main Wing_Surf0,SS_CONT_2,11.107451,11.107451
-Main Wing_Surf0,SS_CONT_3,57.594702,57.594702
-Main Wing_Surf0,SS_CONT_4,52.259219,52.259219
-Main Wing_Surf0,SS_CONT_5,16.507808,16.507808
-Main Wing_Surf1,SS_CONT_0,24.391511,24.391511
-Main Wing_Surf1,SS_CONT_1,26.825656,26.825656
-Main Wing_Surf1,SS_CONT_2,11.107451,11.107451
-Main Wing_Surf1,SS_CONT_3,57.576352,57.576352
-Main Wing_Surf1,SS_CONT_4,52.262397,52.262397
-Main Wing_Surf1,SS_CONT_5,16.493918,16.493918
+Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,13.420621,13.420621
+Fuselage_Surf0,Passenger Door,Passenger Door,12.699025,12.699025
+Fuselage_Surf0,Aft Cargo Hold Door,Passenger Door,20.111478,20.111478
+Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,1847.112116,1847.112116
+Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Forward Cargo Hold Door,Passenger Door,18.999083,18.999083
+Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,Passenger Door,9.123740,9.123740
+Fuselage_Surf0,Passenger Door,Aft Cargo Hold Door,Passenger Door,SS_RECT_5,17.528949,17.528949

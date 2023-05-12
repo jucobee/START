@@ -29,8 +29,13 @@ def STARTG01_AVL(phase=1,alpha=0,T=1):
 
     # setup
     AVLsp = pyAVL.AVL()
+
+    if pyAVL.IsItWindows():
+        polar_output = 'polar\\P{}_A{}.out'.format(phase,alpha)
+    else:
+        polar_output = 'polar/P{}_A{}.out'.format(phase,alpha)
     
-    if not os.path.isfile('polar\\P{}_A{}.out'.format(phase,alpha)):
+    if not os.path.isfile(polar_output):
         print('P{}_A{}.out does not exist, running . . .'.format(phase,alpha))
         planeName = 'STARTG01'
         AVLsp.loadPlane(planeName)
@@ -55,10 +60,10 @@ def STARTG01_AVL(phase=1,alpha=0,T=1):
             flaps(35) 
         
         AVLsp.addInput('X') #run
-        AVLsp.saveOutput('FT','polar\\P{}_A{}'.format(phase,alpha) ) # save case data
+        AVLsp.saveOutput('FT',polar_output ) # save case data
         AVLsp.runAVL()
 
-    out = AVLsp.readFT( 'polar\\P{}_A{}.out'.format(phase,alpha) )  #read file output
+    out = AVLsp.readFT(polar_output)  #read file output
     return out['CLtot'],out['CDind'] # ouput CLtot and CDind
     # print(out['CLtot'],out['CDind']) 
 
