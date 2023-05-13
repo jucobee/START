@@ -279,7 +279,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
         return Wb_W0,Wf_W0
 
-
+    
 
     Wb_W0,Wf_W0 = runMission(PHIvec,R_req)
     # print('{:.0f} nmi block fuel: {:.3f}'.format(R_req,Wf_W0*MTOW))

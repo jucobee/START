@@ -235,8 +235,5 @@ def ImprovedFuelFrac(MTOW):
     print(MTOW*Wi_W0)
     return W_fuel, W_bat
 
-#a,b=ImprovedFuelFrac(70000)
-#print(a)
-#print(b)
 
 ImprovedFuelFrac(53438)   # Run at least twice
