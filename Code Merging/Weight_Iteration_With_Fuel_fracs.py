@@ -91,7 +91,7 @@ def WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5):
         Scsw = 0.2 * Sw
         W_strut = 394 #approximate wing strut weight <---????
 
-        Wwing = 0.0051 * ((Wdg * Nz)**0.557) * (Sw**0.649) * (ARw**0.5) * (tcw**-0.4) * ((1+lambdaw)**0.1) * ((np.cos(Gammaw))**-1) * (Scsw**0.1) * 0.82 + W_strut
+        Wwing = 0.0051 * ((Wdg * Nz)**0.557) * (Sw**0.649) * (ARw**0.5) * (tcw**-0.4) * ((1+lambdaw)**0.1) * ((np.cos(Gammaw))**-1) * (Scsw**0.1) * 0.9 + W_strut
 
         Sht = Sw/826.134*94.19  # Area of horizantle tail
         Gammaht = 16 * (np.pi / 180)  # Sweep angle of horizontal tail
@@ -296,9 +296,10 @@ def WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5):
         err = abs(MTOWn - MTOW)
         MTOW = MTOWn
     print('MTOW: {:.3f}'.format(MTOW))
-    print('GT: {:.3f}, EM: {:.3f}, W_engine: {:.3f}'.format(P_GT,P_EM1,P_total))
+    print('GT: {:.3f} hp, {:.3f} kg\nEM: {:.3f} hp, {:.3f} kg\nW_engine: {:.3f} hp, {:.3f} kg'.format(P_GT,gas_turb,P_EM1,EM1,P_total,Wengine))
     print('Battery Weight: {:.3f}, Fuel Weight: {:.3f}'.format(Wbattery,Wfuel))
-    # print(xCG)
+    print('Wing Area: {:.3f}'.format(Wbattery,Wfuel))
+    print(xCG)
     if math.isnan(MTOW):
         return (1e7,1e7)
     else:
@@ -390,8 +391,8 @@ class BlockFuelOPT(om.ExplicitComponent):
     def setup(self):
         # Global Design Variable
         self.add_input('PHIvec', val = np.array([[0, 0], # Taxi
-            [0.36, 0.36],      # Takeoff
-            [0.2, 0.2],        # Climb
+            [0.4, 0.4],      # Takeoff
+            [0.36, 0.36],        # Climb
             [0, 0],            # Cruise
             [0, 0],            # Descent
             [0, 0],            # Divert Climb
@@ -416,60 +417,20 @@ class BlockFuelOPT(om.ExplicitComponent):
 
         WS,WP,WP_GT,WP_EM1 = PrelimSize(inputs['PHIvec'])
         # MTOW,Wfuel = WeightBuildUp(WS,WP,WP_GT,WP_EM1,inputs['PHIvec'],V_cruise=1.68780986*275,ARw=17.51)
-        MTOW,Wfuel = WeightEstimation(WS,WP,WP_GT,WP_EM1,inputs['PHIvec'],V_cruise=1.68780986*275,ARw=17.51)
+        MTOW,Wfuel = WeightBuildUp(WS,WP,WP_GT,WP_EM1,inputs['PHIvec'],V_cruise=1.68780986*275,ARw=17.51)
         print(inputs['PHIvec'])
         print('Wfuel {:.3f}'.format(Wfuel))
         # outputs['Wip1_Wi'] = Wip1_Wi
         outputs['Wf'] = Wfuel
 
 if __name__ == "__main__":
-    # build the model
-    prob = om.Problem()
-    prob.model.add_subsystem('BFOPT', BlockFuelOPT(), promotes_inputs=['PHIvec'])
+    # # build the model
+    # prob = om.Problem()
+    # prob.model.add_subsystem('BFOPT', BlockFuelOPT(), promotes_inputs=['PHIvec'])
 
-    prob.model.set_input_defaults('PHIvec', np.array([[0, 0], # 0: Taxi
-            [0, 0],      # 1: Takeoff
-            [0, 0],        # 2: Climb
-            [0, 0],            # 3: Cruise
-            [0, 0],            # 4: Descent
-            [0, 0],            # 5: Divert Climb
-            [0, 0],            # 6: Divert
-            [0, 0],            # 7: Divert First Descent
-            [0, 0],            # 8: Loiter
-            [0, 0],            # 9: Divert Final Descent
-            [0, 0]],           # 10: Landing
-            float))
-    # prob.model.set_input_defaults('PHIvec', np.array([[0.06369971, 0.31903651],
-    #         [0.96385417, 0.71884486],
-    #         [0.96173562, 0.00945743],
-    #         [0.21274627, 0.78550783],
-    #         [0.99974305, 0.00426302],
-    #         [0.00117523, 0.16083328],
-    #         [0.04747238, 0.07949061],
-    #         [0.127311  , 0.25506034],
-    #         [1.        , 0.08457946],
-    #         [0.3926251 , 0.07309257],
-    #         [0.38544507, 0.05145903]],           # 10: Landing
-    #         float))
-
-    # setup the optimization 
-    prob.driver = om.ScipyOptimizeDriver()
-    prob.driver.options['optimizer'] = 'SLSQP'
-    prob.driver.options['maxiter'] = 1e5
-    prob.driver.options['tol'] = 1e-16
-
-    prob.model.add_design_var('PHIvec', lower=0, upper=1)
-    prob.model.add_objective('BFOPT.Wf',scaler=1)
-    
-
-    prob.setup()
-    prob.run_driver();
-    
-    # WS = 69.36423531558572
-    # WP = 8.564498702867692
-    # PHIvec = np.array([[0, 0], # 0: Taxi
-    #         [0.36, 0.36],      # 1: Takeoff
-    #         [0.2, 0.2],        # 2: Climb
+    # prob.model.set_input_defaults('PHIvec', np.array([[0, 0], # 0: Taxi
+    #         [0.4, 0.4],      # Takeoff
+    #         [0.36, 0.36],        # Climb
     #         [0, 0],            # 3: Cruise
     #         [0, 0],            # 4: Descent
     #         [0, 0],            # 5: Divert Climb
@@ -478,5 +439,47 @@ if __name__ == "__main__":
     #         [0, 0],            # 8: Loiter
     #         [0, 0],            # 9: Divert Final Descent
     #         [0, 0]],           # 10: Landing
-    #         float)
-    # WeightBuildUp(WS,WP,PHIvec,V_cruise=1.68780986*275,ARw=17.51)
+    #         float))
+    # # prob.model.set_input_defaults('PHIvec', np.array([[0.06369971, 0.31903651],
+    # #         [0.96385417, 0.71884486],
+    # #         [0.96173562, 0.00945743],
+    # #         [0.21274627, 0.78550783],
+    # #         [0.99974305, 0.00426302],
+    # #         [0.00117523, 0.16083328],
+    # #         [0.04747238, 0.07949061],
+    # #         [0.127311  , 0.25506034],
+    # #         [1.        , 0.08457946],
+    # #         [0.3926251 , 0.07309257],
+    # #         [0.38544507, 0.05145903]],           # 10: Landing
+    # #         float))
+
+    # # setup the optimization 
+    # prob.driver = om.ScipyOptimizeDriver()
+    # prob.driver.options['optimizer'] = 'SLSQP'
+    # prob.driver.options['maxiter'] = 1e5
+    # prob.driver.options['tol'] = 1e-16
+
+    # prob.model.add_design_var('PHIvec', lower=0, upper=1)
+    # prob.model.add_objective('BFOPT.Wf',scaler=1)
+    
+
+    # prob.setup()
+    # prob.run_driver();
+    
+    # WS = 69.36423531558572
+    # WP = 8.564498702867692
+    PHIvec = np.array([[0, 0], # 0: Taxi
+            [3.77133831e-01, 3.77133831e-01],      # 1: Takeoff
+            [1.76550631e-05, 3.61126603e-01],        # 2: Climb
+            [0, 0],            # 3: Cruise
+            [0, 0],            # 4: Descent
+            [0, 0],            # 5: Divert Climb
+            [0, 0],            # 6: Divert
+            [0, 0],            # 7: Divert First Descent
+            [0, 0],            # 8: Loiter
+            [0, 0],            # 9: Divert Final Descent
+            [0, 0]],           # 10: Landing
+            float)
+    
+    WS,WP,WP_GT,WP_EM1 = PrelimSize(PHIvec,verbose=False)
+    WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5)

@@ -4,9 +4,8 @@ import numpy as np
 import Drag_Build_Up # python file that calculates individual components zero lift drag
 import MiscDrag
 import matplotlib.pyplot as plt
+from FlapDrag import flapDrag
 # import FlapDrag
-
-
 
 class dragpolar:
     def __init__(self,AR=17.51):
@@ -83,7 +82,7 @@ class dragpolar:
         CD0s = []
         for i in range(len(flight_stages)):
             all_components = Drag_Build_Up.dragDragComponents(M[i], rho[i], V[i], mu[i])
-            print([component.CalculateDrag() for component in all_components])
+            # print([component.CalculateDrag() for component in all_components])
             Sumcomps = (1/S_ref) * sum([component.CalculateDrag() for component in all_components])
             C_D_leakpro = 0.07 * Sumcomps
             C_D_missing = MiscDrag.miscDrag(M[i], flight_stages[i])
@@ -126,11 +125,11 @@ class dragpolar:
         # CD4=CD0s[3]+np.array(CDi4)*17.51/AR
         # CD5=CD0s[4]+np.array(CDi5)*17.51/AR
 
-        CD1=0.02+np.array(CDi1)*17.51/AR
-        CD2=0.02+np.array(CDi2)*17.51/AR
-        CD3=0.02+np.array(CDi3)*17.51/AR
-        CD4=0.02+np.array(CDi4)*17.51/AR
-        CD5=0.02+np.array(CDi5)*17.51/AR
+        CD1=0.02+np.array(CDi1)*17.51/AR+flapDrag(1)
+        CD2=0.02+np.array(CDi2)*17.51/AR+flapDrag(2)
+        CD3=0.02+np.array(CDi3)*17.51/AR+flapDrag(3)
+        CD4=0.02+np.array(CDi4)*17.51/AR+flapDrag(4)
+        CD5=0.02+np.array(CDi5)*17.51/AR+flapDrag(5)
         self.CLs = [CL1,CL2,CL3,CL4,CL5]
         self.CDs = [CD1,CD2,CD3,CD4,CD5]
 
@@ -143,7 +142,7 @@ if __name__ == "__main__":
 # print('PING')
     dpobj = dragpolar()
     CD = dpobj.CD(flight_stg_req=1,CL_req=0)
-    print(CD)
+    # print(CD)
     # plt.plot(CL1,(CD1),label='Clean')
     # plt.plot(CL2,(CD2),label='Takeoff w/ Landing Gear Up')
     # plt.plot(CL3,(CD3),'--',label='Takeoff w/ Landing Gear Down')

@@ -61,7 +61,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
     def WF_climb(Wi,H,PHI,seg): # Climb
         eta_p = 0.75 # assumed, Gudmundsson
-        V = 275*1.6878098571   # needs update
+        V = 200*1.6878098571   # needs update
         h=np.linspace(H[0],H[-1],seg+1) # height vector
         dh = (H[-1]-H[0])/seg # change in height per segment
 
@@ -301,8 +301,8 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 if __name__ == "__main__":
     MTOW = 1
     PHIvec = np.array([[0, 0], # Taxi
-            [0.36, 0.36],      # Takeoff
-            [0.2, 0.2],        # Climb
+            [0, 0],      # Takeoff
+            [0, 0],        # Climb
             [0, 0],            # Cruise
             [0, 0],            # Descent
             [0, 0],            # Divert Climb
