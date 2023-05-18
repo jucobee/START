@@ -133,6 +133,7 @@ class dragpolar:
         self.CLs = [CL1,CL2,CL3,CL4,CL5]
         self.CDs = [CD1,CD2,CD3,CD4,CD5]
 
+
     def CD(self,flight_stg_req=1,CL_req=0):
         return np.interp(CL_req,self.CLs[flight_stg_req-1],self.CDs[flight_stg_req-1])
     

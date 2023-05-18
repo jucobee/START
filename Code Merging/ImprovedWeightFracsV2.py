@@ -38,7 +38,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
     ## Dimensionalize:
     S = MTOW/WS
     P = MTOW/WP*550
-    seg_def = 3
+    seg_def = 101
 
     ## Defining Weight Fraction Functions
     def WF_SWT(Wi,t,PHI): # Startup, Warmup, Taxi
@@ -113,6 +113,7 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
             q = rho/2*V**2 # dynamic pressure
             C_L = Wi[i]/(S*q);
             LoD = C_L / dpobj.CD(1,C_L)
+            print(C_L)
             Wjp1_Wj = np.exp(-PSFC[i]*dR/(eta_p * LoD))
             # print(Wjp1_Wj)
             Wi.append(Wjp1_Wj*Wi[-1])
@@ -292,17 +293,11 @@ def MissionFractions(MTOW,WS,WP,PHIvec,R_req=500,Rmax=1000):
 
     
 
-    
-
-    
-
-   
-
 if __name__ == "__main__":
     MTOW = 1
     PHIvec = np.array([[0, 0], # Taxi
-            [0, 0],      # Takeoff
-            [0, 0],        # Climb
+            [0.2, 0.2],      # Takeoff
+            [0.32, 0.32],        # Climb
             [0, 0],            # Cruise
             [0, 0],            # Descent
             [0, 0],            # Divert Climb

@@ -195,32 +195,32 @@ def WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5):
 
 
         # xCG values in feet measured from leading edge of wing(Calculated if leading edge of wing moved forward by 2.1ft)
-        wingxCG = 5.41 * 0.25   # At quarter chord of wing
-        fuelxCG = 5.41 * 0.35      # Fuel sits about a third of the way along the chord of the wing
-        passengersxCG = 4.8 # Passenger weight slightly behind wing LE
-        crewxCG = -4.77
-        baggagexCG = 15.69
-        batteryxCG = 5.41*0.55
-        enginexCG = 0.0
-        htxCG = 48.17
-        vtxCG = 41.854
-        noselandingxCG = -20.858
-        mainlandingxCG = 12
-        fuselagexCG = 6.007
-        nacellexCG = 4.708    # Nacelle group cg sits almost level with the wing leading edge
-        engcontxCG = 10.021
-        starterxCG = 0.0
-        fuelsysxCG = 5.41 * 0.25
-        flightcontxCG = 10.021
-        APUxCG = 46.717
-        instrumentsxCG = -26.172
-        hydraulicsxCG = 22.3
-        electricalxCG = -0.805
-        avionicsxCG = -26.172
-        furnishingsxCG = 4.8
-        airconxCG = 3.461
-        antiicexCG = 0
-        handlinggearxCG = 0
+        wingxCG = 5.41 * 0.25    # At quarter chord of wing
+        fuelxCG = 5.41 * 0.35       # Fuel sits about a third of the way along the chord of the wing
+        passengersxCG = 4.8      + 4    # Passenger weight slightly behind wing LE
+        crewxCG = -4.77 + 4
+        baggagexCG = 15.69 + 4
+        batteryxCG = 5.41*0.55 
+        enginexCG = 0.0 
+        htxCG = 48.17 + 4
+        vtxCG = 41.854 + 4
+        noselandingxCG = -20.858 + 4
+        mainlandingxCG = 12 + 4
+        fuselagexCG = 6.007 + 4
+        nacellexCG = 4.708             # Nacelle group cg sits almost level with the wing leading edge
+        engcontxCG = 10.021 
+        starterxCG = 0.0 + 4
+        fuelsysxCG = 5.41 * 0.25 
+        flightcontxCG = 10.021 + 4
+        APUxCG = 46.717 + 4
+        instrumentsxCG = -26.172 + 4
+        hydraulicsxCG = 22.3 + 4
+        electricalxCG = -0.805 + 4
+        avionicsxCG = -26.172 + 4
+        furnishingsxCG = 4.8 + 4
+        airconxCG = 3.461 + 4
+        antiicexCG = 0 + 4
+        handlinggearxCG = 0 + 4
         
         
         W_wing = WeightComponent(Wwing,wingxCG)
@@ -298,7 +298,7 @@ def WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5):
     print('MTOW: {:.3f}'.format(MTOW))
     print('GT: {:.3f} hp, {:.3f} kg\nEM: {:.3f} hp, {:.3f} kg\nW_engine: {:.3f} hp, {:.3f} kg'.format(P_GT,gas_turb,P_EM1,EM1,P_total,Wengine))
     print('Battery Weight: {:.3f}, Fuel Weight: {:.3f}'.format(Wbattery,Wfuel))
-    print('Wing Area: {:.3f}'.format(Wbattery,Wfuel))
+    print('Wing Area: {:.3f}'.format(MTOW/WS))
     print(xCG)
     if math.isnan(MTOW):
         return (1e7,1e7)
@@ -468,9 +468,21 @@ if __name__ == "__main__":
     
     # WS = 69.36423531558572
     # WP = 8.564498702867692
+    # PHIvec = np.array([[0, 0], # 0: Taxi
+    #         [3.77133831e-01, 3.77133831e-01],      # 1: Takeoff
+    #         [1.76550631e-05, 3.61126603e-01],        # 2: Climb
+    #         [0, 0],            # 3: Cruise
+    #         [0, 0],            # 4: Descent
+    #         [0, 0],            # 5: Divert Climb
+    #         [0, 0],            # 6: Divert
+    #         [0, 0],            # 7: Divert First Descent
+    #         [0, 0],            # 8: Loiter
+    #         [0, 0],            # 9: Divert Final Descent
+    #         [0, 0]],           # 10: Landing
+    #         float)
     PHIvec = np.array([[0, 0], # 0: Taxi
-            [3.77133831e-01, 3.77133831e-01],      # 1: Takeoff
-            [1.76550631e-05, 3.61126603e-01],        # 2: Climb
+            [.2, .2],      # 1: Takeoff
+            [.32, .32],        # 2: Climb
             [0, 0],            # 3: Cruise
             [0, 0],            # 4: Descent
             [0, 0],            # 5: Divert Climb
@@ -480,6 +492,7 @@ if __name__ == "__main__":
             [0, 0],            # 9: Divert Final Descent
             [0, 0]],           # 10: Landing
             float)
-    
+    #     
     WS,WP,WP_GT,WP_EM1 = PrelimSize(PHIvec,verbose=False)
-    WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5)
+    print([53438/WP_GT,53438/WP_EM1],53438/WP_GT+53438/WP_EM1)
+    # WeightBuildUp(WS,WP,WP_GT,WP_EM1,PHIvec,V_cruise=1.68780986*275,ARw=17.5)
