@@ -12,23 +12,23 @@ Legend for flight_stg:
 '''
 
 def flapDrag(flight_stg):
-    Sw =  # Wing reference area
-    Sf =  # Area of flapped portion
-    Cfc = # Percentage of chord that is the flap portion
-    dfl = # Landing flap deflection angle in RADIANS
-    dft = # Takeoff flap deflection angle in RADIANS
+    # Sw =  # Wing reference area
+    # Sf =  # Area of flapped portion
+    # Cfc = # Percentage of chord that is the flap portion
+    dfl = 35 # Landing flap deflection angle in RADIANS
+    dft = 15 # Takeoff flap deflection angle in RADIANS
     if flight_stg == 1:
         CDflaps = 0
         return CDflaps
     elif flight_stg == 2:
-        CDflaps = 0.9*(Cfc)**1.38 * (Sf/Sw) * (np.sin(dft))**2
+        CDflaps = 0.0023*dft*.6
         return CDflaps
     elif flight_stg == 3:
-        CDflaps = 0.9*(Cfc)**1.38 * (Sf/Sw) * (np.sin(dft))**2
+        CDflaps = 0.0023*dft*.6
         return CDflaps
     elif flight_stg == 4:
-        CDflaps = 0.9*(Cfc)**1.38 * (Sf/Sw) * (np.sin(dfl))**2
+        CDflaps = 0.0023*dfl*.6
         return CDflaps
     elif flight_stg == 5:
-        CDflaps = 0.9*(Cfc)**1.38 * (Sf/Sw) * (np.sin(dfl))**2
+        CDflaps = 0.0023*dfl*.6
         return CDflaps
